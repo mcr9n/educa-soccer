@@ -77,12 +77,23 @@ export const pagamentosPendentes: PagamentoPendente[] = [
   { id: "p3", aluno: "Enzo Martins", turma: "Sub-11", mesReferencia: "Julho", valor: 180, situacao: "pendente", diasAtraso: 3 },
   { id: "p4", aluno: "Helena Costa", turma: "Particular", mesReferencia: "Julho", valor: 320, situacao: "pendente", diasAtraso: 2 },
   { id: "p5", aluno: "Miguel Souza", turma: "Sub-13", mesReferencia: "Julho", valor: 180, situacao: "pendente", diasAtraso: 1 },
+  { id: "p6", aluno: "Maria Fernanda Albuquerque", turma: "Sub-11", mesReferencia: "Julho", valor: 180, situacao: "atrasado", diasAtraso: 15 },
+  { id: "p7", aluno: "Arthur Gonçalves Ribeiro", turma: "Sub-9", mesReferencia: "Julho", valor: 180, situacao: "atrasado", diasAtraso: 6 },
+  { id: "p8", aluno: "Valentina Cardoso", turma: "Particular", mesReferencia: "Julho", valor: 320, situacao: "pendente", diasAtraso: 4 },
+  { id: "p9", aluno: "Bernardo Almeida", turma: "Sub-7", mesReferencia: "Julho", valor: 180, situacao: "pendente", diasAtraso: 2 },
+  { id: "p10", aluno: "Cecília Nascimento", turma: "Sub-15", mesReferencia: "Julho", valor: 180, situacao: "atrasado", diasAtraso: 9 },
+  { id: "p11", aluno: "Heitor Carvalho Mendes", turma: "Sub-13", mesReferencia: "Julho", valor: 180, situacao: "pendente", diasAtraso: 1 },
+  { id: "p12", aluno: "Lorena Oliveira", turma: "Sub-11", mesReferencia: "Junho", valor: 180, situacao: "atrasado", diasAtraso: 33 },
 ]
 
 export const faltasConsecutivas: FaltaConsecutiva[] = [
   { id: "f1", aluno: "Théo Barbosa", turma: "Sub-9", faltas: 4, ultimaAusencia: "25/07" },
   { id: "f2", aluno: "Alice Ferreira", turma: "Sub-7", faltas: 3, ultimaAusencia: "24/07" },
   { id: "f3", aluno: "Davi Nunes", turma: "Sub-11", faltas: 3, ultimaAusencia: "26/07" },
+  { id: "f4", aluno: "Maria Fernanda Albuquerque", turma: "Sub-11", faltas: 5, ultimaAusencia: "26/07" },
+  { id: "f5", aluno: "Benjamin Vasconcelos", turma: "Sub-13", faltas: 4, ultimaAusencia: "23/07" },
+  { id: "f6", aluno: "Cecília Nascimento", turma: "Sub-15", faltas: 3, ultimaAusencia: "25/07" },
+  { id: "f7", aluno: "Antônio Guilherme Fontes", turma: "Sub-9", faltas: 3, ultimaAusencia: "24/07" },
 ]
 
 export const aulasExperimentais: AulaExperimental[] = [

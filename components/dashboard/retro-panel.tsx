@@ -7,9 +7,11 @@ type RetroPanelProps = {
   right?: ReactNode
   children: ReactNode
   className?: string
+  /** Altura máxima da área de conteúdo (com rolagem) */
+  maxBodyHeight?: number
 }
 
-export function RetroPanel({ title, tag, right, children, className }: RetroPanelProps) {
+export function RetroPanel({ title, tag, right, children, className, maxBodyHeight }: RetroPanelProps) {
   return (
     <section className={cn("panel-bevel rounded-md bg-card overflow-hidden flex flex-col", className)}>
       <header className="flex items-center justify-between gap-2 bg-scoreboard px-3 py-2 border-b-2 border-panel-shade">
@@ -25,7 +27,12 @@ export function RetroPanel({ title, tag, right, children, className }: RetroPane
         </div>
         {right}
       </header>
-      <div className="flex-1 p-2.5">{children}</div>
+      <div
+        className={cn("flex-1 p-2.5", maxBodyHeight && "overflow-y-auto")}
+        style={maxBodyHeight ? { maxHeight: maxBodyHeight } : undefined}
+      >
+        {children}
+      </div>
     </section>
   )
 }

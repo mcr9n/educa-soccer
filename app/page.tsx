@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { ScoreboardHeader } from "@/components/dashboard/scoreboard-header"
-import { PitchTurmas } from "@/components/dashboard/pitch-turmas"
 import { QuickMenu } from "@/components/dashboard/quick-menu"
 import {
   PagamentosPanel,
@@ -14,19 +13,29 @@ import {
 
 export default function Page() {
   const [area, setArea] = useState<string | null>(null)
+  const [aba, setAba] = useState<string>("Painel Inicial")
 
   return (
     <div className="min-h-dvh bg-stadium">
-      <main className="mx-auto w-full max-w-6xl p-3 sm:p-4 pb-16 flex flex-col gap-3">
-        <ScoreboardHeader />
-
-        <div className="grid gap-3 lg:grid-cols-12">
-          <div className="flex flex-col gap-3 lg:col-span-5">
-            <PitchTurmas onSelect={setArea} />
-            <QuickMenu onSelect={setArea} />
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-3 p-3 pb-16 sm:p-4 lg:flex-row">
+        {/* Barra lateral de navegação */}
+        <aside className="lg:w-64 lg:shrink-0">
+          <div className="lg:sticky lg:top-4">
+            <QuickMenu
+              active={aba}
+              onSelect={(a) => {
+                setAba(a)
+                setArea(a)
+              }}
+            />
           </div>
+        </aside>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:col-span-7">
+        {/* Conteúdo principal */}
+        <main className="flex min-w-0 flex-1 flex-col gap-3">
+          <ScoreboardHeader />
+
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-2">
             <PagamentosPanel onSelect={setArea} />
             <FaltasPanel onSelect={setArea} />
             <ExperimentaisPanel onSelect={setArea} />
@@ -35,12 +44,12 @@ export default function Page() {
               <TorneiosPanel onSelect={setArea} />
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
 
       {/* Barra de status estilo game */}
       <footer className="fixed inset-x-0 bottom-0 z-10 border-t-2 border-panel-edge bg-scoreboard/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-2">
+        <div className="mx-auto flex max-w-[1600px] items-center gap-2 px-4 py-2">
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">
             OK
           </span>
@@ -50,7 +59,7 @@ export default function Page() {
                 Abrindo área: <span className="text-gold">{area}</span>
               </>
             ) : (
-              "Selecione um indicador para o acesso rápido."
+              "Selecione uma aba ou indicador para o acesso rápido."
             )}
           </p>
         </div>

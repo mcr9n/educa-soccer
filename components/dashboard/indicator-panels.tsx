@@ -37,8 +37,8 @@ function Row({
       >
         <PositionTag label={tag} variant={tagVariant} className="w-11 shrink-0" />
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-sans text-sm font-bold text-foreground">{name}</span>
-          {meta && <span className="block truncate font-sans text-[11px] text-muted-foreground">{meta}</span>}
+          <span className="block font-sans text-sm font-bold leading-tight text-foreground text-pretty">{name}</span>
+          {meta && <span className="mt-0.5 block truncate font-sans text-[11px] text-muted-foreground">{meta}</span>}
         </span>
         {right}
       </button>
@@ -64,6 +64,7 @@ export function PagamentosPanel({ onSelect }: { onSelect: SelectFn }) {
       tag="R$"
       right={<span className="font-pixel text-[9px] text-gold">R$ {total.toLocaleString("pt-BR")}</span>}
       className="h-full"
+      maxBodyHeight={340}
     >
       <ul className="flex flex-col gap-0.5">
         {pagamentosPendentes.map((p) => (
@@ -89,6 +90,7 @@ export function FaltasPanel({ onSelect }: { onSelect: SelectFn }) {
       tag="!"
       right={<span className="font-pixel text-[9px] text-danger">{faltasConsecutivas.length} alerta(s)</span>}
       className="h-full"
+      maxBodyHeight={340}
     >
       <ul className="flex flex-col gap-0.5">
         {faltasConsecutivas.map((f) => (
@@ -116,6 +118,7 @@ export function ExperimentaisPanel({ onSelect }: { onSelect: SelectFn }) {
       tag="EXP"
       right={<span className="font-pixel text-[9px] text-gold">{aulasExperimentais.length}</span>}
       className="h-full"
+      maxBodyHeight={300}
     >
       <ul className="flex flex-col gap-0.5">
         {aulasExperimentais.map((e) => (
@@ -142,6 +145,7 @@ export function UniformesPanel({ onSelect }: { onSelect: SelectFn }) {
       tag="#"
       right={<span className="font-pixel text-[9px] text-gold">{uniformesPendentes.length}</span>}
       className="h-full"
+      maxBodyHeight={300}
     >
       <ul className="flex flex-col gap-0.5">
         {uniformesPendentes.map((u) => (
@@ -168,6 +172,7 @@ export function TorneiosPanel({ onSelect }: { onSelect: SelectFn }) {
       tag="CUP"
       right={<span className="font-pixel text-[9px] text-gold">{torneios.length}</span>}
       className="h-full"
+      maxBodyHeight={300}
     >
       <ul className="flex flex-col gap-0.5">
         {torneios.map((t) => (
