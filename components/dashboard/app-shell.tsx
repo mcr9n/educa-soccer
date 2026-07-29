@@ -8,6 +8,8 @@ const secaoPorRota: Record<string, string> = {
   "/": "Painel Inicial",
   "/alunos": "Consulta de Alunos",
   "/cadastro": "Cadastro de Aluno",
+  "/turmas": "Gestão de Turmas",
+  "/cadastro-turma": "Cadastro de Turma",
 }
 
 export function AppShell({ children }: { children: ReactNode }) {

@@ -17,6 +17,7 @@ import {
   type Modalidade,
   calcularIdade,
   faixaEtaria,
+  modalidadeDaTurma,
   turmasDisponiveis,
 } from "@/lib/alunos-data"
 import { formatarTelefone } from "@/lib/alunos-data"
@@ -74,7 +75,7 @@ export function CadastroForm() {
   }
 
   function aoSelecionarTurma(turma: string) {
-    const modalidade: Modalidade = turma === "Particular" ? "particular" : "coletiva"
+    const modalidade: Modalidade = turma ? modalidadeDaTurma(turma) : form.modalidade
     setForm((f) => ({ ...f, turma, modalidade }))
     setErros((e) => ({ ...e, turma: undefined }))
   }

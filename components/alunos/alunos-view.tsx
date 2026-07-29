@@ -8,6 +8,7 @@ import {
   calcularIdade,
   faixaEtaria,
   faixasEtarias,
+  modalidadeDaTurma,
   turmasDisponiveis,
   totalExAlunos,
 } from "@/lib/alunos-data"
@@ -54,7 +55,7 @@ export function AlunosView() {
   }
 
   function transferirAluno(id: string, turma: string) {
-    const modalidade: Aluno["modalidade"] = turma === "Particular" ? "particular" : "coletiva"
+    const modalidade: Aluno["modalidade"] = modalidadeDaTurma(turma)
     setLista((prev) => prev.map((a) => (a.id === id ? { ...a, turma, modalidade } : a)))
   }
 

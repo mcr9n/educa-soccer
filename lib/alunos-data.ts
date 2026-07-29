@@ -4,7 +4,10 @@
 // MENSALIDADE, TURMA e situacao (ATIVO). Em uma versao futura, estes dados
 // virao de um banco de dados.
 
-export type Modalidade = "coletiva" | "particular"
+import type { Modalidade } from "./turmas-data"
+
+export type { Modalidade } from "./turmas-data"
+export { turmasDisponiveis, modalidadeDaTurma } from "./turmas-data"
 
 export type Aluno = {
   id: string
@@ -24,8 +27,6 @@ export type Aluno = {
   foto?: string // data URL ou caminho da fotografia (opcional)
 }
 
-export const turmasDisponiveis = ["Sub-7", "Sub-9", "Sub-11", "Sub-13", "Sub-15", "Particular"] as const
-
 export const alunos: Aluno[] = [
   {
     id: "a1",
@@ -37,7 +38,7 @@ export const alunos: Aluno[] = [
     email: "joao.kunde@email.com",
     horaAula: "Quinta 18h40 e Sábado 09h00",
     mensalidade: 230,
-    turma: "Sub-9",
+    turma: "SUDOESTE (QUINTA 18H40 E SÁBADO 09H00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -51,7 +52,7 @@ export const alunos: Aluno[] = [
     email: "aline.andrade@email.com",
     horaAula: "Sexta 17h00 às 18h00",
     mensalidade: 230,
-    turma: "Sub-7",
+    turma: "SUDOESTE (SEXTA - 17h00 às 18h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -65,7 +66,7 @@ export const alunos: Aluno[] = [
     email: "joao.cunha@email.com",
     horaAula: "Sábado 10h40 às 11h40",
     mensalidade: 230,
-    turma: "Sub-11",
+    turma: "SUDOESTE (SÁBADO - 10h40 às 11h40)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -79,7 +80,7 @@ export const alunos: Aluno[] = [
     email: "marcos.catteli@email.com",
     horaAula: "Terça e Quinta 17h00",
     mensalidade: 230,
-    turma: "Sub-13",
+    turma: "NOROESTE (TERÇA E QUINTA - 17h00 às 18h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -93,7 +94,7 @@ export const alunos: Aluno[] = [
     email: "renata.britto@email.com",
     horaAula: "Segunda e Quarta 18h00",
     mensalidade: 230,
-    turma: "Sub-9",
+    turma: "ASA NORTE (SEGUNDA E QUARTA - 18h00 às 19h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -107,7 +108,7 @@ export const alunos: Aluno[] = [
     email: "patricia.freitas@email.com",
     horaAula: "Sábado 09h00 às 10h00",
     mensalidade: 230,
-    turma: "Sub-11",
+    turma: "SUDOESTE (SÁBADO - 09h00 às 10h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -121,7 +122,7 @@ export const alunos: Aluno[] = [
     email: "fabio.belas@email.com",
     horaAula: "Aula particular — Quarta 19h00",
     mensalidade: 420,
-    turma: "Particular",
+    turma: "PARTICULAR (HORÁRIO A COMBINAR)",
     modalidade: "particular",
     ativo: true,
   },
@@ -135,7 +136,7 @@ export const alunos: Aluno[] = [
     email: "carla.fernandes@email.com",
     horaAula: "Sábado 10h40 às 11h40",
     mensalidade: 230,
-    turma: "Sub-7",
+    turma: "SUDOESTE (SÁBADO - 10h40 às 11h40)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -149,7 +150,7 @@ export const alunos: Aluno[] = [
     email: "sergio.rueda@email.com",
     horaAula: "Terça e Quinta 18h00",
     mensalidade: 230,
-    turma: "Sub-9",
+    turma: "NOROESTE (TERÇA E QUINTA - 18h00 às 19h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -163,7 +164,7 @@ export const alunos: Aluno[] = [
     email: "debora.catelli@email.com",
     horaAula: "Aula particular — Segunda 19h00",
     mensalidade: 420,
-    turma: "Particular",
+    turma: "PARTICULAR (HORÁRIO A COMBINAR)",
     modalidade: "particular",
     ativo: true,
   },
@@ -177,7 +178,7 @@ export const alunos: Aluno[] = [
     email: "rodrigo.campos@email.com",
     horaAula: "Segunda e Quarta 19h00",
     mensalidade: 230,
-    turma: "Sub-15",
+    turma: "ASA NORTE (SEGUNDA E QUARTA - 19h00 às 20h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -191,7 +192,7 @@ export const alunos: Aluno[] = [
     email: "mariana.soriano@email.com",
     horaAula: "Sábado 09h00 às 10h00",
     mensalidade: 230,
-    turma: "Sub-9",
+    turma: "SUDOESTE (SÁBADO - 09h00 às 10h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -205,7 +206,7 @@ export const alunos: Aluno[] = [
     email: "luiz.camargo@email.com",
     horaAula: "Terça e Quinta 17h00",
     mensalidade: 230,
-    turma: "Sub-13",
+    turma: "NOROESTE (TERÇA E QUINTA - 17h00 às 18h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -219,7 +220,7 @@ export const alunos: Aluno[] = [
     email: "camila.borges@email.com",
     horaAula: "Segunda e Quarta 18h00",
     mensalidade: 230,
-    turma: "Sub-13",
+    turma: "ASA NORTE (SEGUNDA E QUARTA - 18h00 às 19h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -233,7 +234,7 @@ export const alunos: Aluno[] = [
     email: "gustavo.filippi@email.com",
     horaAula: "Segunda e Quarta 19h00",
     mensalidade: 230,
-    turma: "Sub-15",
+    turma: "ASA NORTE (SEGUNDA E QUARTA - 19h00 às 20h00)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -247,7 +248,7 @@ export const alunos: Aluno[] = [
     email: "simone.rangel@email.com",
     horaAula: "Sábado 10h40 às 11h40",
     mensalidade: 230,
-    turma: "Sub-7",
+    turma: "SUDOESTE (SÁBADO - 10h40 às 11h40)",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -261,7 +262,7 @@ export const alunos: Aluno[] = [
     email: "alexandre.teixeira@email.com",
     horaAula: "Aula particular — Sexta 18h00",
     mensalidade: 420,
-    turma: "Particular",
+    turma: "PARTICULAR (HORÁRIO A COMBINAR)",
     modalidade: "particular",
     ativo: true,
   },
@@ -275,7 +276,7 @@ export const alunos: Aluno[] = [
     email: "fernanda.prado@email.com",
     horaAula: "Terça e Quinta 18h00",
     mensalidade: 230,
-    turma: "Sub-9",
+    turma: "NOROESTE (TERÇA E QUINTA - 18h00 às 19h00)",
     modalidade: "coletiva",
     ativo: true,
   },

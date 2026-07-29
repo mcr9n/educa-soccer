@@ -6,6 +6,7 @@ import {
   Phone,
   Mail,
   Clock,
+  Users,
   Wallet,
   Pencil,
   ArrowLeftRight,
@@ -23,9 +24,15 @@ import {
   linkWhatsApp,
   turmasDisponiveis,
 } from "@/lib/alunos-data"
+import { getTurma } from "@/lib/turmas-data"
 
 function turmaVariant(modalidade: Aluno["modalidade"]) {
   return modalidade === "particular" ? "gold" : "blue"
+}
+
+/** Rotulo curto para o cabecalho: o local da turma (ex.: SUDOESTE). */
+function localCurto(aluno: Aluno) {
+  return (getTurma(aluno.turma)?.local ?? aluno.turma).toUpperCase()
 }
 
 function InfoLinha({ icon: Icon, label, value }: { icon: typeof Phone; label: string; value: string }) {
@@ -95,7 +102,7 @@ export function AlunoCard({
             <span>Resp.: {aluno.responsavel}</span>
           </span>
         </span>
-        <PositionTag label={aluno.turma} variant={turmaVariant(aluno.modalidade)} className="shrink-0" />
+        <PositionTag label={localCurto(aluno)} variant={turmaVariant(aluno.modalidade)} className="shrink-0" />
         <ChevronDown
           className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform ${expandido ? "rotate-180" : ""}`}
           strokeWidth={2.5}
@@ -106,6 +113,12 @@ export function AlunoCard({
       {expandido && (
         <div className="border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-3">
           <div className="grid gap-3 sm:grid-cols-2">
+            <InfoLinha icon={Users} label="Turma" value={aluno.turma} />
+            <InfoLinha
+              icon={Wallet}
+              label="Modalidade"
+              value={aluno.modalidade === "particular" ? "Atendimento particular" : "Turma coletiva"}
+            />
             <InfoLinha icon={Phone} label="Telefone do responsável" value={aluno.telefone} />
             <InfoLinha icon={Mail} label="E-mail" value={aluno.email || "—"} />
             <InfoLinha icon={Clock} label="Hora / Aula" value={aluno.horaAula} />
@@ -114,11 +127,6 @@ export function AlunoCard({
               icon={Clock}
               label="Nascimento / Faixa etária"
               value={`${formatarData(aluno.dataNascimento)} • ${faixaEtaria(idade)} anos`}
-            />
-            <InfoLinha
-              icon={Wallet}
-              label="Modalidade"
-              value={aluno.modalidade === "particular" ? "Atendimento particular" : "Turma coletiva"}
             />
           </div>
 
