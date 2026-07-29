@@ -12,6 +12,7 @@ import { RetroPanel } from "./retro-panel"
 import { PositionTag } from "./position-tag"
 
 type SelectFn = (area: string) => void
+const noop: SelectFn = () => {}
 
 function Row({
   tag,
@@ -56,7 +57,7 @@ function CountBadge({ n, tone }: { n: number; tone: "danger" | "gold" | "green" 
   return <span className={`font-pixel text-sm text-outline ${map[tone]}`}>{n}</span>
 }
 
-export function PagamentosPanel({ onSelect }: { onSelect: SelectFn }) {
+export function PagamentosPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
   const total = pagamentosPendentes.reduce((s, p) => s + p.valor, 0)
   return (
     <RetroPanel
@@ -83,7 +84,7 @@ export function PagamentosPanel({ onSelect }: { onSelect: SelectFn }) {
   )
 }
 
-export function FaltasPanel({ onSelect }: { onSelect: SelectFn }) {
+export function FaltasPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
   return (
     <RetroPanel
       title="Faltas Consecutivas"
@@ -109,7 +110,7 @@ export function FaltasPanel({ onSelect }: { onSelect: SelectFn }) {
   )
 }
 
-export function ExperimentaisPanel({ onSelect }: { onSelect: SelectFn }) {
+export function ExperimentaisPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
   const tagFor = (s: string) => (s === "agendada" ? "AGD" : s === "aguardando" ? "AGU" : "OK")
   const variantFor = (s: string) => (s === "agendada" ? "green" : s === "aguardando" ? "gold" : "blue")
   return (
@@ -136,7 +137,7 @@ export function ExperimentaisPanel({ onSelect }: { onSelect: SelectFn }) {
   )
 }
 
-export function UniformesPanel({ onSelect }: { onSelect: SelectFn }) {
+export function UniformesPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
   const tagFor = (s: string) => (s.includes("pagamento") ? "$" : s.includes("produção") ? "PROD" : "ENTR")
   const variantFor = (s: string) => (s.includes("pagamento") ? "danger" : s.includes("produção") ? "gold" : "green")
   return (
@@ -164,7 +165,7 @@ export function UniformesPanel({ onSelect }: { onSelect: SelectFn }) {
   )
 }
 
-export function TorneiosPanel({ onSelect }: { onSelect: SelectFn }) {
+export function TorneiosPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
   const variantFor = (s: string) => (s === "confirmado" ? "green" : s === "em andamento" ? "blue" : "gold")
   return (
     <RetroPanel
