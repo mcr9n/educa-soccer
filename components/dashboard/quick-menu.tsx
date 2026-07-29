@@ -27,7 +27,7 @@ type Item = { label: string; icon: LucideIcon; href?: string }
 const itens: Item[] = [
   { label: "Painel Inicial", icon: LayoutDashboard, href: "/" },
   { label: "Alunos", icon: Users, href: "/alunos" },
-  { label: "Cadastro de Aluno", icon: UserPlus },
+  { label: "Cadastro de Aluno", icon: UserPlus, href: "/cadastro" },
   { label: "Turmas", icon: UsersRound },
   { label: "Pagamentos", icon: Wallet },
   { label: "Chamada", icon: ClipboardCheck },

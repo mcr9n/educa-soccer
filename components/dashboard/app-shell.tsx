@@ -7,6 +7,7 @@ import { QuickMenu } from "./quick-menu"
 const secaoPorRota: Record<string, string> = {
   "/": "Painel Inicial",
   "/alunos": "Consulta de Alunos",
+  "/cadastro": "Cadastro de Aluno",
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
