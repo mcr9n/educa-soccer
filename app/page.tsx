@@ -10,7 +10,6 @@ import {
   UniformesPanel,
   TorneiosPanel,
 } from "@/components/dashboard/indicator-panels"
-import { StudentsScreen } from "@/components/students/students-screen"
 
 export default function Page() {
   const [area, setArea] = useState<string | null>(null)
