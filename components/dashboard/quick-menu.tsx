@@ -65,7 +65,7 @@ export function QuickMenu({
         </div>
       </header>
 
-      <ul className="flex flex-col gap-1 p-2">
+      <ul className="flex max-h-[calc(100dvh-9rem)] flex-col gap-1 overflow-y-auto p-2">
         {itens.map(({ label, icon: Icon }) => {
           const isActive = active === label
           return (
