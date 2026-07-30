@@ -31,7 +31,7 @@ const itens: Item[] = [
   { label: "Cadastro de Aluno", icon: UserPlus, href: "/cadastro" },
   { label: "Turmas", icon: UsersRound, href: "/turmas" },
   { label: "Cadastro de Turma", icon: FolderPlus, href: "/cadastro-turma" },
-  { label: "Pagamentos", icon: Wallet },
+  { label: "Pagamentos", icon: Wallet, href: "/pagamentos" },
   { label: "Chamada", icon: ClipboardCheck },
   { label: "Alertas de Faltas", icon: AlarmClock },
   { label: "Aulas Experimentais", icon: FlaskConical },

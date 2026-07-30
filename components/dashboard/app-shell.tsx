@@ -10,6 +10,7 @@ const secaoPorRota: Record<string, string> = {
   "/cadastro": "Cadastro de Aluno",
   "/turmas": "Gestão de Turmas",
   "/cadastro-turma": "Cadastro de Turma",
+  "/pagamentos": "Gestão de Pagamentos",
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
