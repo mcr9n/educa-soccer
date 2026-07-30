@@ -22,7 +22,7 @@ export function PositionTag({
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center rounded-sm border border-panel-shade px-1.5 py-0.5 font-pixel text-[8px] leading-none uppercase inset-bevel",
+        "inline-flex items-center justify-center rounded-sm border border-panel-shade px-2 py-1 font-pixel text-xs font-bold leading-none uppercase inset-bevel",
         variants[variant],
         className,
       )}

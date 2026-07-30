@@ -63,7 +63,7 @@ export function PagamentosPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
     <RetroPanel
       title="Pagamentos Pendentes"
       tag="R$"
-      right={<span className="font-pixel text-[9px] text-gold">R$ {total.toLocaleString("pt-BR")}</span>}
+      right={<span className="font-pixel text-sm font-bold text-gold">R$ {total.toLocaleString("pt-BR")}</span>}
       className="h-full"
       maxBodyHeight={340}
     >
@@ -75,7 +75,7 @@ export function PagamentosPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
             tagVariant={p.situacao === "atrasado" ? "danger" : "gold"}
             name={p.aluno}
             meta={`${p.turma} • ${p.mesReferencia} • ${p.diasAtraso}d`}
-            right={<span className="font-pixel text-[11px] text-foreground">R${p.valor}</span>}
+            right={<span className="font-pixel text-sm font-bold text-foreground">R${p.valor}</span>}
             onClick={() => onSelect(`Cobrança de ${p.aluno}`)}
           />
         ))}
@@ -89,7 +89,7 @@ export function FaltasPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
     <RetroPanel
       title="Faltas Consecutivas"
       tag="!"
-      right={<span className="font-pixel text-[9px] text-danger">{faltasConsecutivas.length} alerta(s)</span>}
+      right={<span className="font-pixel text-sm font-bold text-danger">{faltasConsecutivas.length} alerta(s)</span>}
       className="h-full"
       maxBodyHeight={340}
     >
@@ -117,7 +117,7 @@ export function ExperimentaisPanel({ onSelect = noop }: { onSelect?: SelectFn })
     <RetroPanel
       title="Aulas Experimentais"
       tag="EXP"
-      right={<span className="font-pixel text-[9px] text-gold">{aulasExperimentais.length}</span>}
+      right={<span className="font-pixel text-sm font-bold text-gold">{aulasExperimentais.length}</span>}
       className="h-full"
       maxBodyHeight={300}
     >
@@ -144,7 +144,7 @@ export function UniformesPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
     <RetroPanel
       title="Uniformes Pendentes"
       tag="#"
-      right={<span className="font-pixel text-[9px] text-gold">{uniformesPendentes.length}</span>}
+      right={<span className="font-pixel text-sm font-bold text-gold">{uniformesPendentes.length}</span>}
       className="h-full"
       maxBodyHeight={300}
     >
@@ -166,12 +166,14 @@ export function UniformesPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
 }
 
 export function TorneiosPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
-  const variantFor = (s: string) => (s === "confirmado" ? "green" : s === "em andamento" ? "blue" : "gold")
+  // Confirmado/ja ocorrido = verde; em andamento = azul; planejamento = amarelo
+  const variantFor = (s: string) =>
+    s === "confirmado" || s === "realizado" ? "green" : s === "em andamento" ? "blue" : "gold"
   return (
     <RetroPanel
       title="Próximos Torneios"
       tag="CUP"
-      right={<span className="font-pixel text-[9px] text-gold">{torneios.length}</span>}
+      right={<span className="font-pixel text-sm font-bold text-gold">{torneios.length}</span>}
       className="h-full"
       maxBodyHeight={300}
     >
@@ -184,7 +186,17 @@ export function TorneiosPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
             name={t.nome}
             meta={`${t.categoria} • ${t.local}`}
             right={
-              <span className="font-pixel text-[8px] uppercase text-muted-foreground">{t.situacao}</span>
+              <span
+                className={`font-pixel text-xs font-bold uppercase ${
+                  t.situacao === "confirmado"
+                    ? "text-primary"
+                    : t.situacao === "em andamento"
+                      ? "text-scoreboard"
+                      : "text-gold"
+                }`}
+              >
+                {t.situacao}
+              </span>
             }
             onClick={() => onSelect(`Torneio ${t.nome}`)}
           />

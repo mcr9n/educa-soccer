@@ -17,11 +17,11 @@ export function RetroPanel({ title, tag, right, children, className, maxBodyHeig
       <header className="flex items-center justify-between gap-2 bg-scoreboard px-3 py-2 border-b-2 border-panel-shade">
         <div className="flex items-center gap-2 min-w-0">
           {tag && (
-            <span className="shrink-0 rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">
+            <span className="shrink-0 rounded-sm bg-gold px-2 py-0.5 font-pixel text-sm font-bold leading-none text-gold-foreground">
               {tag}
             </span>
           )}
-          <h2 className="font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow truncate">
+          <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-primary-foreground pixel-shadow truncate">
             {title}
           </h2>
         </div>
