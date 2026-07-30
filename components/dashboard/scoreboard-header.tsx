@@ -11,22 +11,20 @@ export function ScoreboardHeader() {
   return (
     <header className="panel-bevel rounded-md bg-card overflow-hidden">
       <div className="flex items-center gap-3 bg-scoreboard px-3 py-2">
-        <span className="shrink-0 rounded-sm bg-gold px-1.5 py-1 font-pixel text-[9px] leading-none text-gold-foreground">
-          EDU
-        </span>
         <Image
           src="/educa-soccer-crest.png"
-          alt="Brasão do Educa Soccer"
-          width={40}
-          height={40}
-          className="shrink-0 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]"
+          alt="Logotipo do EducaSoccer"
+          width={44}
+          height={44}
+          className="shrink-0 drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]"
           priority
         />
         <div className="min-w-0">
-          <h1 className="font-pixel text-sm sm:text-base uppercase tracking-wide text-primary-foreground pixel-shadow truncate">
-            Educa Soccer
+          <h1 className="font-pixel text-xl sm:text-2xl font-extrabold uppercase leading-none tracking-tight truncate">
+            <span className="text-primary-foreground">EDUCA</span>
+            <span className="text-gold">SOCCER</span>
           </h1>
-          <p className="font-sans text-[11px] font-semibold uppercase tracking-widest text-gold">
+          <p className="mt-0.5 font-sans text-[11px] font-semibold uppercase tracking-widest text-gold">
             Painel do Técnico
           </p>
         </div>

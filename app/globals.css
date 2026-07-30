@@ -7,7 +7,8 @@
 @theme inline {
   --font-sans: var(--font-oxanium), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-oxanium), ui-monospace, monospace;
-  --font-pixel: var(--font-press-start), ui-monospace, monospace;
+  /* Fonte dos titulos: condensada e atletica (estilo da logo), legivel. */
+  --font-pixel: var(--font-heading), var(--font-oxanium), ui-sans-serif, sans-serif;
 
   --color-field: var(--field);
   --color-field-line: var(--field-line);
@@ -95,49 +96,51 @@
 
 .dark {
   color-scheme: dark;
-  /* Stadium night palette */
-  --background: oklch(0.24 0.02 60);
-  --foreground: oklch(0.97 0.01 90);
-  --card: oklch(0.30 0.015 250);
-  --card-foreground: oklch(0.97 0.01 90);
-  --popover: oklch(0.28 0.015 250);
-  --popover-foreground: oklch(0.97 0.01 90);
-  --primary: oklch(0.55 0.15 145);
-  --primary-foreground: oklch(0.98 0.01 145);
-  --secondary: oklch(0.34 0.02 250);
-  --secondary-foreground: oklch(0.97 0.01 90);
-  --muted: oklch(0.34 0.02 250);
-  --muted-foreground: oklch(0.74 0.02 250);
-  --accent: oklch(0.82 0.16 85);
-  --accent-foreground: oklch(0.24 0.03 60);
+  /* Identidade EducaSoccer: navy azul-marinho + vermelho + branco */
+  --background: oklch(0.19 0.05 264);
+  --foreground: oklch(0.97 0.01 250);
+  --card: oklch(0.26 0.055 264);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.24 0.05 264);
+  --popover-foreground: oklch(0.97 0.01 250);
+  /* Verde reservado apenas para status de sucesso (pago/ativo) */
+  --primary: oklch(0.62 0.15 150);
+  --primary-foreground: oklch(0.16 0.03 264);
+  --secondary: oklch(0.31 0.055 264);
+  --secondary-foreground: oklch(0.97 0.01 250);
+  --muted: oklch(0.31 0.055 264);
+  --muted-foreground: oklch(0.74 0.03 260);
+  /* Vermelho da marca como cor de acao/destaque */
+  --accent: oklch(0.58 0.21 27);
+  --accent-foreground: oklch(0.98 0.01 20);
   --destructive: oklch(0.58 0.21 27);
-  --border: oklch(0.45 0.03 250 / 55%);
+  --border: oklch(0.46 0.05 264 / 55%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.82 0.16 85);
-  --chart-1: oklch(0.55 0.15 145);
-  --chart-2: oklch(0.55 0.16 250);
-  --chart-3: oklch(0.82 0.16 85);
-  --chart-4: oklch(0.58 0.21 27);
-  --chart-5: oklch(0.74 0.02 250);
+  --ring: oklch(0.58 0.21 27);
+  --chart-1: oklch(0.58 0.21 27);
+  --chart-2: oklch(0.45 0.12 264);
+  --chart-3: oklch(0.62 0.15 150);
+  --chart-4: oklch(0.72 0.14 60);
+  --chart-5: oklch(0.74 0.03 260);
 
-  /* Game-specific tokens */
+  /* Tokens tematicos */
   --field: oklch(0.46 0.11 148);
   --field-line: oklch(0.92 0.02 148 / 65%);
-  --scoreboard: oklch(0.45 0.15 250);
-  --gold: oklch(0.82 0.16 85);
-  --gold-foreground: oklch(0.24 0.03 60);
-  --danger: oklch(0.58 0.21 27);
-  --panel-edge: oklch(0.62 0.02 250);
-  --panel-shade: oklch(0.20 0.015 250);
+  --scoreboard: oklch(0.42 0.13 264);
+  --gold: oklch(0.58 0.21 27);
+  --gold-foreground: oklch(0.98 0.01 20);
+  --danger: oklch(0.62 0.22 27);
+  --panel-edge: oklch(0.50 0.06 264);
+  --panel-shade: oklch(0.15 0.04 264);
 
-  --sidebar: oklch(0.28 0.015 250);
-  --sidebar-foreground: oklch(0.97 0.01 90);
-  --sidebar-primary: oklch(0.55 0.15 145);
-  --sidebar-primary-foreground: oklch(0.98 0.01 145);
-  --sidebar-accent: oklch(0.34 0.02 250);
-  --sidebar-accent-foreground: oklch(0.97 0.01 90);
-  --sidebar-border: oklch(0.45 0.03 250 / 55%);
-  --sidebar-ring: oklch(0.82 0.16 85);
+  --sidebar: oklch(0.24 0.05 264);
+  --sidebar-foreground: oklch(0.97 0.01 250);
+  --sidebar-primary: oklch(0.58 0.21 27);
+  --sidebar-primary-foreground: oklch(0.98 0.01 20);
+  --sidebar-accent: oklch(0.31 0.055 264);
+  --sidebar-accent-foreground: oklch(0.97 0.01 250);
+  --sidebar-border: oklch(0.46 0.05 264 / 55%);
+  --sidebar-ring: oklch(0.58 0.21 27);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -187,13 +190,13 @@
 }
 
 @layer utilities {
-  /* Warm stadium gradient backdrop, like the PS2 menu screens */
+  /* Fundo em degrade azul-marinho da identidade EducaSoccer */
   .bg-stadium {
-    background-color: oklch(0.24 0.02 60);
+    background-color: oklch(0.19 0.05 264);
     background-image:
-      radial-gradient(120% 80% at 50% -10%, oklch(0.42 0.04 70) 0%, transparent 55%),
-      radial-gradient(140% 100% at 50% 120%, oklch(0.18 0.02 40) 0%, transparent 60%),
-      linear-gradient(180deg, oklch(0.30 0.03 65) 0%, oklch(0.22 0.02 55) 50%, oklch(0.16 0.015 45) 100%);
+      radial-gradient(120% 80% at 50% -10%, oklch(0.30 0.08 264) 0%, transparent 55%),
+      radial-gradient(140% 100% at 50% 120%, oklch(0.15 0.05 264) 0%, transparent 60%),
+      linear-gradient(180deg, oklch(0.24 0.06 264) 0%, oklch(0.19 0.05 264) 50%, oklch(0.14 0.04 264) 100%);
   }
 
   /* Metallic beveled panel edge */
@@ -214,12 +217,10 @@
   }
 
   .text-outline {
-    text-shadow:
-      0 2px 0 oklch(0 0 0 / 55%),
-      1px 1px 0 oklch(0 0 0 / 45%);
+    text-shadow: 0 1px 2px oklch(0 0 0 / 45%);
   }
 
   .pixel-shadow {
-    text-shadow: 2px 2px 0 oklch(0 0 0 / 60%);
+    text-shadow: 0 1px 1px oklch(0 0 0 / 35%);
   }
 }

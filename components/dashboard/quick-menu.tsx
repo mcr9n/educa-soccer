@@ -53,14 +53,15 @@ export function QuickMenu() {
       <header className="flex shrink-0 items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-3">
         <Image
           src="/educa-soccer-crest.png"
-          alt="Brasão do Educa Soccer"
-          width={28}
-          height={28}
+          alt="Logotipo do EducaSoccer"
+          width={32}
+          height={32}
           className="shrink-0 drop-shadow"
         />
         <div className="min-w-0">
-          <p className="font-pixel text-[10px] uppercase leading-none tracking-wide text-primary-foreground pixel-shadow">
-            Educa Soccer
+          <p className="font-pixel text-base font-extrabold uppercase leading-none tracking-tight">
+            <span className="text-primary-foreground">EDUCA</span>
+            <span className="text-gold">SOCCER</span>
           </p>
           <p className="mt-1 font-sans text-[10px] uppercase tracking-widest text-gold">Menu Principal</p>
         </div>

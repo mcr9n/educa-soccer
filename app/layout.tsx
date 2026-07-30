@@ -1,12 +1,12 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Press_Start_2P, Oxanium } from 'next/font/google'
+import { Saira_Condensed, Oxanium } from 'next/font/google'
 import './globals.css'
 
-const pressStart = Press_Start_2P({
+const sairaCondensed = Saira_Condensed({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-press-start',
+  weight: ['500', '600', '700', '800'],
+  variable: '--font-heading',
   display: 'swap',
 })
 
@@ -54,7 +54,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className={`dark ${pressStart.variable} ${oxanium.variable}`}>
+    <html lang="pt-BR" className={`dark ${sairaCondensed.variable} ${oxanium.variable}`}>
       <body className="antialiased bg-background font-sans">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
