@@ -23,7 +23,7 @@ export function AlunosCounters({
   ]
 
   const accentClass: Record<NonNullable<Counter["accent"]>, string> = {
-    green: "text-primary",
+    green: "green",
     gold: "text-gold",
     blue: "text-scoreboard",
     danger: "text-danger",
