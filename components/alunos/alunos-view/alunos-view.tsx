@@ -113,7 +113,7 @@ export function AlunosView() {
             onChange={setFaixaFiltro}
             options={[
               { value: "todas", label: "Todas as idades" },
-              ...faixasEtarias.map((f) => ({ value: f, label: `${f} anos` })),
+              ...faixasEtarias.map((f) => ({ value: f, label: `${f}` })),
             ]}
           />
 

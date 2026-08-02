@@ -63,7 +63,7 @@ export function PagamentosPanel({ onSelect = noop }: { onSelect?: SelectFn }) {
     <RetroPanel
       title="Pagamentos Pendentes"
       tag="R$"
-      right={<span className="font-pixel text-sm font-bold text-gold">R$ {total.toLocaleString("pt-BR")}</span>}
+      right={<span className="font-pixel text-sm font-bold text-danger">R$ {total.toLocaleString("pt-BR")}</span>}
       className="h-full"
       maxBodyHeight={340}
     >

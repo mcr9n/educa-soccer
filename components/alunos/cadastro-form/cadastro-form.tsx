@@ -30,7 +30,6 @@ type FormState = {
   email: string
   turma: string
   modalidade: Modalidade
-  horaAula: string
   mensalidade: string
   dataEntrada: string
   observacoes: string
@@ -49,7 +48,6 @@ const estadoInicial: FormState = {
   email: "",
   turma: "",
   modalidade: "coletiva",
-  horaAula: "",
   mensalidade: "",
   dataEntrada: hoje,
   observacoes: "",
@@ -113,7 +111,6 @@ export function CadastroForm() {
       dataNascimento: form.dataNascimento,
       telefone: form.telefone,
       email: form.email.trim(),
-      horaAula: form.horaAula.trim() || "A definir",
       mensalidade: Number(form.mensalidade) || 0,
       turma: form.turma,
       modalidade: form.modalidade,
@@ -140,8 +137,8 @@ export function CadastroForm() {
     <form onSubmit={aoEnviar} className="flex flex-col gap-3" noValidate>
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">NEW</span>
-          <h2 className="flex items-center gap-2 font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">NEW</span>
+          <h2 className="flex items-center gap-2 font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             <UserPlus className="h-4 w-4" strokeWidth={2.5} />
             Ficha de Cadastro
           </h2>
@@ -149,7 +146,7 @@ export function CadastroForm() {
 
         <div className="grid gap-4 p-4 lg:grid-cols-[auto_1fr]">
           <div className="flex flex-col items-center gap-2">
-            <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">Fotografia</span>
+            <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">Fotografia</span>
             <div className="relative h-32 w-28 overflow-hidden rounded-sm border-2 border-panel-edge bg-panel-shade/60 inset-bevel">
               {form.foto ? (
                 <Image src={form.foto || "/placeholder.svg"} alt="Foto do aluno" fill className="object-cover" />
@@ -227,10 +224,6 @@ export function CadastroForm() {
             </div>
           </Campo>
 
-          <Campo className="sm:col-span-2" label="Horário / Aula">
-            <input value={form.horaAula} onChange={(e) => set("horaAula", e.target.value)} placeholder="Ex.: Terça 18h30" className={inputClasses} />
-          </Campo>
-
           <Campo label="Mensalidade (R$)">
             <input type="number" min="0" value={form.mensalidade} onChange={(e) => set("mensalidade", e.target.value)} className={inputClasses} />
           </Campo>
@@ -252,7 +245,7 @@ export function CadastroForm() {
           <RotateCcw className="h-3.5 w-3.5" strokeWidth={2.5} />
           Limpar formulário
         </button>
-        <button type="submit" className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[10px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none">
+        <button type="submit" className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[14px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none">
           <Check className="h-4 w-4" strokeWidth={3} />
           Salvar cadastro
         </button>
@@ -279,7 +272,7 @@ function Campo({
 }) {
   return (
     <label className={`flex flex-col gap-1 ${className ?? ""}`}>
-      <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">
+      <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">
         {label}
         {obrigatorio && <span className="ml-1 text-danger">*</span>}
       </span>
@@ -306,8 +299,8 @@ function FormSection({
   return (
     <section className="panel-bevel overflow-hidden rounded-md bg-card">
       <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-        <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">{tag}</span>
-        <h2 className="font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">{titulo}</h2>
+        <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">{tag}</span>
+        <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">{titulo}</h2>
       </header>
       <div className="p-4">{children}</div>
     </section>
@@ -330,7 +323,6 @@ function CadastroSucesso({
     { rotulo: "Responsável", valor: aluno.responsavel },
     { rotulo: "Telefone", valor: aluno.telefone },
     { rotulo: "Turma", valor: `${aluno.turma} • ${aluno.modalidade === "particular" ? "Particular" : "Coletivo"}` },
-    { rotulo: "Horário", valor: aluno.horaAula },
     { rotulo: "Mensalidade", valor: `R$ ${aluno.mensalidade.toLocaleString("pt-BR")}` },
   ]
 

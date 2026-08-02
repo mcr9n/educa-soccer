@@ -17,7 +17,6 @@ export type Aluno = {
   dataNascimento: string // ISO (YYYY-MM-DD)
   telefone: string // formato (DD) 9XXXX-XXXX
   email: string
-  horaAula: string
   mensalidade: number
   turma: string
   modalidade: Modalidade
@@ -36,7 +35,6 @@ export const alunos: Aluno[] = [
     dataNascimento: "2016-01-31",
     telefone: "(51) 99335-6910",
     email: "joao.kunde@email.com",
-    horaAula: "Quinta 18h40 e Sábado 09h00",
     mensalidade: 230,
     turma: "SUDOESTE (QUINTA 18H40 E SÁBADO 09H00)",
     modalidade: "coletiva",
@@ -50,7 +48,6 @@ export const alunos: Aluno[] = [
     dataNascimento: "2018-01-04",
     telefone: "(61) 98114-7236",
     email: "aline.andrade@email.com",
-    horaAula: "Sexta 17h00 às 18h00",
     mensalidade: 230,
     turma: "SUDOESTE (SEXTA - 17h00 às 18h00)",
     modalidade: "coletiva",
@@ -64,7 +61,6 @@ export const alunos: Aluno[] = [
     dataNascimento: "2015-11-05",
     telefone: "(61) 99397-3773",
     email: "joao.cunha@email.com",
-    horaAula: "Sábado 10h40 às 11h40",
     mensalidade: 230,
     turma: "SUDOESTE (SÁBADO - 10h40 às 11h40)",
     modalidade: "coletiva",
@@ -78,7 +74,6 @@ export const alunos: Aluno[] = [
     dataNascimento: "2014-03-22",
     telefone: "(61) 99812-5544",
     email: "marcos.catteli@email.com",
-    horaAula: "Terça e Quinta 17h00",
     mensalidade: 230,
     turma: "NOROESTE (TERÇA E QUINTA - 17h00 às 18h00)",
     modalidade: "coletiva",
@@ -92,7 +87,6 @@ export const alunos: Aluno[] = [
     dataNascimento: "2016-07-18",
     telefone: "(61) 98233-1290",
     email: "renata.britto@email.com",
-    horaAula: "Segunda e Quarta 18h00",
     mensalidade: 230,
     turma: "ASA NORTE (SEGUNDA E QUARTA - 18h00 às 19h00)",
     modalidade: "coletiva",
@@ -106,7 +100,6 @@ export const alunos: Aluno[] = [
     dataNascimento: "2015-05-09",
     telefone: "(62) 99441-7788",
     email: "patricia.freitas@email.com",
-    horaAula: "Sábado 09h00 às 10h00",
     mensalidade: 230,
     turma: "SUDOESTE (SÁBADO - 09h00 às 10h00)",
     modalidade: "coletiva",
@@ -120,7 +113,6 @@ export const alunos: Aluno[] = [
     dataNascimento: "2013-10-08",
     telefone: "(61) 99126-4590",
     email: "fabio.belas@email.com",
-    horaAula: "Aula particular — Quarta 19h00",
     mensalidade: 420,
     turma: "PARTICULAR (HORÁRIO A COMBINAR)",
     modalidade: "particular",
@@ -298,13 +290,14 @@ export type FaixaEtaria = "5 a 7" | "8 a 10" | "11 a 13" | "14+"
 
 /** Faixa etaria de acordo com a idade. */
 export function faixaEtaria(idade: number): FaixaEtaria {
-  if (idade <= 7) return "5 a 7"
-  if (idade <= 10) return "8 a 10"
-  if (idade <= 13) return "11 a 13"
-  return "14+"
+  if (idade < 11) return "sub-11"
+  if (idade < 10) return "sub-10"
+  if (idade < 8) return "sub-8"
+  if (idade < 7) return "sub-7"
+  return "11+"
 }
 
-export const faixasEtarias: FaixaEtaria[] = ["5 a 7", "8 a 10", "11 a 13", "14+"]
+export const faixasEtarias: FaixaEtaria[] = [ "sub-7","sub-8", "sub-10", "sub-11", "11+"]
 
 /** Monta o link de conversa no WhatsApp a partir do telefone cadastrado. */
 export function linkWhatsApp(telefone: string, nomeAluno: string): string {

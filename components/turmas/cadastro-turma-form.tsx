@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Check, ChevronLeft, RotateCcw, UsersRound, Sparkles, X } from "lucide-react"
 import {
@@ -11,18 +11,15 @@ import {
   diasDaSemana,
   locaisDisponiveis,
   professoresDisponiveis,
-  sugerirNomeTurma,
 } from "@/lib/turmas-data"
+
+const faixasEtariasDisponiveis = ["sub-7", "sub-8", "sub-10", "sub-11", "11+"]
 
 type FormState = {
   nome: string
-  local: string
-  dias: string[]
-  horario: string
   modalidade: Modalidade
   faixaEtaria: string
   professor: string
-  situacao: SituacaoTurma
   limite: string
 }
 
@@ -30,13 +27,9 @@ type Erros = Partial<Record<keyof FormState, string>>
 
 const estadoInicial: FormState = {
   nome: "",
-  local: "",
-  dias: [],
-  horario: "",
   modalidade: "coletiva",
   faixaEtaria: "",
   professor: professoresDisponiveis[0],
-  situacao: "ativa",
   limite: "",
 }
 
@@ -45,14 +38,6 @@ export function CadastroTurmaForm() {
   const [form, setForm] = useState<FormState>(estadoInicial)
   const [erros, setErros] = useState<Erros>({})
   const [salva, setSalva] = useState<Turma | null>(null)
-  const [nomeEditado, setNomeEditado] = useState(false)
-
-  // Nome sugerido automaticamente enquanto o usuário não digitar um nome próprio.
-  const nomeSugerido = useMemo(
-    () => sugerirNomeTurma(form.local, form.dias, form.horario),
-    [form.local, form.dias, form.horario],
-  )
-  const nomeEfetivo = nomeEditado && form.nome ? form.nome : nomeSugerido
 
   function set<K extends keyof FormState>(campo: K, valor: FormState[K]) {
     setForm((f) => ({ ...f, [campo]: valor }))
@@ -69,10 +54,7 @@ export function CadastroTurmaForm() {
 
   function validar(): boolean {
     const e: Erros = {}
-    if (!nomeEfetivo.trim()) e.nome = "Informe o nome da turma."
-    if (!form.local.trim()) e.local = "Selecione o local."
-    if (form.modalidade === "coletiva" && form.dias.length === 0) e.dias = "Selecione ao menos um dia."
-    if (!form.horario.trim()) e.horario = "Informe o horário."
+    if (!form.nome.trim()) e.nome = "Informe o nome da turma."
     if (!form.faixaEtaria.trim()) e.faixaEtaria = "Informe a faixa etária."
     if (form.limite && (Number(form.limite) <= 0 || !Number.isInteger(Number(form.limite))))
       e.limite = "Limite inválido."
@@ -84,14 +66,10 @@ export function CadastroTurmaForm() {
     evento.preventDefault()
     if (!validar()) return
     const turma = adicionarTurma({
-      nome: nomeEfetivo.trim(),
-      local: form.local.trim(),
-      dias: form.dias.length ? form.dias : ["A combinar"],
-      horario: form.horario.trim(),
+      nome: form.nome.trim(),
       modalidade: form.modalidade,
       faixaEtaria: form.faixaEtaria.trim(),
       professor: form.professor,
-      situacao: form.situacao,
       limite: form.limite ? Number(form.limite) : undefined,
     })
     setSalva(turma)
@@ -101,7 +79,6 @@ export function CadastroTurmaForm() {
   function novaTurma() {
     setForm(estadoInicial)
     setErros({})
-    setNomeEditado(false)
     setSalva(null)
   }
 
@@ -113,82 +90,13 @@ export function CadastroTurmaForm() {
     <form onSubmit={aoEnviar} className="flex flex-col gap-3" noValidate>
       <FormSection tag="NEW" titulo="Dados da Turma" icon>
         <div className="grid gap-3">
-          {/* Nome + sugestão */}
           <Campo label="Nome da turma" obrigatorio erro={erros.nome}>
             <input
-              value={nomeEfetivo}
-              onChange={(e) => {
-                setNomeEditado(true)
-                set("nome", e.target.value)
-              }}
+              value={form.nome}
+              onChange={(e) => set("nome", e.target.value)}
               placeholder="Ex.: SUDOESTE (SEXTA - 17h00 às 18h00)"
               className={inputClasses}
             />
-            {nomeSugerido && nomeEditado && (
-              <button
-                type="button"
-                onClick={() => {
-                  setNomeEditado(false)
-                  set("nome", "")
-                }}
-                className="mt-1 inline-flex items-center gap-1 self-start rounded-sm border border-panel-edge bg-panel-shade/50 px-1.5 py-0.5 font-sans text-[11px] font-bold uppercase tracking-wide text-gold transition-colors hover:border-gold focus:outline-none"
-              >
-                <Sparkles className="h-3 w-3" strokeWidth={2.5} />
-                Usar sugestão: {nomeSugerido}
-              </button>
-            )}
-            {!nomeEditado && nomeSugerido && (
-              <span className="mt-1 inline-flex items-center gap-1 font-sans text-[11px] text-muted-foreground">
-                <Sparkles className="h-3 w-3 text-gold" strokeWidth={2.5} />
-                Nome gerado automaticamente — edite se preferir.
-              </span>
-            )}
-          </Campo>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Campo label="Local" obrigatorio erro={erros.local}>
-              <select value={form.local} onChange={(e) => set("local", e.target.value)} className={inputClasses}>
-                <option value="">Selecione o local...</option>
-                {locaisDisponiveis.map((l) => (
-                  <option key={l} value={l}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </Campo>
-
-            <Campo label="Horário" obrigatorio erro={erros.horario}>
-              <input
-                value={form.horario}
-                onChange={(e) => set("horario", e.target.value)}
-                placeholder="Ex.: 17h00 às 18h00"
-                className={inputClasses}
-              />
-            </Campo>
-          </div>
-
-          {/* Dias */}
-          <Campo label="Dias das aulas" erro={erros.dias}>
-            <div className="flex flex-wrap gap-1.5">
-              {diasDaSemana.map((dia) => {
-                const ativo = form.dias.includes(dia)
-                return (
-                  <button
-                    key={dia}
-                    type="button"
-                    onClick={() => alternarDia(dia)}
-                    aria-pressed={ativo}
-                    className={`rounded-sm border-2 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide transition-colors focus:outline-none ${
-                      ativo
-                        ? "border-gold bg-gold text-gold-foreground"
-                        : "border-panel-edge bg-panel-shade/50 text-foreground hover:border-gold hover:text-gold"
-                    }`}
-                  >
-                    {dia}
-                  </button>
-                )
-              })}
-            </div>
           </Campo>
         </div>
       </FormSection>
@@ -215,33 +123,19 @@ export function CadastroTurmaForm() {
             </div>
           </Campo>
 
-          <Campo label="Situação" obrigatorio>
-            <div className="flex gap-2">
-              {(["ativa", "inativa"] as SituacaoTurma[]).map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => set("situacao", s)}
-                  aria-pressed={form.situacao === s}
-                  className={`flex-1 rounded-sm border-2 px-2 py-1.5 font-sans text-xs font-bold uppercase tracking-wide transition-colors focus:outline-none ${
-                    form.situacao === s
-                      ? "border-gold bg-gold text-gold-foreground"
-                      : "border-panel-edge bg-panel-shade/50 text-foreground hover:border-gold hover:text-gold"
-                  }`}
-                >
-                  {s === "ativa" ? "Ativa" : "Inativa"}
-                </button>
-              ))}
-            </div>
-          </Campo>
-
           <Campo label="Faixa etária" obrigatorio erro={erros.faixaEtaria}>
-            <input
+            <select
               value={form.faixaEtaria}
               onChange={(e) => set("faixaEtaria", e.target.value)}
-              placeholder="Ex.: 8 a 10 anos"
               className={inputClasses}
-            />
+            >
+              <option value="">Selecione...</option>
+              {faixasEtariasDisponiveis.map((faixa) => (
+                <option key={faixa} value={faixa}>
+                  {faixa}
+                </option>
+              ))}
+            </select>
           </Campo>
 
           <Campo label="Professor responsável" obrigatorio>
@@ -277,7 +171,7 @@ export function CadastroTurmaForm() {
         </button>
         <button
           type="submit"
-          className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[10px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none"
+          className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[14px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none"
         >
           <Check className="h-4 w-4" strokeWidth={3} />
           Salvar turma
@@ -305,7 +199,7 @@ function Campo({
 }) {
   return (
     <label className={`flex flex-col gap-1 ${className ?? ""}`}>
-      <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">
+      <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">
         {label}
         {obrigatorio && <span className="ml-1 text-danger">*</span>}
       </span>
@@ -334,10 +228,10 @@ function FormSection({
   return (
     <section className="panel-bevel overflow-hidden rounded-md bg-card">
       <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-        <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">
+        <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
           {tag}
         </span>
-        <h2 className="flex items-center gap-2 font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+        <h2 className="flex items-center gap-2 font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
           {icon && <UsersRound className="h-4 w-4" strokeWidth={2.5} />}
           {titulo}
         </h2>
@@ -358,13 +252,9 @@ function TurmaSalva({
 }) {
   const linhas: { rotulo: string; valor: string }[] = [
     { rotulo: "Turma", valor: turma.nome },
-    { rotulo: "Local", valor: turma.local },
-    { rotulo: "Dias", valor: turma.dias.join(", ") },
-    { rotulo: "Horário", valor: turma.horario },
     { rotulo: "Modalidade", valor: turma.modalidade === "particular" ? "Particular" : "Coletiva" },
     { rotulo: "Faixa etária", valor: turma.faixaEtaria },
     { rotulo: "Professor", valor: turma.professor },
-    { rotulo: "Situação", valor: turma.situacao === "ativa" ? "Ativa" : "Inativa" },
     { rotulo: "Limite", valor: turma.limite ? `${turma.limite} alunos` : "Sem limite" },
   ]
 
