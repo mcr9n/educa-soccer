@@ -84,7 +84,7 @@ export function ExAlunosView() {
       {/* Busca e filtros */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <span className="rounded-sm bg-gold px-2 py-0.5 font-pixel text-sm font-bold leading-none text-gold-foreground">
+          <span className="rounded-sm bg-gold px-3 py-0.5 font-pixel text-sm font-bold leading-none text-gold-foreground">
             FILTRO
           </span>
           <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-primary-foreground pixel-shadow">
@@ -94,7 +94,7 @@ export function ExAlunosView() {
 
         <div className="grid gap-3 p-3 md:grid-cols-3">
           <label className="flex flex-col gap-1">
-            <span className="font-pixel text-[9px] uppercase tracking-wide text-muted-foreground">
+            <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">
               Nome ou responsável
             </span>
             <span className="flex items-center gap-2 rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1.5 inset-bevel focus-within:border-gold">
@@ -210,7 +210,7 @@ function FiltroSelect({
 }) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-pixel text-[9px] uppercase tracking-wide text-muted-foreground">{label}</span>
+      <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

@@ -22,20 +22,20 @@ export function ScoreboardHeader() {
         <div className="min-w-0">
           <h1 className="font-pixel text-xl sm:text-2xl font-extrabold uppercase leading-none tracking-tight truncate">
             <span className="text-primary-foreground">EDUCA</span>
-            <span className="text-gold">SOCCER</span>
+            <span className="text-danger">SOCCER</span>
           </h1>
-          <p className="mt-0.5 font-sans text-[11px] font-semibold uppercase tracking-widest text-gold">
+          <p className="mt-0.5 font-sans text-[11px] font-semibold uppercase tracking-widest text-danger">
             Painel do Técnico
           </p>
         </div>
         <div className="ml-auto hidden sm:block text-right">
-          <p className="font-pixel text-[9px] uppercase text-gold">Temporada</p>
+          <p className="font-pixel text-[14px] uppercase text-danger">Temporada</p>
           <p className="font-sans text-sm font-bold text-primary-foreground capitalize">{hoje}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-panel-shade">
-        <StatCell label="Alunos Ativos" value={resumo.alunosAtivos} accent="green" />
+        <StatCell label="Alunos Ativos" value={resumo.alunosAtivos} />
         <StatCell label="Turmas" value={resumo.totalTurmas} />
         <StatCell label="Particulares" value={resumo.alunosParticulares} />
         <StatCell label="Coletivos" value={resumo.alunosColetivos} />
@@ -55,7 +55,7 @@ function StatCell({
 }) {
   return (
     <div className="bg-card px-3 py-2 inset-bevel">
-      <p className="font-pixel text-[8px] uppercase tracking-wide text-muted-foreground">{label}</p>
+      <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</p>
       <p
         className={
           "font-pixel text-xl leading-none mt-1 text-outline " +

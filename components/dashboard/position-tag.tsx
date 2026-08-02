@@ -5,7 +5,7 @@ type Variant = "default" | "gold" | "green" | "danger" | "blue"
 const variants: Record<Variant, string> = {
   default: "bg-secondary text-secondary-foreground",
   gold: "bg-gold text-gold-foreground",
-  green: "bg-primary text-primary-foreground",
+  green: "bg-success text-success-foreground",
   danger: "bg-danger text-white",
   blue: "bg-scoreboard text-primary-foreground",
 }

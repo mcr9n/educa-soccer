@@ -1,0 +1,198 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panel {
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background: var(--card);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--panel-shade);
+  background: var(--scoreboard);
+  padding: 0.5rem 0.75rem;
+}
+
+.badge {
+  border-radius: 0.1875rem;
+  background: var(--gold);
+  padding: 0.25rem 0.375rem;
+  font-family: var(--font-pixel);
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--gold-foreground);
+}
+
+.title {
+  font-family: var(--font-pixel);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-foreground);
+  text-shadow: 0 1px 1px oklch(0 0 0 / 35%);
+}
+
+.filtersGrid {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .filtersGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .filtersGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.fieldLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fieldLabelWide {
+  grid-column: span 2;
+}
+
+@media (min-width: 1024px) {
+  .fieldLabelWide {
+    grid-column: span 1;
+  }
+}
+
+.fieldCaption {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+}
+
+.searchField,
+.selectField {
+  border: 1px solid var(--panel-edge);
+  background: color-mix(in oklab, var(--panel-shade) 60%, transparent);
+  border-radius: 0.1875rem;
+  box-shadow:
+    inset 0 2px 4px oklch(0 0 0 / 45%),
+    inset 0 -1px 0 oklch(1 0 0 / 8%);
+}
+
+.searchField {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+}
+
+.searchInput,
+.selectInput {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  outline: none;
+}
+
+.searchInput {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+
+.selectInput {
+  padding: 0.375rem 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.filtersFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-top: 2px solid var(--panel-shade);
+  background: color-mix(in oklab, var(--panel-shade) 20%, transparent);
+  padding: 0.5rem 0.75rem;
+}
+
+.countText {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.clearButton {
+  border: 1px solid var(--panel-edge);
+  border-radius: 0.1875rem;
+  background: color-mix(in oklab, var(--panel-shade) 50%, transparent);
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--foreground);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.clearButton:hover,
+.clearButton:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+  outline: none;
+}
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.emptyState {
+  border-radius: 0.375rem;
+  background: var(--card);
+  padding: 2.5rem 1rem;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-family: var(--font-pixel);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.emptyDescription {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.iconGold {
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
+.fieldIcon {
+  flex-shrink: 0;
+  color: var(--gold);
+}
