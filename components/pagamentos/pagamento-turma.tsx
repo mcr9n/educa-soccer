@@ -61,15 +61,15 @@ export function TurmaPagamentos({
           className="shrink-0"
         />
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <span className="block truncate font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             {turma}
           </span>
           <span className="mt-1 flex flex-wrap gap-x-3 font-sans text-[11px] font-semibold">
-            <span className="text-primary">Recebido: {formatarValor(recebido)}</span>
-            <span className="text-gold">Em aberto: {formatarValor(emAberto)}</span>
+            <span className="text-primary-foreground">Recebido: {formatarValor(recebido)}</span>
+            <span className="text-primary-foreground">Em aberto: {formatarValor(emAberto)}</span>
           </span>
         </span>
-        <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[8px] text-primary-foreground">
+        <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-primary-foreground">
           {linhas.length}
         </span>
         <ChevronDown
@@ -116,7 +116,7 @@ function PagamentoRow({
 
         <div className="min-w-0 flex-1">
           <p className="font-sans text-sm font-bold leading-tight text-foreground text-pretty">{aluno.nome}</p>
-          <p className="mt-0.5 font-sans text-[11px] text-muted-foreground">
+          <p className="mt-0.5 font-sans text-[13px] text-muted-foreground">
             {meses[pagamento.mes - 1]}/{pagamento.ano} • {formatarValor(pagamento.valor)} • Venc.{" "}
             {formatarDataBR(pagamento.vencimento)}
           </p>
@@ -195,7 +195,7 @@ function PagamentoRow({
 function Detalhe({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">{label}</p>
+      <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</p>
       <p className="font-sans text-sm font-semibold text-foreground text-pretty">{value}</p>
     </div>
   )

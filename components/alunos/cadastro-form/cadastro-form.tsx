@@ -32,6 +32,7 @@ type FormState = {
   modalidade: Modalidade
   mensalidade: string
   dataEntrada: string
+  dataVencimentoParcelas: string
   observacoes: string
   foto: string
 }
@@ -50,6 +51,7 @@ const estadoInicial: FormState = {
   modalidade: "coletiva",
   mensalidade: "",
   dataEntrada: hoje,
+  dataVencimentoParcelas: hoje,
   observacoes: "",
   foto: "",
 }
@@ -96,6 +98,7 @@ export function CadastroForm() {
     if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "E-mail inválido."
     if (!form.turma) e.turma = "Selecione uma turma."
     if (!form.dataEntrada) e.dataEntrada = "Informe a data de entrada."
+    if (!form.dataVencimentoParcelas) e.dataVencimentoParcelas = "Informe a data de vencimento das parcelas."
     setErros(e)
     return Object.keys(e).length === 0
   }
@@ -116,6 +119,7 @@ export function CadastroForm() {
       modalidade: form.modalidade,
       ativo: true,
       dataEntrada: form.dataEntrada,
+      dataVencimentoParcelas: form.dataVencimentoParcelas,
       observacoes: form.observacoes.trim() || undefined,
       foto: form.foto || undefined,
     }
@@ -201,6 +205,10 @@ export function CadastroForm() {
 
           <Campo className="sm:col-span-2" label="E-mail" erro={erros.email}>
             <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="responsavel@email.com" className={inputClasses} />
+          </Campo>
+
+          <Campo label="Data de vencimento das parcelas" obrigatorio erro={erros.dataVencimentoParcelas}>
+            <input type="date" min={hoje} value={form.dataVencimentoParcelas} onChange={(e) => set("dataVencimentoParcelas", e.target.value)} className={inputClasses} />
           </Campo>
         </div>
       </FormSection>

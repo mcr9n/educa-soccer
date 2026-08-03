@@ -11,6 +11,7 @@ import {
   Wallet,
   Medal,
   Flag,
+  Minus
 } from "lucide-react"
 import type { Aluno } from "@/lib/alunos-data"
 import type { Turma } from "@/lib/turmas-data"
@@ -40,7 +41,6 @@ export function TurmaCard({
   const pagosEmDia = Math.max(0, total - (s % Math.max(1, total + 1)) % 3)
   const pendentes = total - pagosEmDia
   const artilheiro = matriculados[s % Math.max(1, total)]?.nome ?? "—"
-  const ultimoResultado = ["Vitória 3 x 1", "Empate 2 x 2", "Treino técnico", "Vitória 4 x 0"][s % 4]
 
   const lotacao = turma.limite ? Math.round((total / turma.limite) * 100) : null
 
@@ -67,7 +67,7 @@ export function TurmaCard({
           <span className="block font-sans text-sm font-bold leading-tight text-foreground text-pretty">
             {turma.nome}
           </span>
-          <span className="mt-0.5 flex flex-wrap items-center gap-1.5 font-sans text-[11px] text-muted-foreground">
+          <span className="mt-0.5 flex flex-wrap items-center gap-1.5 font-sans text-[13px] text-muted-foreground">
             <span>{turma.faixaEtaria}</span>
             <span aria-hidden>•</span>
             <span>{turma.professor}</span>
@@ -76,7 +76,7 @@ export function TurmaCard({
 
         <span className="hidden shrink-0 items-center gap-1 sm:inline-flex">
           <Users className="h-3.5 w-3.5 text-gold" strokeWidth={2.5} />
-          <span className="font-pixel text-[10px] text-gold">
+          <span className="font-pixel text-[16px] text-gold">
             {total}
             {turma.limite ? `/${turma.limite}` : ""}
           </span>
@@ -102,9 +102,6 @@ export function TurmaCard({
         <div className="border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-3">
           {/* Ficha da turma */}
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <Info icon={MapPin} label="Local" value={turma.local} />
-            <Info icon={CalendarDays} label="Dias das aulas" value={turma.dias.join(", ")} />
-            <Info icon={Clock} label="Horário" value={turma.horario} />
             <Info icon={UserRound} label="Professor responsável" value={turma.professor} />
             <Info icon={Users} label="Faixa etária" value={turma.faixaEtaria} />
             <Info
@@ -124,7 +121,7 @@ export function TurmaCard({
                     style={{ width: `${Math.min(100, lotacao)}%` }}
                   />
                 </div>
-                <p className="mt-1 font-sans text-[11px] text-muted-foreground">{lotacao}% da capacidade</p>
+                <p className="mt-1 font-sans text-[13px] text-muted-foreground">{lotacao}% da capacidade</p>
               </div>
             )}
             {total > 0 ? (
@@ -148,8 +145,6 @@ export function TurmaCard({
           <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             <Resumo icon={ClipboardCheck} label="Frequência média" valor={`${frequencia}%`} />
             <Resumo icon={Wallet} label="Pagamentos" valor={`${pagosEmDia} em dia • ${pendentes} pend.`} />
-            <Resumo icon={Medal} label="Ranking (artilheiro)" valor={artilheiro} />
-            <Resumo icon={Flag} label="Último resultado" valor={ultimoResultado} />
           </div>
         </div>
       )}
@@ -162,7 +157,7 @@ function Info({ icon: Icon, label, value }: { icon: typeof MapPin; label: string
     <div className="flex items-start gap-2">
       <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={2.5} />
       <div className="min-w-0">
-        <p className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">{label}</p>
+        <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</p>
         <p className="font-sans text-sm font-semibold text-foreground text-pretty">{value}</p>
       </div>
     </div>
@@ -183,11 +178,11 @@ function Bloco({
   return (
     <section className="mt-3 rounded-sm border border-panel-shade bg-card p-2.5">
       <header className="mb-2 flex items-center gap-2">
-        <span className="rounded-sm bg-scoreboard px-1.5 py-0.5 font-pixel text-[7px] leading-none text-primary-foreground">
+        <span className="rounded-sm bg-scoreboard px-1.5 py-0.5 font-pixel text-[13px] leading-none text-primary-foreground">
           {tag}
         </span>
-        <h3 className="flex-1 font-pixel text-[8px] uppercase tracking-wide text-foreground">{titulo}</h3>
-        {contador && <span className="font-pixel text-[9px] text-gold">{contador}</span>}
+        <h3 className="flex-1 font-pixel text-[13px] uppercase tracking-wide text-foreground">{titulo}</h3>
+        {contador && <span className="font-pixel text-[15px] text-gold">{contador}</span>}
       </header>
       {children}
     </section>
@@ -199,9 +194,52 @@ function Resumo({ icon: Icon, label, valor }: { icon: typeof MapPin; label: stri
     <div className="flex items-center gap-2 rounded-sm border border-panel-shade bg-card px-2.5 py-2 inset-bevel">
       <Icon className="h-4 w-4 shrink-0 text-gold" strokeWidth={2.5} />
       <div className="min-w-0">
-        <p className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">{label}</p>
+        <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</p>
         <p className="truncate font-sans text-sm font-bold text-foreground">{valor}</p>
       </div>
     </div>
+  )
+}
+
+
+function ActionButton({
+  icon: Icon,
+  children,
+  onClick,
+  href,
+  target,
+  rel,
+  tone = "default",
+}: {
+  icon: typeof Pencil
+  children: React.ReactNode
+  onClick?: () => void
+  href?: string
+  target?: string
+  rel?: string
+  tone?: "default" | "danger" | "confirm"
+}) {
+  const tones = {
+    default: "border-panel-edge bg-panel-shade/50 text-foreground hover:border-gold hover:bg-gold hover:text-gold-foreground",
+    danger: "border-danger bg-danger/15 text-danger hover:bg-danger hover:text-white",
+    confirm: "border-primary bg-primary/15 text-primary hover:bg-primary hover:text-primary-foreground",
+  }
+
+  const classes = `inline-flex items-center gap-1.5 rounded-sm border-2 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide transition-colors focus:outline-none ${tones[tone]}`
+
+  if (href) {
+    return (
+      <a href={href} target={target} rel={rel} className={classes}>
+        <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />
+        {children}
+      </a>
+    )
+  }
+
+  return (
+    <button type="button" onClick={onClick} className={classes}>
+      <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />
+      {children}
+    </button>
   )
 }

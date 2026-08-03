@@ -22,6 +22,7 @@ export type Aluno = {
   modalidade: Modalidade
   ativo: boolean
   dataEntrada?: string // ISO (YYYY-MM-DD) - data de entrada na escolinha
+  dataVencimentoParcelas: string // ISO (YYYY-MM-DD) - data de vencimento das parcelas escolhida
   observacoes?: string
   foto?: string // data URL ou caminho da fotografia (opcional)
 }

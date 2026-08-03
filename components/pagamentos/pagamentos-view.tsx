@@ -153,7 +153,7 @@ export function PagamentosView() {
             <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
               Gestão de Pagamentos
             </h1>
-            <p className="font-sans text-[11px] font-semibold uppercase tracking-widest text-gold">
+            <p className="font-sans text-[14px] font-semibold uppercase tracking-widest text-danger">
               {meses[mesFiltro - 1]} / {anoFiltro}
             </p>
           </div>
@@ -162,8 +162,8 @@ export function PagamentosView() {
         <div className="grid grid-cols-2 gap-px bg-panel-shade sm:grid-cols-3 lg:grid-cols-5">
           {cards.map((c) => (
             <div key={c.label} className="inset-bevel bg-card px-3 py-2">
-              <p className="font-pixel text-[8px] uppercase tracking-wide text-muted-foreground">{c.label}</p>
-              <p className={`mt-1 font-pixel text-base leading-none text-outline ${c.cls}`}>{c.value}</p>
+              <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{c.label}</p>
+              <p className={`mt-1 font-pixel text-base leading-none text-outline text-primary-foreground ${c.cls}`}>{c.value}</p>
             </div>
           ))}
         </div>
@@ -172,17 +172,17 @@ export function PagamentosView() {
       {/* Filtros (req. 6.4) */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">
+          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>
 
         <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <label className="flex flex-col gap-1 sm:col-span-2 lg:col-span-3 xl:col-span-1">
-            <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">Aluno / responsável</span>
+            <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">Aluno / responsável</span>
             <span className="flex items-center gap-2 rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1.5 inset-bevel focus-within:border-gold">
               <Search className="h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={2.5} />
               <input
@@ -261,7 +261,7 @@ export function PagamentosView() {
         </div>
       ) : (
         <div className="panel-bevel rounded-md bg-card px-4 py-10 text-center">
-          <p className="font-pixel text-[10px] uppercase text-muted-foreground">Nenhuma mensalidade encontrada</p>
+          <p className="font-pixel text-[13px] uppercase text-muted-foreground">Nenhuma mensalidade encontrada</p>
           <p className="mt-2 font-sans text-sm text-muted-foreground">Ajuste o mês, o ano ou os filtros.</p>
         </div>
       )}
@@ -282,7 +282,7 @@ function FiltroSelect({
 }) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">{label}</span>
+      <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

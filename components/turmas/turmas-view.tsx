@@ -13,7 +13,6 @@ type ModalidadeFiltro = "todas" | "coletiva" | "particular"
 
 export function TurmasView() {
   const [busca, setBusca] = useState("")
-  const [localFiltro, setLocalFiltro] = useState<string>("todos")
   const [situacaoFiltro, setSituacaoFiltro] = useState<SituacaoFiltro>("todas")
   const [modalidadeFiltro, setModalidadeFiltro] = useState<ModalidadeFiltro>("todas")
   const [expandidoId, setExpandidoId] = useState<string | null>(null)
@@ -34,12 +33,11 @@ export function TurmasView() {
     const termo = busca.trim().toLowerCase()
     return turmasIniciais.filter((t: Turma) => {
       if (termo && !t.nome.toLowerCase().includes(termo) && !t.professor.toLowerCase().includes(termo)) return false
-      if (localFiltro !== "todos" && t.local !== localFiltro) return false
       if (situacaoFiltro !== "todas" && t.situacao !== situacaoFiltro) return false
       if (modalidadeFiltro !== "todas" && t.modalidade !== modalidadeFiltro) return false
       return true
     })
-  }, [busca, localFiltro, situacaoFiltro, modalidadeFiltro])
+  }, [busca, situacaoFiltro, modalidadeFiltro])
 
   const contadores = useMemo(() => {
     const ativas = turmasIniciais.filter((t) => t.situacao === "ativa").length
@@ -49,13 +47,13 @@ export function TurmasView() {
   }, [])
 
   const temFiltro =
-    busca !== "" || localFiltro !== "todos" || situacaoFiltro !== "todas" || modalidadeFiltro !== "todas"
+    busca !== "" || situacaoFiltro !== "todas" || modalidadeFiltro !== "todas"
 
   const principais = [
-    { label: "Turmas", value: contadores.total, cls: "text-primary" },
-    { label: "Ativas", value: contadores.ativas, cls: "text-gold" },
-    { label: "Inativas", value: contadores.inativas, cls: "text-muted-foreground" },
-    { label: "Matriculados", value: contadores.matriculados, cls: "text-scoreboard" },
+    { label: "Turmas", value: contadores.total, cls: "text-primary-foreground" },
+    { label: "Ativas", value: contadores.ativas, cls: "text-primary-foreground" },
+    { label: "Inativas", value: contadores.inativas, cls: "text-primary-foreground" },
+    { label: "Matriculados", value: contadores.matriculados, cls: "text-primary-foreground" },
   ]
 
   return (
@@ -75,11 +73,11 @@ export function TurmasView() {
             <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
               Gestão de Turmas
             </h1>
-            <p className="font-sans text-[11px] font-semibold uppercase tracking-widest text-gold">Elencos & Horários</p>
+            <p className="font-sans text-[13px] font-semibold uppercase tracking-widest text-danger">Elencos & Horários</p>
           </div>
           <Link
             href="/cadastro-turma"
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border-2 border-gold bg-gold px-2.5 py-1.5 font-pixel text-[8px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border-2 border-gold bg-gold px-2.5 py-1.5 font-pixel text-[13px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none"
           >
             <Plus className="h-3.5 w-3.5" strokeWidth={3} />
             Nova turma
@@ -89,7 +87,7 @@ export function TurmasView() {
         <div className="grid grid-cols-2 gap-px bg-panel-shade sm:grid-cols-4">
           {principais.map((c) => (
             <div key={c.label} className="inset-bevel bg-card px-3 py-2">
-              <p className="font-pixel text-[8px] uppercase tracking-wide text-muted-foreground">{c.label}</p>
+              <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{c.label}</p>
               <p className={`mt-1 font-pixel text-xl leading-none text-outline ${c.cls}`}>{c.value}</p>
             </div>
           ))}
@@ -99,17 +97,17 @@ export function TurmasView() {
       {/* Filtros */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">
+          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>
 
         <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-4">
           <label className="flex flex-col gap-1 md:col-span-2 lg:col-span-1">
-            <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">Turma ou professor</span>
+            <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">Turma ou professor</span>
             <span className="flex items-center gap-2 rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1.5 inset-bevel focus-within:border-gold">
               <Search className="h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={2.5} />
               <input
@@ -120,13 +118,6 @@ export function TurmasView() {
               />
             </span>
           </label>
-
-          <FiltroSelect
-            label="Local"
-            value={localFiltro}
-            onChange={setLocalFiltro}
-            options={[{ value: "todos", label: "Todos os locais" }, ...locaisDisponiveis.map((l) => ({ value: l, label: l }))]}
-          />
           <FiltroSelect
             label="Situação"
             value={situacaoFiltro}
@@ -207,7 +198,7 @@ function FiltroSelect({
 }) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">{label}</span>
+      <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

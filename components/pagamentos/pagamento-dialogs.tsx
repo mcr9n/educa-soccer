@@ -231,7 +231,7 @@ export function RegistroDialog({
 function Campo({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-pixel text-[7px] uppercase tracking-wide text-muted-foreground">{label}</span>
+      <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</span>
       {children}
     </label>
   )
@@ -243,7 +243,7 @@ export function BotaoCobranca({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 rounded-sm border-2 border-primary bg-primary/15 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus:outline-none"
+      className="inline-flex items-center gap-1.5 rounded-sm border-2 border-panel-edge bg-panel-shade/50 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none"
     >
       <MessageCircle className="h-3.5 w-3.5" strokeWidth={2.5} />
       Cobrar
