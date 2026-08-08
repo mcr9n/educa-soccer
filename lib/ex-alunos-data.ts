@@ -206,9 +206,16 @@ export const exAlunos: ExAluno[] = [
   },
 ]
 
-/** Formata data ISO no padrao brasileiro. */
+/**
+ * Formata data ISO (YYYY-MM-DD) no padrao brasileiro (DD/MM/AAAA).
+ * Faz o parse manual dos componentes para evitar o deslocamento de fuso
+ * horario do `new Date(iso)`, que causa divergencia de hidratacao.
+ */
 export function formatarDataBR(iso: string): string {
-  return new Date(iso).toLocaleDateString("pt-BR")
+  if (!iso) return "—"
+  const [ano, mes, dia] = iso.slice(0, 10).split("-")
+  if (!ano || !mes || !dia) return "—"
+  return `${dia}/${mes}/${ano}`
 }
 
 /** Tempo de permanencia (em meses) entre entrada e saida. */
