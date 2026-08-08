@@ -310,9 +310,17 @@ export function linkWhatsApp(telefone: string, nomeAluno: string): string {
   return `https://wa.me/${numero}?text=${texto}`
 }
 
-/** Formata a data de nascimento no padrao brasileiro. */
+/**
+ * Formata a data (YYYY-MM-DD) no padrao brasileiro (DD/MM/AAAA).
+ * Faz o parse manual dos componentes para evitar o deslocamento de fuso
+ * horario do `new Date(iso)`, que interpreta a data como UTC e causa
+ * divergencia de hidratacao entre servidor e cliente.
+ */
 export function formatarData(dataISO: string): string {
-  return new Date(dataISO).toLocaleDateString("pt-BR")
+  if (!dataISO) return "—"
+  const [ano, mes, dia] = dataISO.slice(0, 10).split("-")
+  if (!ano || !mes || !dia) return "—"
+  return `${dia}/${mes}/${ano}`
 }
 
 /** Aplica a mascara de telefone brasileiro: (DD) 9XXXX-XXXX. */

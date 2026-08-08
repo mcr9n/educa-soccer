@@ -130,10 +130,17 @@ export function formatarValor(valor: number): string {
   return `R$ ${valor.toLocaleString("pt-BR", { minimumFractionDigits: 0 })}`
 }
 
-/** Formata data ISO no padrao brasileiro. */
+/**
+ * Formata data ISO (YYYY-MM-DD) no padrao brasileiro (DD/MM/AAAA).
+ * Faz o parse manual dos componentes para evitar o deslocamento de fuso
+ * horario do `new Date(iso)` (que interpreta a data como UTC e causa
+ * divergencia de hidratacao entre servidor e cliente).
+ */
 export function formatarDataBR(iso?: string): string {
   if (!iso) return "—"
-  return new Date(iso).toLocaleDateString("pt-BR")
+  const [ano, mes, dia] = iso.slice(0, 10).split("-")
+  if (!ano || !mes || !dia) return "—"
+  return `${dia}/${mes}/${ano}`
 }
 
 /**
