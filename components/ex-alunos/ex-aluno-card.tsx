@@ -34,7 +34,7 @@ function InfoLinha({ icon: Icon, label, value }: { icon: typeof Phone; label: st
     <div className="flex items-start gap-2">
       <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={2.5} />
       <div className="min-w-0">
-        <p className="font-pixel text-[9px] uppercase tracking-wide text-muted-foreground">{label}</p>
+        <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{label}</p>
         <p className="font-sans text-sm font-semibold text-foreground text-pretty">{value}</p>
       </div>
     </div>
@@ -78,7 +78,7 @@ export function ExAlunoCard({
           <span className="block font-sans text-sm font-bold leading-tight text-foreground text-pretty">
             {exAluno.nome}
           </span>
-          <span className="mt-0.5 flex flex-wrap items-center gap-1.5 font-sans text-[11px] text-muted-foreground">
+          <span className="mt-0.5 flex flex-wrap items-center gap-1.5 font-sans text-[13px] text-muted-foreground">
             <span>Saída: {formatarDataBR(exAluno.dataSaida)}</span>
             <span aria-hidden>•</span>
             <span>Resp.: {exAluno.responsavel}</span>
@@ -116,39 +116,10 @@ export function ExAlunoCard({
 
           {/* Histórico de frequência e desempenho */}
           <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <section className="rounded-sm border border-panel-shade bg-card p-3">
-              <h4 className="mb-2 flex items-center gap-1.5 font-pixel text-[11px] uppercase tracking-wide text-primary-foreground">
-                <TrendingUp className="h-3.5 w-3.5 text-gold" strokeWidth={2.5} />
-                Frequência & Desempenho
-              </h4>
-              <div className="flex flex-wrap items-center gap-2">
-                <PositionTag label={d.avaliacao} variant={avaliacaoVariant(d.avaliacao)} />
-                <span className="inline-flex items-center gap-1 rounded-sm border border-panel-edge bg-panel-shade/50 px-2 py-1 font-sans text-xs font-bold text-foreground">
-                  <Target className="h-3.5 w-3.5 text-gold" strokeWidth={2.5} />
-                  {d.gols} gols
-                </span>
-              </div>
-              {/* Barra de frequência */}
-              <div className="mt-3">
-                <div className="mb-1 flex items-center justify-between font-sans text-[11px] font-semibold text-muted-foreground">
-                  <span>Frequência</span>
-                  <span className="text-foreground">
-                    {d.frequencia}% ({d.totalPresencas}/{d.totalAulas})
-                  </span>
-                </div>
-                <div className="h-2.5 overflow-hidden rounded-sm bg-panel-shade inset-bevel">
-                  <div
-                    className={`h-full ${d.frequencia >= 85 ? "bg-primary" : d.frequencia >= 75 ? "bg-gold" : "bg-danger"}`}
-                    style={{ width: `${d.frequencia}%` }}
-                  />
-                </div>
-              </div>
-              <p className="mt-2 font-sans text-xs text-muted-foreground text-pretty">{d.observacaoTecnica}</p>
-            </section>
 
             {/* Histórico de pagamentos */}
             <section className="rounded-sm border border-panel-shade bg-card p-3">
-              <h4 className="mb-2 flex items-center gap-1.5 font-pixel text-[11px] uppercase tracking-wide text-primary-foreground">
+              <h4 className="mb-2 flex items-center gap-1.5 font-pixel text-[13px] uppercase tracking-wide text-primary-foreground">
                 <Wallet className="h-3.5 w-3.5 text-gold" strokeWidth={2.5} />
                 Histórico de Pagamentos
               </h4>
