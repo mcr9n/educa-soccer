@@ -109,7 +109,7 @@ export function QuickMenu() {
           alt="Logotipo do EducaSoccer"
           width={32}
           height={32}
-          className="size-8 shrink-0 drop-shadow"
+          className="shrink-0 drop-shadow"
         />
         <div className="min-w-0">
           <p className="font-pixel text-base font-extrabold uppercase leading-none tracking-tight">

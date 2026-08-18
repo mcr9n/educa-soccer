@@ -66,7 +66,7 @@ export function TurmasView() {
             alt="Brasão do Educa Soccer"
             width={32}
             height={32}
-            className="size-8 shrink-0 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]"
+            className="shrink-0 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]"
             priority
           />
           <div className="min-w-0 flex-1">

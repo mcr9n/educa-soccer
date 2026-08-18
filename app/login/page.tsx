@@ -31,7 +31,7 @@ export default async function LoginPage({
             alt="Logotipo do EducaSoccer"
             width={64}
             height={64}
-            className="size-16 drop-shadow"
+            className="drop-shadow"
           />
           <div>
             <p className="font-pixel text-2xl font-extrabold uppercase leading-none tracking-tight">
