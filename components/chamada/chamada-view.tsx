@@ -8,6 +8,7 @@ import {
   type Chamada,
   type PresencaAluno,
   type StatusChamada,
+  type Pontualidade,
   chamadasIniciais,
   turmasParaChamada,
   dataAtualPadrao,
@@ -80,6 +81,23 @@ export function ChamadaView() {
     setRascunho((r) => ({
       ...r,
       presencas: r.presencas.map((p) => (p.alunoId === alunoId ? { ...p, status } : p)),
+    }))
+  }
+
+  // Gols e pontualidade (req. 12.1 e 12.3): usados no calculo dos rankings.
+  function alterarGols(alunoId: string, gols: number) {
+    setSalvoAgora(false)
+    setRascunho((r) => ({
+      ...r,
+      presencas: r.presencas.map((p) => (p.alunoId === alunoId ? { ...p, gols } : p)),
+    }))
+  }
+
+  function alterarPontualidade(alunoId: string, pontualidade: Pontualidade) {
+    setSalvoAgora(false)
+    setRascunho((r) => ({
+      ...r,
+      presencas: r.presencas.map((p) => (p.alunoId === alunoId ? { ...p, pontualidade } : p)),
     }))
   }
 
@@ -233,7 +251,11 @@ export function ChamadaView() {
                   key={aluno.id}
                   aluno={aluno}
                   status={presenca?.status ?? "presente"}
+                  gols={presenca?.gols ?? 0}
+                  pontualidade={presenca?.pontualidade ?? "no_horario"}
                   onChange={(status) => alterarStatus(aluno.id, status)}
+                  onChangeGols={(gols) => alterarGols(aluno.id, gols)}
+                  onChangePontualidade={(pontualidade) => alterarPontualidade(aluno.id, pontualidade)}
                 />
               )
             })}

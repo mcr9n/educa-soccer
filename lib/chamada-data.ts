@@ -30,9 +30,16 @@ export const statusChamadaInfo: Record<
   nao_se_aplica: { label: "Não se aplica", tag: "N/A", variant: "default" },
 }
 
+/** Pontualidade do aluno na aula, usada no ranking de pontualidade (req. 12.3). */
+export type Pontualidade = "no_horario" | "atrasado"
+
 export type PresencaAluno = {
   alunoId: string
   status: StatusChamada
+  /** Gols marcados na aula, usado no ranking de artilharia (req. 12.1). So faz sentido quando presente. */
+  gols?: number
+  /** So faz sentido quando presente; usado no ranking de pontualidade (req. 12.3). */
+  pontualidade?: Pontualidade
 }
 
 export type Chamada = {
@@ -64,7 +71,12 @@ export function chamadaExistente(lista: Chamada[], turma: string, data: string):
 
 /** Monta uma ficha de chamada em branco (todos marcados como presentes por padrao). */
 export function novaChamadaEmBranco(alunosTurma: Aluno[]): PresencaAluno[] {
-  return alunosTurma.map((a) => ({ alunoId: a.id, status: "presente" as StatusChamada }))
+  return alunosTurma.map((a) => ({
+    alunoId: a.id,
+    status: "presente" as StatusChamada,
+    gols: 0,
+    pontualidade: "no_horario" as Pontualidade,
+  }))
 }
 
 /** Conta quantos alunos estao em cada situacao. */
@@ -153,7 +165,13 @@ function gerarChamadasIniciais(): Chamada[] {
         if (grupo.turma === alunoDemonstracaoFaltas.turma && ai === alunoDemonstracaoFaltas.indice) {
           return { alunoId: aluno.id, status: "ausente" as StatusChamada }
         }
-        return { alunoId: aluno.id, status: pool[(ai + di) % pool.length] }
+        const status = pool[(ai + di) % pool.length]
+        if (status !== "presente") return { alunoId: aluno.id, status }
+        // Distribuicao deterministica de gols e pontualidade para os presentes,
+        // usada para demonstrar os rankings de artilharia e pontualidade (req. 12).
+        const gols = (ai + di) % 4 === 0 ? 2 : (ai + di) % 3 === 0 ? 1 : 0
+        const pontualidade: Pontualidade = (ai + di) % 5 === 0 ? "atrasado" : "no_horario"
+        return { alunoId: aluno.id, status, gols, pontualidade }
       })
       lista.push({
         id: `ch${seq}`,

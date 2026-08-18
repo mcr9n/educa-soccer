@@ -38,7 +38,7 @@ const itens: Item[] = [
   { label: "Ex-Alunos", icon: UserMinus, href: "/ex-alunos" },
   { label: "Torneios", icon: Trophy, href: "/torneios" },
   { label: "Uniformes", icon: Shirt, href: "/uniformes" },
-  { label: "Rankings", icon: Medal },
+  { label: "Rankings", icon: Medal, href: "/rankings" },
   { label: "Álbum de Figurinhas", icon: StickyNote },
 ]
 
