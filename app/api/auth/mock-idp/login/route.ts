@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { autenticarNoIdpMock } from "@/lib/auth/keycloak"
 import { emitirAuthorizationCode } from "@/lib/auth/mock-idp"
+import { urlPublica } from "@/lib/auth/request-origin"
 
 /**
  * Recebe o submit do formulário da tela `/mock-idp` (equivalente ao POST que
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
   const usuario = autenticarNoIdpMock(username, senha)
 
   if (!usuario) {
-    const destino = new URL("/mock-idp", request.url)
+    const destino = urlPublica("/mock-idp", request)
     destino.search = new URLSearchParams({
       state,
       redirect_uri: redirectUri,
@@ -28,7 +29,7 @@ export async function POST(request: NextRequest) {
   }
 
   const code = emitirAuthorizationCode(usuario)
-  const destino = new URL(redirectUri, request.url)
+  const destino = urlPublica(redirectUri, request)
   destino.searchParams.set("code", code)
   destino.searchParams.set("state", state)
   return NextResponse.redirect(destino)

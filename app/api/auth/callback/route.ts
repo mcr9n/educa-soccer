@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { COOKIE_PKCE_STATE } from "@/lib/auth/config"
 import { trocarCodePorTokens } from "@/lib/auth/keycloak"
+import { urlPublica } from "@/lib/auth/request-origin"
 import { criarSessao } from "@/lib/auth/session"
 
 /**
@@ -16,12 +17,12 @@ export async function GET(request: NextRequest) {
   const dadosPkce = cookiePkce ? safeJsonParse(cookiePkce) : null
 
   if (!code || !state || !dadosPkce || dadosPkce.state !== state) {
-    return NextResponse.redirect(new URL("/login?erro=state_invalido", request.url))
+    return NextResponse.redirect(urlPublica("/login?erro=state_invalido", request))
   }
 
   const resultado = await trocarCodePorTokens(code)
   if (!resultado) {
-    return NextResponse.redirect(new URL("/login?erro=code_invalido", request.url))
+    return NextResponse.redirect(urlPublica("/login?erro=code_invalido", request))
   }
 
   // `criarSessao` usa `cookies()` de `next/headers`, que dentro de um Route
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
   await criarSessao(resultado.usuario)
 
   const returnTo: string = typeof dadosPkce.returnTo === "string" ? dadosPkce.returnTo : "/"
-  const response = NextResponse.redirect(new URL(returnTo, request.url))
+  const response = NextResponse.redirect(urlPublica(returnTo, request))
   response.cookies.delete(COOKIE_PKCE_STATE)
   return response
 }

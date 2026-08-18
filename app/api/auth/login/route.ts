@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { COOKIE_PKCE_STATE } from "@/lib/auth/config"
 import { iniciarAutorizacao } from "@/lib/auth/keycloak"
+import { urlPublica } from "@/lib/auth/request-origin"
 
 /**
  * Inicia o fluxo de login (Authorization Code + PKCE) redirecionando para o
@@ -10,7 +11,7 @@ export async function GET(request: NextRequest) {
   const returnTo = sanitizarReturnTo(request.nextUrl.searchParams.get("returnTo"))
   const { state, codeVerifier, urlAutorizacao } = iniciarAutorizacao(returnTo)
 
-  const response = NextResponse.redirect(new URL(urlAutorizacao, request.url))
+  const response = NextResponse.redirect(urlPublica(urlAutorizacao, request))
 
   // `state` + `code_verifier` ficam em um cookie efêmero e HttpOnly, lidos de
   // volta no callback para validar a resposta do IdP e completar o PKCE.
