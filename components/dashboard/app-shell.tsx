@@ -11,6 +11,7 @@ const secaoPorRota: Record<string, string> = {
   "/turmas": "Gestão de Turmas",
   "/cadastro-turma": "Cadastro de Turma",
   "/pagamentos": "Gestão de Pagamentos",
+  "/chamada": "Controle de Chamada",
   "/ex-alunos": "Gestão de Ex-Alunos",
 }
 

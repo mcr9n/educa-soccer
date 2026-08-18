@@ -32,7 +32,7 @@ const itens: Item[] = [
   { label: "Turmas", icon: UsersRound, href: "/turmas" },
   { label: "Cadastro de Turma", icon: FolderPlus, href: "/cadastro-turma" },
   { label: "Pagamentos", icon: Wallet, href: "/pagamentos" },
-  { label: "Chamada", icon: ClipboardCheck },
+  { label: "Chamada", icon: ClipboardCheck, href: "/chamada" },
   { label: "Alertas de Faltas", icon: AlarmClock },
   { label: "Aulas Experimentais", icon: FlaskConical },
   { label: "Ex-Alunos", icon: UserMinus, href: "/ex-alunos" },
