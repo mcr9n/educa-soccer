@@ -61,13 +61,20 @@ export function AlunoCard({
   onToggle: () => void
   onEditar: (id: string, dados: Partial<Aluno>) => void
   onTransferir: (id: string, turma: string) => void
-  onMarcarExAluno: (id: string) => void
+  onMarcarExAluno: (
+    id: string,
+    motivo: string,
+    observacoes: string
+  ) => void
 }) {
-  const [modo, setModo] = useState<"none" | "editar" | "transferir">("none")
+  const [modo, setModo] = useState<"none" | "editar" | "transferir" | "ex-aluno">("none")
   const [telefone, setTelefone] = useState(aluno.telefone)
   const [email, setEmail] = useState(aluno.email)
   const [mensalidade, setMensalidade] = useState(String(aluno.mensalidade))
   const [novaTurma, setNovaTurma] = useState(aluno.turma)
+  /* Estados do formulário para inativar aluno */
+  const [motivoSaida, setMotivoSaida] = useState("")
+  const [observacoesSaida, setObservacoesSaida] = useState("")
 
   const idade = calcularIdade(aluno.dataNascimento)
 
@@ -80,6 +87,18 @@ export function AlunoCard({
     onTransferir(aluno.id, novaTurma)
     setModo("none")
   }
+
+  function confirmarExAluno() {
+
+    onMarcarExAluno(
+      aluno.id,
+      motivoSaida,
+      observacoesSaida
+    )
+
+    setModo("none")
+  }
+
 
   return (
     <li className="panel-bevel overflow-hidden rounded-md bg-card">
@@ -114,22 +133,22 @@ export function AlunoCard({
             <InfoLinha icon={Wallet} label="Mensalidade" value={`R$ ${aluno.mensalidade}`} />
             <InfoLinha icon={Clock} label="Nascimento / Faixa etária" value={`${formatarData(aluno.dataNascimento)} • ${faixaEtaria(idade)}`} />
             {aluno.observacoes && aluno.observacoes.trim() !== "" ? (
-            <InfoLinha icon={TextInitial} label="Observações" value={aluno.observacoes}/>
+              <InfoLinha icon={TextInitial} label="Observações" value={aluno.observacoes} />
             ) : null}
           </div>
 
           {modo === "editar" && (
             <div className="mt-3 grid gap-2 rounded-sm border border-panel-shade bg-card p-2 sm:grid-cols-3">
               <label className="flex flex-col gap-1">
-                <span className="font-pixel text-[7px] uppercase text-muted-foreground">Telefone</span>
+                <span className="font-pixel text-[13px] uppercase text-muted-foreground">Telefone</span>
                 <input value={telefone} onChange={(e) => setTelefone(e.target.value)} className="rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1 font-sans text-sm text-foreground focus:border-gold focus:outline-none" />
               </label>
               <label className="flex flex-col gap-1">
-                <span className="font-pixel text-[7px] uppercase text-muted-foreground">E-mail</span>
+                <span className="font-pixel text-[13px] uppercase text-muted-foreground">E-mail</span>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1 font-sans text-sm text-foreground focus:border-gold focus:outline-none" />
               </label>
               <label className="flex flex-col gap-1">
-                <span className="font-pixel text-[7px] uppercase text-muted-foreground">Mensalidade (R$)</span>
+                <span className="font-pixel text-[13px] uppercase text-muted-foreground">Mensalidade (R$)</span>
                 <input type="number" value={mensalidade} onChange={(e) => setMensalidade(e.target.value)} className="rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1 font-sans text-sm text-foreground focus:border-gold focus:outline-none" />
               </label>
             </div>
@@ -138,7 +157,7 @@ export function AlunoCard({
           {modo === "transferir" && (
             <div className="mt-3 flex flex-wrap items-end gap-2 rounded-sm border border-panel-shade bg-card p-2">
               <label className="flex flex-col gap-1">
-                <span className="font-pixel text-[7px] uppercase text-muted-foreground">Nova turma</span>
+                <span className="font-pixel text-[13px] uppercase text-muted-foreground">Nova turma</span>
                 <select value={novaTurma} onChange={(e) => setNovaTurma(e.target.value)} className="rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1 font-sans text-sm font-semibold text-foreground focus:border-gold focus:outline-none">
                   {turmasDisponiveis.map((t) => (
                     <option key={t} value={t}>
@@ -150,11 +169,50 @@ export function AlunoCard({
             </div>
           )}
 
+          {modo === "ex-aluno" && (
+            <div className="mt-3 grid gap-3 rounded-sm border border-panel-shade bg-card p-3">
+
+              <label className="flex flex-col gap-1">
+                <span className="font-pixel text-[13px] uppercase text-muted-foreground">
+                  Motivo da saída
+                </span>
+
+                <select
+                  value={motivoSaida}
+                  onChange={(e) => setMotivoSaida(e.target.value)}
+                  className="rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1 font-sans text-sm text-foreground focus:border-gold focus:outline-none"
+                >
+                  <option value="">Selecione...</option>
+                  <option value="desistencia">Desistência</option>
+                  <option value="mudanca">Mudança</option>
+                  <option value="financeiro">Motivo financeiro</option>
+                  <option value="outra_escolinha">Mudança de escolinha</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </label>
+
+              <label className="flex flex-col gap-1">
+                <span className="font-pixel text-[13px] uppercase text-muted-foreground">
+                  Observações
+                </span>
+
+                <textarea
+                  value={observacoesSaida}
+                  onChange={(e) => setObservacoesSaida(e.target.value)}
+                  rows={3}
+                  placeholder="Informações adicionais sobre a saída..."
+                  className="rounded-sm border border-panel-edge bg-panel-shade/60 px-2 py-1 font-sans text-sm text-foreground focus:border-gold focus:outline-none"
+                />
+              </label>
+
+            </div>
+          )}
+
           <div className="mt-3 flex flex-wrap gap-2">
             {modo === "none" && (
               <>
                 <ActionButton icon={Pencil} onClick={() => setModo("editar")}>Editar</ActionButton>
-                <ActionButton icon={ArrowLeftRight} onClick={() => setModo("transferir")}>Transferir turma</ActionButton>                
+                <ActionButton icon={ArrowLeftRight} onClick={() => setModo("transferir")}>Transferir turma</ActionButton>
                 <ActionButton
                   icon={MessageCircle}
                   href={linkWhatsApp(aluno.telefone, aluno.nome)}
@@ -163,7 +221,13 @@ export function AlunoCard({
                 >
                   WhatsApp
                 </ActionButton>
-                <ActionButton icon={UserMinus} tone="danger" onClick={() => onMarcarExAluno(aluno.id)}>Marcar ex-aluno</ActionButton>
+                <ActionButton
+                  icon={UserMinus}
+                  tone="danger"
+                  onClick={() => setModo("ex-aluno")}
+                >
+                  Marcar ex-aluno
+                </ActionButton>
               </>
             )}
 
@@ -178,6 +242,24 @@ export function AlunoCard({
               <>
                 <ActionButton icon={Check} tone="confirm" onClick={confirmarTransferencia}>Confirmar</ActionButton>
                 <ActionButton icon={X} onClick={() => setModo("none")}>Cancelar</ActionButton>
+              </>
+            )}
+            {modo === "ex-aluno" && (
+              <>
+                <ActionButton
+                  icon={Check}
+                  tone="danger"
+                  onClick={confirmarExAluno}
+                >
+                  Confirmar saída
+                </ActionButton>
+
+                <ActionButton
+                  icon={X}
+                  onClick={() => setModo("none")}
+                >
+                  Cancelar
+                </ActionButton>
               </>
             )}
           </div>
