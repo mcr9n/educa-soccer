@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { urlPublica } from "@/lib/auth/request-origin"
 
 /**
  * Endpoint de autorização mockado — equivalente ao `/protocol/openid-connect/auth`
@@ -8,7 +7,7 @@ import { urlPublica } from "@/lib/auth/request-origin"
  * página hospedada do IdP.
  */
 export async function GET(request: NextRequest) {
-  const destino = urlPublica("/mock-idp", request)
+  const destino = new URL("/mock-idp", request.url)
   destino.search = request.nextUrl.search
   return NextResponse.redirect(destino)
 }

@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { urlPublica } from "@/lib/auth/request-origin"
 import { destruirSessao } from "@/lib/auth/session"
 
 /**
@@ -10,7 +9,7 @@ import { destruirSessao } from "@/lib/auth/session"
  */
 export async function POST(request: NextRequest) {
   await destruirSessao()
-  return NextResponse.redirect(urlPublica("/login", request))
+  return NextResponse.redirect(new URL("/login", request.url))
 }
 
 export async function GET(request: NextRequest) {

@@ -1,7 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { COOKIE_SESSAO } from "@/lib/auth/config"
 import { rotaEhPublica, usuarioPodeAcessarRota } from "@/lib/auth/permissions"
-import { urlPublica } from "@/lib/auth/request-origin"
 import { verificarTokenSessaoEdge } from "@/lib/auth/verify-edge"
 
 /**
@@ -19,7 +18,7 @@ export async function proxy(request: NextRequest) {
     // Usuário já autenticado não deveria ver a tela de login de novo.
     if (pathname === "/login") {
       const sessao = await verificarTokenSessaoEdge(request.cookies.get(COOKIE_SESSAO)?.value)
-      if (sessao) return NextResponse.redirect(urlPublica("/", request))
+      if (sessao) return NextResponse.redirect(new URL("/", request.url))
     }
     return NextResponse.next()
   }
@@ -27,13 +26,13 @@ export async function proxy(request: NextRequest) {
   const sessao = await verificarTokenSessaoEdge(request.cookies.get(COOKIE_SESSAO)?.value)
 
   if (!sessao) {
-    const loginUrl = urlPublica("/login", request)
+    const loginUrl = new URL("/login", request.url)
     loginUrl.searchParams.set("returnTo", pathname)
     return NextResponse.redirect(loginUrl)
   }
 
   if (!usuarioPodeAcessarRota(pathname, sessao.usuario.papeis)) {
-    return NextResponse.redirect(urlPublica("/403", request))
+    return NextResponse.redirect(new URL("/403", request.url))
   }
 
   return NextResponse.next()
