@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react"
 import Image from "next/image"
-import { CalendarDays, Save, CheckCircle2, XCircle, RotateCcw, History } from "lucide-react"
+import { CalendarDays, Save, CheckCircle2, XCircle, RotateCcw, History, Lock, LockOpen } from "lucide-react"
+import { cn } from "@/lib/utils"
 import { getTurma } from "@/lib/turmas-data"
 import {
   type Chamada,
@@ -49,6 +50,11 @@ export function ChamadaView() {
     carregarRascunho(turmasParaChamada[0] ?? "", dataAtualPadrao, chamadasIniciais),
   )
   const [salvoAgora, setSalvoAgora] = useState(false)
+  // Uma ficha ja salva abre bloqueada, para evitar edicao acidental; o
+  // professor precisa reabri-la explicitamente para poder alterar (pedido
+  // do usuario: "possibilidade de mudar a situacao da ficha mesmo depois
+  // de salvar, para ficar em edicao novamente").
+  const [edicaoForcada, setEdicaoForcada] = useState(false)
 
   const alunosTurma = useMemo(() => alunosDaTurma(rascunho.turma), [rascunho.turma])
   const resumo = useMemo(() => resumoChamada(rascunho.presencas), [rascunho.presencas])
@@ -56,6 +62,7 @@ export function ChamadaView() {
     () => Boolean(chamadaExistente(chamadas, rascunho.turma, rascunho.data)),
     [chamadas, rascunho.turma, rascunho.data],
   )
+  const bloqueada = jaSalva && !edicaoForcada
   const professor = getTurma(rascunho.turma)?.professor ?? "Coordenação"
 
   const historicoTurma = useMemo(
@@ -68,12 +75,19 @@ export function ChamadaView() {
 
   function selecionarTurma(turma: string) {
     setSalvoAgora(false)
+    setEdicaoForcada(false)
     setRascunho(carregarRascunho(turma, rascunho.data, chamadas))
   }
 
   function selecionarData(data: string) {
     setSalvoAgora(false)
+    setEdicaoForcada(false)
     setRascunho(carregarRascunho(rascunho.turma, data, chamadas))
+  }
+
+  function reabrirParaEdicao() {
+    setSalvoAgora(false)
+    setEdicaoForcada(true)
   }
 
   function alterarStatus(alunoId: string, status: StatusChamada) {
@@ -109,6 +123,7 @@ export function ChamadaView() {
   function salvar() {
     setChamadas((prev) => registrarChamada(prev, rascunho.turma, rascunho.data, rascunho.presencas, professor))
     setSalvoAgora(true)
+    setEdicaoForcada(false)
   }
 
   const cards: { status: StatusChamada; value: number }[] = ordemStatusChamada.map((s) => ({
@@ -195,11 +210,24 @@ export function ChamadaView() {
 
           <div className="flex flex-col gap-1">
             <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">Situação da ficha</span>
-            <span className="flex items-center gap-1.5 rounded-sm border border-panel-edge bg-panel-shade/20 px-2 py-1.5">
-              {jaSalva ? (
+            <span className="flex flex-wrap items-center gap-1.5 rounded-sm border border-panel-edge bg-panel-shade/20 px-2 py-1.5">
+              {bloqueada ? (
                 <>
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-success" strokeWidth={2.5} />
+                  <Lock className="h-3.5 w-3.5 shrink-0 text-success" strokeWidth={2.5} />
                   <span className="font-sans text-xs font-bold uppercase tracking-wide text-success">Salva</span>
+                  <button
+                    type="button"
+                    onClick={reabrirParaEdicao}
+                    className="ml-auto inline-flex items-center gap-1 rounded-sm border border-gold bg-gold/10 px-1.5 py-0.5 font-sans text-[11px] font-bold uppercase tracking-wide text-gold transition-colors hover:bg-gold hover:text-gold-foreground focus:outline-none"
+                  >
+                    <LockOpen className="h-3 w-3" strokeWidth={2.5} />
+                    Reabrir para edição
+                  </button>
+                </>
+              ) : jaSalva ? (
+                <>
+                  <LockOpen className="h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={2.5} />
+                  <span className="font-sans text-xs font-bold uppercase tracking-wide text-gold">Editando ficha salva</span>
                 </>
               ) : (
                 <>
@@ -211,10 +239,16 @@ export function ChamadaView() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-2">
+        <div
+          className={cn(
+            "flex flex-wrap items-center gap-2 border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-2 transition-opacity",
+            bloqueada && "pointer-events-none opacity-50",
+          )}
+        >
           <span className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">Ações rápidas:</span>
           <button
             type="button"
+            disabled={bloqueada}
             onClick={() => aplicarAtodos("presente")}
             className="rounded-sm border border-panel-edge bg-panel-shade/50 px-2 py-1 font-sans text-[11px] font-bold uppercase tracking-wide text-foreground transition-colors hover:border-success hover:text-success focus:outline-none"
           >
@@ -222,6 +256,7 @@ export function ChamadaView() {
           </button>
           <button
             type="button"
+            disabled={bloqueada}
             onClick={() => aplicarAtodos("aula_cancelada")}
             className="inline-flex items-center gap-1 rounded-sm border border-panel-edge bg-panel-shade/50 px-2 py-1 font-sans text-[11px] font-bold uppercase tracking-wide text-foreground transition-colors hover:border-scoreboard hover:text-primary-foreground focus:outline-none"
           >
@@ -253,6 +288,7 @@ export function ChamadaView() {
                   status={presenca?.status ?? "presente"}
                   gols={presenca?.gols ?? 0}
                   pontualidade={presenca?.pontualidade ?? "no_horario"}
+                  bloqueada={bloqueada}
                   onChange={(status) => alterarStatus(aluno.id, status)}
                   onChangeGols={(gols) => alterarGols(aluno.id, gols)}
                   onChangePontualidade={(pontualidade) => alterarPontualidade(aluno.id, pontualidade)}
@@ -268,15 +304,26 @@ export function ChamadaView() {
 
         <div className="flex items-center justify-between gap-2 border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-2">
           <p className="font-sans text-xs font-semibold text-muted-foreground">Professor(a): {professor}</p>
-          <button
-            type="button"
-            onClick={salvar}
-            disabled={alunosTurma.length === 0}
-            className="inline-flex items-center gap-1.5 rounded-sm border-2 border-gold bg-gold px-3 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Save className="h-3.5 w-3.5" strokeWidth={2.5} />
-            Salvar chamada
-          </button>
+          {bloqueada ? (
+            <button
+              type="button"
+              onClick={reabrirParaEdicao}
+              className="inline-flex items-center gap-1.5 rounded-sm border-2 border-gold bg-transparent px-3 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-gold transition-transform hover:-translate-y-0.5 hover:bg-gold hover:text-gold-foreground focus:outline-none"
+            >
+              <LockOpen className="h-3.5 w-3.5" strokeWidth={2.5} />
+              Reabrir para edição
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={salvar}
+              disabled={alunosTurma.length === 0}
+              className="inline-flex items-center gap-1.5 rounded-sm border-2 border-gold bg-gold px-3 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Save className="h-3.5 w-3.5" strokeWidth={2.5} />
+              {jaSalva ? "Salvar alterações" : "Salvar chamada"}
+            </button>
+          )}
         </div>
       </section>
 

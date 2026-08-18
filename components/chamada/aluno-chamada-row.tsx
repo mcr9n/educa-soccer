@@ -1,6 +1,6 @@
 "use client"
 
-import { Clock, Timer } from "lucide-react"
+import { Clock, Minus, Plus, Timer } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Aluno } from "@/lib/alunos-data"
 import { ordemStatusChamada, statusChamadaInfo, type StatusChamada, type Pontualidade } from "@/lib/chamada-data"
@@ -18,6 +18,7 @@ export function AlunoChamadaRow({
   status,
   gols,
   pontualidade,
+  bloqueada = false,
   onChange,
   onChangeGols,
   onChangePontualidade,
@@ -26,11 +27,14 @@ export function AlunoChamadaRow({
   status: StatusChamada
   gols: number
   pontualidade: Pontualidade
+  /** Ficha ja salva e ainda nao reaberta para edicao: todos os controles ficam somente leitura. */
+  bloqueada?: boolean
   onChange: (status: StatusChamada) => void
   onChangeGols: (gols: number) => void
   onChangePontualidade: (pontualidade: Pontualidade) => void
 }) {
   const presente = status === "presente"
+  const golsEditavel = presente && !bloqueada
 
   return (
     <li className="flex flex-col gap-2 px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between">
@@ -47,29 +51,42 @@ export function AlunoChamadaRow({
             presente ? "opacity-100" : "pointer-events-none opacity-30",
           )}
         >
-          <label className="flex items-center gap-1 rounded-sm border border-panel-edge bg-panel-shade/40 px-1.5 py-1 inset-bevel focus-within:border-gold">
+          <div className="flex items-center gap-1 rounded-sm border border-panel-edge bg-panel-shade/40 py-1 pl-1.5 pr-1 inset-bevel">
             <span className="font-pixel text-[10px] uppercase leading-none text-muted-foreground">Gols</span>
-            <input
-              type="number"
-              inputMode="numeric"
-              min={0}
-              max={20}
-              disabled={!presente}
-              value={gols}
-              onChange={(e) => onChangeGols(Math.max(0, Number(e.target.value) || 0))}
+            <button
+              type="button"
+              disabled={!golsEditavel || gols <= 0}
+              onClick={() => onChangeGols(Math.max(0, gols - 1))}
+              aria-label={`Diminuir gols de ${aluno.nome}`}
+              className="flex h-5 w-5 items-center justify-center rounded-sm border border-panel-edge bg-secondary text-secondary-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none disabled:pointer-events-none disabled:opacity-40"
+            >
+              <Minus className="h-3 w-3" strokeWidth={3} />
+            </button>
+            <span
               aria-label={`Gols de ${aluno.nome}`}
-              className="w-9 bg-transparent font-sans text-xs font-bold text-foreground focus:outline-none"
-            />
-          </label>
+              className="w-5 text-center font-sans text-sm font-bold tabular-nums text-foreground"
+            >
+              {gols}
+            </span>
+            <button
+              type="button"
+              disabled={!golsEditavel}
+              onClick={() => onChangeGols(Math.min(20, gols + 1))}
+              aria-label={`Aumentar gols de ${aluno.nome}`}
+              className="flex h-5 w-5 items-center justify-center rounded-sm border border-panel-edge bg-secondary text-secondary-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none disabled:pointer-events-none disabled:opacity-40"
+            >
+              <Plus className="h-3 w-3" strokeWidth={3} />
+            </button>
+          </div>
 
           <button
             type="button"
-            disabled={!presente}
+            disabled={!golsEditavel}
             onClick={() => onChangePontualidade(pontualidade === "atrasado" ? "no_horario" : "atrasado")}
             title={pontualidade === "atrasado" ? "Chegou atrasado" : "Chegou no horário"}
             aria-pressed={pontualidade === "atrasado"}
             className={cn(
-              "inline-flex items-center gap-1 rounded-sm border-2 px-1.5 py-1 font-sans text-[11px] font-bold uppercase leading-none transition-colors focus:outline-none",
+              "inline-flex items-center gap-1 rounded-sm border-2 px-1.5 py-1 font-sans text-[11px] font-bold uppercase leading-none transition-colors focus:outline-none disabled:pointer-events-none",
               pontualidade === "atrasado"
                 ? "border-gold bg-gold text-gold-foreground"
                 : "border-panel-edge bg-panel-shade/40 text-muted-foreground hover:border-success hover:text-success",
@@ -84,7 +101,14 @@ export function AlunoChamadaRow({
           </button>
         </div>
 
-        <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label={`Situação de ${aluno.nome}`}>
+        <div
+          className={cn(
+            "flex flex-wrap gap-1.5 transition-opacity",
+            bloqueada && "pointer-events-none opacity-50",
+          )}
+          role="radiogroup"
+          aria-label={`Situação de ${aluno.nome}`}
+        >
           {ordemStatusChamada.map((s) => {
             const info = statusChamadaInfo[s]
             const ativo = status === s
@@ -94,6 +118,7 @@ export function AlunoChamadaRow({
                 type="button"
                 role="radio"
                 aria-checked={ativo}
+                disabled={bloqueada}
                 onClick={() => onChange(s)}
                 title={info.label}
                 className={cn(
