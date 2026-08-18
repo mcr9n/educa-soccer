@@ -47,7 +47,7 @@ export function MobileNav({ secao }: { secao: string }) {
           alt="Logotipo do EducaSoccer"
           width={28}
           height={28}
-          className="shrink-0 drop-shadow"
+          className="size-7 shrink-0 drop-shadow"
         />
         <div className="min-w-0 flex-1">
           <p className="truncate font-pixel text-[13px] uppercase leading-none tracking-tight text-primary-foreground">
@@ -71,7 +71,7 @@ export function MobileNav({ secao }: { secao: string }) {
                 alt="Logotipo do EducaSoccer"
                 width={32}
                 height={32}
-                className="shrink-0 drop-shadow"
+                className="size-8 shrink-0 drop-shadow"
               />
               <div className="min-w-0 flex-1">
                 <p className="font-pixel text-base font-extrabold uppercase leading-none tracking-tight">

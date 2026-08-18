@@ -16,7 +16,7 @@ export function ScoreboardHeader() {
           alt="Logotipo do EducaSoccer"
           width={44}
           height={44}
-          className="shrink-0 drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]"
+          className="size-11 shrink-0 drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]"
           priority
         />
         <div className="min-w-0">
