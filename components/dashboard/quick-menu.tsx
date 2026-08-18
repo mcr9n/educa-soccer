@@ -34,7 +34,7 @@ const itens: Item[] = [
   { label: "Pagamentos", icon: Wallet, href: "/pagamentos" },
   { label: "Chamada", icon: ClipboardCheck, href: "/chamada" },
   { label: "Alertas de Faltas", icon: AlarmClock },
-  { label: "Aulas Experimentais", icon: FlaskConical },
+  { label: "Aulas Experimentais", icon: FlaskConical, href: "/aulas-experimentais" },
   { label: "Ex-Alunos", icon: UserMinus, href: "/ex-alunos" },
   { label: "Torneios", icon: Trophy },
   { label: "Uniformes", icon: Shirt },
