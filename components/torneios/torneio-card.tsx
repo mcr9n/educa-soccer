@@ -49,7 +49,7 @@ export function TorneioCard({
         aria-expanded={expandido}
         className="flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-gold/10 focus-visible:bg-gold/10 focus:outline-none"
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[9px] text-primary-foreground inset-bevel">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[13px] text-primary-foreground inset-bevel">
           <Users className="h-4 w-4" strokeWidth={2.5} />
         </span>
         <span className="min-w-0 flex-1">
@@ -87,7 +87,7 @@ export function TorneioCard({
           </div>
 
           {torneio.observacoes && (
-            <p className="mt-2 font-sans text-[12px] text-muted-foreground">
+            <p className="mt-2 font-sans text-[14px] text-muted-foreground">
               <span className="font-bold text-foreground">Observações:</span> {torneio.observacoes}
             </p>
           )}

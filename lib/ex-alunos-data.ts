@@ -52,7 +52,7 @@ export type ExAluno = {
   dataEntrada: string // ISO
   dataSaida: string // ISO
   motivoSaida: MotivoSaida
-  observacoes: string
+  observacoesSaida: string
   historicoPagamentos: HistoricoPagamento[]
   desempenho: HistoricoDesempenho
 }
@@ -83,7 +83,7 @@ export const exAlunos: ExAluno[] = [
     dataEntrada: "2023-03-06",
     dataSaida: "2026-01-20",
     motivoSaida: "Mudança de cidade",
-    observacoes: "Família se mudou para São Paulo. Aluno dedicado, sentiremos falta.",
+    observacoesSaida: "Família se mudou para São Paulo. Aluno dedicado, sentiremos falta.",
     historicoPagamentos: pagamentosMock("pago"),
     desempenho: {
       frequencia: 92,
@@ -105,7 +105,7 @@ export const exAlunos: ExAluno[] = [
     dataEntrada: "2024-02-12",
     dataSaida: "2025-11-30",
     motivoSaida: "Questões financeiras",
-    observacoes: "Responsável demonstrou interesse em retornar quando possível.",
+    observacoesSaida: "Responsável demonstrou interesse em retornar quando possível.",
     historicoPagamentos: pagamentosMock("atrasado"),
     desempenho: {
       frequencia: 78,
@@ -127,7 +127,7 @@ export const exAlunos: ExAluno[] = [
     dataEntrada: "2022-08-01",
     dataSaida: "2025-12-15",
     motivoSaida: "Mudança de esporte",
-    observacoes: "Optou por natação. Manteve bom relacionamento com a equipe.",
+    observacoesSaida: "Optou por natação. Manteve bom relacionamento com a equipe.",
     historicoPagamentos: pagamentosMock("pago"),
     desempenho: {
       frequencia: 85,
@@ -149,7 +149,7 @@ export const exAlunos: ExAluno[] = [
     dataEntrada: "2024-09-10",
     dataSaida: "2026-01-08",
     motivoSaida: "Falta de tempo / agenda",
-    observacoes: "Conflito com atividades escolares no contraturno.",
+    observacoesSaida: "Conflito com atividades escolares no contraturno.",
     historicoPagamentos: pagamentosMock("pago"),
     desempenho: {
       frequencia: 96,
@@ -171,7 +171,7 @@ export const exAlunos: ExAluno[] = [
     dataEntrada: "2021-05-04",
     dataSaida: "2025-10-25",
     motivoSaida: "Conclusão do ciclo",
-    observacoes: "Chegou à idade máxima da categoria. Encaminhado para clube parceiro.",
+    observacoesSaida: "Chegou à idade máxima da categoria. Encaminhado para clube parceiro.",
     historicoPagamentos: pagamentosMock("pago"),
     desempenho: {
       frequencia: 90,
@@ -193,7 +193,7 @@ export const exAlunos: ExAluno[] = [
     dataEntrada: "2023-11-18",
     dataSaida: "2025-09-30",
     motivoSaida: "Insatisfação",
-    observacoes: "Buscou turma em horário diferente que não tínhamos disponível.",
+    observacoesSaida: "Buscou turma em horário diferente que não tínhamos disponível.",
     historicoPagamentos: pagamentosMock("isento"),
     desempenho: {
       frequencia: 71,

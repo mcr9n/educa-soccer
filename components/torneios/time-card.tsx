@@ -45,7 +45,7 @@ export function TimeCard({
           <span className="block font-sans text-sm font-bold leading-tight text-foreground text-pretty">
             {time.nome}
           </span>
-          <span className="mt-0.5 flex flex-wrap items-center gap-1.5 font-sans text-[12px] text-muted-foreground">
+          <span className="mt-0.5 flex flex-wrap items-center gap-1.5 font-sans text-[14px] text-muted-foreground">
             <span>{time.faixaEtaria}</span>
             <span aria-hidden>•</span>
             <span>Treinador: {time.treinador}</span>

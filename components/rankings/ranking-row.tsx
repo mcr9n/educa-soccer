@@ -27,13 +27,13 @@ export function RankingRow({ item, tipo }: { item: ItemRanking; tipo: TipoRankin
         <PositionTag label={`${item.posicao}º`} variant={variantePosicao(item.posicao)} className="shrink-0" />
         <div className="min-w-0">
           <p className="font-sans text-sm font-bold leading-tight text-foreground text-pretty">{item.aluno.nome}</p>
-          <p className="mt-0.5 truncate font-sans text-[13px] text-muted-foreground">{item.detalhe}</p>
+          <p className="mt-0.5 truncate font-sans text-[15px] text-muted-foreground">{item.detalhe}</p>
         </div>
       </div>
 
       <span
         className={cn(
-          "shrink-0 self-start rounded-sm border border-panel-shade bg-panel-shade/30 px-2 py-1 text-right font-pixel text-sm leading-none text-outline sm:self-center",
+          "shrink-0 self-start rounded-sm border border-panel-shade bg-panel-shade/30 px-2 py-1 text-right font-pixel text-sm leading-none text-outline sm:self-center text-[20px]",
           corPorTipo[tipo],
         )}
       >

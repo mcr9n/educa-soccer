@@ -184,7 +184,7 @@ export function RankingsView() {
 
         <div className="flex items-start gap-2 border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-2">
           <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={2.5} />
-          <p className="font-sans text-xs text-muted-foreground">
+          <p className="font-sans text-xs text-muted-foreground text-[13px]">
             {tipo === "artilharia" &&
               "Soma dos gols registrados na chamada durante as aulas do período. Faltas justificadas e aulas canceladas não entram no cálculo."}
             {tipo === "frequencia" &&
@@ -198,7 +198,7 @@ export function RankingsView() {
       {/* Lista de ranking */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center justify-between gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[15px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             Ranking de {tipoInfo.label}
           </h2>
           <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-primary-foreground">

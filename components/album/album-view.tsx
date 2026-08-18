@@ -135,10 +135,10 @@ export function AlbumView() {
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center justify-between gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
           <div className="flex items-center gap-2">
-            <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
+            <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
               TIPO
             </span>
-            <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+            <h2 className="font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
               Tipos de figurinha
             </h2>
           </div>
@@ -158,7 +158,7 @@ export function AlbumView() {
               className="flex items-center gap-2 rounded-sm border border-panel-shade bg-panel-shade/20 px-2 py-1.5"
             >
               <TipoFigurinhaBadge tipo={tipo} quantidade={concedidas.filter((f) => f.tipoId === tipo.id).length} variant={varianteDoTipo(tipo.id, tipos)} />
-              <span className="max-w-[10rem] truncate font-sans text-[11px] text-muted-foreground" title={tipo.comportamento}>
+              <span className="max-w-[10rem] truncate font-sans text-[14px] text-muted-foreground" title={tipo.comportamento}>
                 {tipo.comportamento}
               </span>
               {!tipo.ativo && (
@@ -190,10 +190,10 @@ export function AlbumView() {
       {/* Filtros */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
+          <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>

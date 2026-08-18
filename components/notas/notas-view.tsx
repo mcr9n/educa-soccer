@@ -210,7 +210,7 @@ export function NotasView() {
           </header>
 
           {!chamadaDoDia && (
-            <p className="border-b-2 border-panel-shade bg-gold/10 px-3 py-2 font-sans text-xs text-muted-foreground">
+            <p className="border-b-2 border-panel-shade bg-gold/10 px-3 py-2 font-sans text-xs text-muted-foreground text-[13px]">
               Ainda não há chamada registrada para esta turma nesta data. Presença e pontualidade aparecerão
               automaticamente após a chamada ser feita.
             </p>
@@ -235,7 +235,7 @@ export function NotasView() {
           )}
 
           <div className="flex items-center justify-between gap-2 border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-2">
-            <p className="font-sans text-xs font-semibold text-muted-foreground">
+            <p className="font-sans text-xs font-semibold text-muted-foreground text-[13px]">
               Total da turma no dia: <span className="text-gold">{totalTurmaDia} pts</span>
             </p>
             <button

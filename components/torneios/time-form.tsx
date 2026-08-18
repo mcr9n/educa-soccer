@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Check, Shield, X } from "lucide-react"
 import type { TimeTorneio, Torneio } from "@/lib/torneios-data"
 import { SeletorJogadores } from "./seletor-jogadores"
+import { faixasEtarias } from "@/lib/alunos-data"
 
 type FormState = {
   nome: string
@@ -140,13 +141,14 @@ export function TimeForm({
               />
             </Campo>
 
-            <Campo label="Faixa etária do time">
-              <input
-                value={form.faixaEtaria}
-                onChange={(e) => set("faixaEtaria", e.target.value)}
-                placeholder="Ex.: 8 a 12 anos"
-                className={inputClasses}
-              />
+            <Campo label="Categoria ou faixa etária" obrigatorio erro={erros.faixaEtaria}>
+              <select value={form.faixaEtaria} onChange={(e) => set("faixaEtaria", e.target.value)} className={inputClasses}>
+                {faixasEtarias.map((f) => (
+                  <option key={f} value={f}>
+                    {f}
+                  </option>
+                ))}
+              </select>
             </Campo>
 
             <Campo label="Treinador responsável" obrigatorio erro={erros.treinador}>

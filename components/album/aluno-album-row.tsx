@@ -43,10 +43,10 @@ export function TurmaAlbum({
         className="flex w-full items-center gap-3 border-b-2 border-panel-shade bg-scoreboard px-3 py-2 text-left"
       >
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <span className="block truncate font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             {turma}
           </span>
-          <span className="mt-1 block font-sans text-[11px] font-semibold text-primary-foreground">
+          <span className="mt-1 block font-sans text-[13px] font-semibold text-primary-foreground">
             {totalTurma} figurinha(s) entregue(s) em {ano}
           </span>
         </span>

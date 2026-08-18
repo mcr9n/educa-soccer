@@ -195,20 +195,6 @@ export function SeletorJogadores({
                     <span className="truncate">{aluno.turma}</span>
                   </span>
                 </span>
-                <span className="flex shrink-0 flex-col items-end gap-1">
-                  {!dentroDaFaixa && (
-                    <span className="inline-flex items-center gap-1 rounded-sm bg-danger/15 px-1.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wide text-danger">
-                      <AlertTriangle className="h-3 w-3" strokeWidth={2.5} />
-                      Fora da faixa
-                    </span>
-                  )}
-                  {outroTime && (
-                    <span className="inline-flex items-center gap-1 rounded-sm bg-gold/20 px-1.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wide text-gold">
-                      <ShieldAlert className="h-3 w-3" strokeWidth={2.5} />
-                      Já no time {outroTime.nome}
-                    </span>
-                  )}
-                </span>
               </label>
             </li>
           )

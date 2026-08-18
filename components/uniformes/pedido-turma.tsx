@@ -39,10 +39,10 @@ export function TurmaPedidos({
         className="flex w-full items-center gap-3 border-b-2 border-panel-shade bg-scoreboard px-3 py-2 text-left"
       >
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <span className="block truncate font-pixel text-[15px] uppercase tracking-wide text-primary-foreground pixel-shadow">
             {turma}
           </span>
-          <span className="mt-1 flex flex-wrap gap-x-3 font-sans text-[11px] font-semibold">
+          <span className="mt-1 flex flex-wrap gap-x-3 font-sans text-[13px] font-semibold">
             <span className="text-primary-foreground">
               {pendentesPagamento > 0 ? `${pendentesPagamento} pagamento(s) pendente(s)` : "Pagamentos em dia"}
             </span>
@@ -180,7 +180,7 @@ function PedidoRow({
       </div>
 
       {(pedido.dataPagamento || pedido.dataEntrega || pedido.dataRepasse || pedido.observacoes) && (
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 rounded-sm border border-panel-shade bg-panel-shade/20 px-2 py-1.5 font-sans text-[11px] text-muted-foreground">
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 rounded-sm border border-panel-shade bg-panel-shade/20 px-2 py-1.5 font-sans text-[14px] text-muted-foreground">
           {pedido.dataPagamento && <span>Pago em {formatarDataBR(pedido.dataPagamento)}</span>}
           {pedido.dataEntrega && <span>Entregue em {formatarDataBR(pedido.dataEntrega)}</span>}
           {pedido.dataRepasse && <span>Repassado em {formatarDataBR(pedido.dataRepasse)}</span>}

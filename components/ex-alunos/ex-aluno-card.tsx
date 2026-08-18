@@ -111,7 +111,7 @@ export function ExAlunoCard({
               value={`${formatarDataBR(exAluno.dataSaida)} • ${tempoPermanencia(exAluno.dataEntrada, exAluno.dataSaida)}`}
             />
             <InfoLinha icon={LogOut} label="Motivo da saída" value={exAluno.motivoSaida} />
-            <InfoLinha icon={StickyNote} label="Observações" value={exAluno.observacoes} />
+            <InfoLinha icon={StickyNote} label="Observações da saída" value={exAluno.observacoesSaida} />
           </div>
 
           {/* Histórico de frequência e desempenho */}

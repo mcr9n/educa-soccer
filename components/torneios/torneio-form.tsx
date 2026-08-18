@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Check, Trophy, X } from "lucide-react"
 import { locaisTorneioSugeridos, situacaoTorneioInfo, situacoesTorneio, type SituacaoTorneio, type Torneio } from "@/lib/torneios-data"
+import { faixasEtarias } from "@/lib/alunos-data"
 
 type FormState = {
   nome: string
@@ -148,12 +149,13 @@ export function TorneioForm({
             </Campo>
 
             <Campo label="Categoria ou faixa etária" obrigatorio erro={erros.categoria}>
-              <input
-                value={form.categoria}
-                onChange={(e) => set("categoria", e.target.value)}
-                placeholder="Ex.: 8 a 12 anos ou Sub-10"
-                className={inputClasses}
-              />
+              <select value={form.categoria} onChange={(e) => set("categoria", e.target.value)} className={inputClasses}>
+                {faixasEtarias.map((f) => (
+                  <option key={f} value={f}>
+                    {f}
+                  </option>
+                ))}
+              </select>
             </Campo>
 
             <Campo label="Quantidade máxima de jogadores por time" obrigatorio erro={erros.maxJogadoresPorTime}>

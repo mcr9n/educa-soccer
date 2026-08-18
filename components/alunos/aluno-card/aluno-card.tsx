@@ -132,8 +132,8 @@ export function AlunoCard({
             <InfoLinha icon={Mail} label="E-mail" value={aluno.email || "—"} />
             <InfoLinha icon={Wallet} label="Mensalidade" value={`R$ ${aluno.mensalidade}`} />
             <InfoLinha icon={Clock} label="Nascimento / Faixa etária" value={`${formatarData(aluno.dataNascimento)} • ${faixaEtaria(idade)}`} />
-            {aluno.observacoes && aluno.observacoes.trim() !== "" ? (
-              <InfoLinha icon={TextInitial} label="Observações" value={aluno.observacoes} />
+            {aluno.observacoesCadastro && aluno.observacoesCadastro.trim() !== "" ? (
+              <InfoLinha icon={TextInitial} label="Observações" value={aluno.observacoesCadastro} />
             ) : null}
           </div>
 

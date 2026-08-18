@@ -23,7 +23,8 @@ export type Aluno = {
   ativo: boolean
   dataEntrada?: string // ISO (YYYY-MM-DD) - data de entrada na escolinha
   dataVencimentoParcelas: string // ISO (YYYY-MM-DD) - data de vencimento das parcelas escolhida
-  observacoes?: string
+  observacoesDesativacao?: string
+  observacoesCadastro?: string
   foto?: string // data URL ou caminho da fotografia (opcional)
 }
 
@@ -34,10 +35,12 @@ export const alunos: Aluno[] = [
     nome: "Aletea Vega Marona Kunde",
     responsavel: "João Inácio Marona Kunde",
     dataNascimento: "2016-01-31",
+    dataVencimentoParcelas: "2016-01-31",
     telefone: "(51) 99335-6910",
     email: "joao.kunde@email.com",
     mensalidade: 230,
     turma: "SUDOESTE (QUINTA 18H40 E SÁBADO 09H00)",
+    observacoesCadastro: "Tem intolerância à lactose",
     modalidade: "coletiva",
     ativo: true,
   },
@@ -287,10 +290,8 @@ export function calcularIdade(dataNascimento: string, hoje = new Date()): number
   return idade
 }
 
-export type FaixaEtaria = "5 a 7" | "8 a 10" | "11 a 13" | "14+"
-
 /** Faixa etaria de acordo com a idade. */
-export function faixaEtaria(idade: number): FaixaEtaria {
+export function faixaEtaria(idade: number): string {
   if (idade < 11) return "sub-11"
   if (idade < 10) return "sub-10"
   if (idade < 8) return "sub-8"
@@ -298,7 +299,7 @@ export function faixaEtaria(idade: number): FaixaEtaria {
   return "11+"
 }
 
-export const faixasEtarias: FaixaEtaria[] = [ "sub-7","sub-8", "sub-10", "sub-11", "11+"]
+export const faixasEtarias: string[] = [ "sub-7","sub-8", "sub-10", "sub-11", "11+"];
 
 /** Monta o link de conversa no WhatsApp a partir do telefone cadastrado. */
 export function linkWhatsApp(telefone: string, nomeAluno: string): string {
