@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, X } from "lucide-react"
+import { Check } from "lucide-react"
 import type { Aluno } from "@/lib/alunos-data"
 import {
   ordemCriteriosMensais,
@@ -11,51 +11,7 @@ import {
   type CriterioMensal,
 } from "@/lib/notas-data"
 import { StepperNota } from "./stepper-nota"
-
-/** Fundo escuro + painel centralizado, no mesmo estilo dos demais modais do sistema. */
-function ModalShell({
-  titulo,
-  tag,
-  onClose,
-  children,
-}: {
-  titulo: string
-  tag: string
-  onClose: () => void
-  children: React.ReactNode
-}) {
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-label={titulo}
-      onClick={onClose}
-    >
-      <div className="panel-bevel w-full max-w-md overflow-hidden rounded-md bg-card" onClick={(e) => e.stopPropagation()}>
-        <header className="flex items-center justify-between gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <div className="flex items-center gap-2">
-            <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
-              {tag}
-            </span>
-            <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
-              {titulo}
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Fechar"
-            className="rounded-sm border border-panel-edge bg-panel-shade/50 p-1 text-foreground transition-colors hover:border-danger hover:text-danger focus:outline-none"
-          >
-            <X className="h-3.5 w-3.5" strokeWidth={3} />
-          </button>
-        </header>
-        <div className="p-3">{children}</div>
-      </div>
-    </div>
-  )
-}
+import { ModalShell } from "@/components/shared/modal-shell"
 
 /**
  * Formulário de lançamentos pontuais do mês (req. 14): Testes, Eventos,

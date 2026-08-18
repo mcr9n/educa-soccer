@@ -150,7 +150,6 @@ export function TurmasView() {
               type="button"
               onClick={() => {
                 setBusca("")
-                setLocalFiltro("todos")
                 setSituacaoFiltro("todas")
                 setModalidadeFiltro("todas")
               }}

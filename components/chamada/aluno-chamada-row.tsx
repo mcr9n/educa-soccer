@@ -58,9 +58,9 @@ export function AlunoChamadaRow({
               disabled={!golsEditavel || gols <= 0}
               onClick={() => onChangeGols(Math.max(0, gols - 1))}
               aria-label={`Diminuir gols de ${aluno.nome}`}
-              className="flex h-5 w-5 items-center justify-center rounded-sm border border-panel-edge bg-secondary text-secondary-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none disabled:pointer-events-none disabled:opacity-40"
+              className="flex h-8 w-8 items-center justify-center rounded-sm border border-panel-edge bg-secondary text-secondary-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none disabled:pointer-events-none disabled:opacity-40 sm:h-5 sm:w-5"
             >
-              <Minus className="h-3 w-3" strokeWidth={3} />
+              <Minus className="h-3.5 w-3.5 sm:h-3 sm:w-3" strokeWidth={3} />
             </button>
             <span
               aria-label={`Gols de ${aluno.nome}`}
@@ -73,9 +73,9 @@ export function AlunoChamadaRow({
               disabled={!golsEditavel}
               onClick={() => onChangeGols(Math.min(20, gols + 1))}
               aria-label={`Aumentar gols de ${aluno.nome}`}
-              className="flex h-5 w-5 items-center justify-center rounded-sm border border-panel-edge bg-secondary text-secondary-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none disabled:pointer-events-none disabled:opacity-40"
+              className="flex h-8 w-8 items-center justify-center rounded-sm border border-panel-edge bg-secondary text-secondary-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none disabled:pointer-events-none disabled:opacity-40 sm:h-5 sm:w-5"
             >
-              <Plus className="h-3 w-3" strokeWidth={3} />
+              <Plus className="h-3.5 w-3.5 sm:h-3 sm:w-3" strokeWidth={3} />
             </button>
           </div>
 
@@ -86,7 +86,7 @@ export function AlunoChamadaRow({
             title={pontualidade === "atrasado" ? "Chegou atrasado" : "Chegou no horário"}
             aria-pressed={pontualidade === "atrasado"}
             className={cn(
-              "inline-flex items-center gap-1 rounded-sm border-2 px-1.5 py-1 font-sans text-[11px] font-bold uppercase leading-none transition-colors focus:outline-none disabled:pointer-events-none",
+              "inline-flex min-h-9 items-center gap-1 rounded-sm border-2 px-2.5 py-1.5 font-sans text-[11px] font-bold uppercase leading-none transition-colors focus:outline-none disabled:pointer-events-none sm:min-h-0 sm:px-1.5 sm:py-1",
               pontualidade === "atrasado"
                 ? "border-gold bg-gold text-gold-foreground"
                 : "border-panel-edge bg-panel-shade/40 text-muted-foreground hover:border-success hover:text-success",
@@ -122,7 +122,7 @@ export function AlunoChamadaRow({
                 onClick={() => onChange(s)}
                 title={info.label}
                 className={cn(
-                  "rounded-sm border-2 px-2 py-1 font-pixel text-[13px] font-bold uppercase leading-none transition-colors focus:outline-none",
+                  "min-h-10 min-w-10 rounded-sm border-2 px-2.5 py-2 font-pixel text-[13px] font-bold uppercase leading-none transition-colors focus:outline-none sm:min-h-0 sm:min-w-0 sm:px-2 sm:py-1",
                   ativo
                     ? variantAtivo[info.variant]
                     : "border-panel-edge bg-panel-shade/40 text-muted-foreground hover:border-gold hover:text-gold",

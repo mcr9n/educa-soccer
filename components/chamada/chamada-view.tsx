@@ -303,7 +303,10 @@ export function ChamadaView() {
         )}
 
         <div className="flex items-center justify-between gap-2 border-t-2 border-panel-shade bg-panel-shade/20 px-3 py-2">
-          <p className="font-sans text-xs font-semibold text-muted-foreground">Professor(a): {professor}</p>
+          <p className="hidden font-sans text-xs font-semibold text-muted-foreground sm:block">
+            Professor(a): {professor}
+          </p>
+          <p className="font-sans text-xs font-semibold text-muted-foreground sm:hidden">{professor}</p>
           {bloqueada ? (
             <button
               type="button"
@@ -326,6 +329,39 @@ export function ChamadaView() {
           )}
         </div>
       </section>
+
+      {/*
+        Barra fixa no mobile: acesso rápido ao "Salvar chamada" sem precisar
+        rolar até o fim da lista de alunos, pedido explicitamente para a
+        experiência do professor no celular. Some no desktop (o botão da
+        seção acima já é suficiente lá).
+      */}
+      {alunosTurma.length > 0 && (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-panel-edge bg-card p-3 shadow-[0_-4px_16px_rgba(0,0,0,0.35)] lg:hidden">
+          {bloqueada ? (
+            <button
+              type="button"
+              onClick={reabrirParaEdicao}
+              className="flex w-full items-center justify-center gap-2 rounded-sm border-2 border-gold bg-transparent px-3 py-3 font-sans text-sm font-bold uppercase tracking-wide text-gold focus:outline-none"
+            >
+              <LockOpen className="h-4 w-4" strokeWidth={2.5} />
+              Reabrir para edição
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={salvar}
+              className="flex w-full items-center justify-center gap-2 rounded-sm border-2 border-gold bg-gold px-3 py-3 font-sans text-sm font-bold uppercase tracking-wide text-gold-foreground focus:outline-none"
+            >
+              <Save className="h-4 w-4" strokeWidth={2.5} />
+              {jaSalva ? "Salvar alterações" : "Salvar chamada"}
+            </button>
+          )}
+        </div>
+      )}
+      {/* Espaço reservado para a barra fixa não cobrir o histórico no mobile */}
+      <div className="h-16 lg:hidden" aria-hidden />
+
 
       {/* Historico da turma selecionada */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
