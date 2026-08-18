@@ -12,6 +12,7 @@ const secaoPorRota: Record<string, string> = {
   "/cadastro-turma": "Cadastro de Turma",
   "/pagamentos": "Gestão de Pagamentos",
   "/chamada": "Controle de Chamada",
+  "/notas": "Notas / Aluno Destaque",
   "/alertas-faltas": "Alertas de Faltas",
   "/ex-alunos": "Gestão de Ex-Alunos",
   "/aulas-experimentais": "Gestão de Aulas Experimentais",

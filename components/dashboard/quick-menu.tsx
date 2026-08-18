@@ -18,6 +18,7 @@ import {
   Shirt,
   Medal,
   StickyNote,
+  Star,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
@@ -33,6 +34,7 @@ const itens: Item[] = [
   { label: "Cadastro de Turma", icon: FolderPlus, href: "/cadastro-turma" },
   { label: "Pagamentos", icon: Wallet, href: "/pagamentos" },
   { label: "Chamada", icon: ClipboardCheck, href: "/chamada" },
+  { label: "Notas", icon: Star, href: "/notas" },
   { label: "Alertas de Faltas", icon: AlarmClock, href: "/alertas-faltas" },
   { label: "Aulas Experimentais", icon: FlaskConical, href: "/aulas-experimentais" },
   { label: "Ex-Alunos", icon: UserMinus, href: "/ex-alunos" },
