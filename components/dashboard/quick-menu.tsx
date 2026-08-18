@@ -21,7 +21,6 @@ import {
   Star,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
-import { UserMenu } from "./user-menu"
 
 export type Item = { label: string; icon: LucideIcon; href?: string }
 
@@ -121,7 +120,6 @@ export function QuickMenu() {
       </header>
 
       <NavList />
-      <UserMenu />
     </nav>
   )
 }

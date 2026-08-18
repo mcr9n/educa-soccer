@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
 import { NavList } from "./quick-menu"
-import { UserMenu } from "./user-menu"
 
 /**
  * Navegação mobile (< lg): cabeçalho compacto com botão hamburguer que abre
@@ -91,7 +90,6 @@ export function MobileNav({ secao }: { secao: string }) {
             </header>
 
             <NavList onNavigate={() => setAberto(false)} />
-            <UserMenu />
           </div>
         </div>
       )}
