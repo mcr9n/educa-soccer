@@ -124,7 +124,8 @@ function gerarChamadasIniciais(): Chamada[] {
   const grupos: { turma: string; datas: string[] }[] = [
     { turma: "SUDOESTE (QUINTA 18H40 E SÁBADO 09H00)", datas: ["2026-07-02", "2026-07-09"] },
     { turma: "SUDOESTE (SÁBADO - 10h40 às 11h40)", datas: ["2026-07-04", "2026-07-11"] },
-    { turma: "NOROESTE (TERÇA E QUINTA - 17h00 às 18h00)", datas: ["2026-07-07", "2026-07-14"] },
+    // Turma com 3 datas para demonstrar o alerta de faltas consecutivas (req. 10.2).
+    { turma: "NOROESTE (TERÇA E QUINTA - 17h00 às 18h00)", datas: ["2026-07-07", "2026-07-14", "2026-07-21"] },
     { turma: "ASA NORTE (SEGUNDA E QUARTA - 18h00 às 19h00)", datas: ["2026-07-06", "2026-07-13"] },
     { turma: "NOROESTE (TERÇA E QUINTA - 18h00 às 19h00)", datas: ["2026-07-02", "2026-07-09"] },
     { turma: "ASA NORTE (SEGUNDA E QUARTA - 19h00 às 20h00)", datas: ["2026-07-06", "2026-07-13"] },
@@ -135,6 +136,11 @@ function gerarChamadasIniciais(): Chamada[] {
   // pagamentos.
   const pool: StatusChamada[] = ["presente", "presente", "presente", "ausente", "ausencia_justificada"]
 
+  // O primeiro aluno (por ordem alfabetica) da turma com 3 datas fica com
+  // ausencia em todas elas, para que a tela de Alertas de Faltas exiba um
+  // exemplo real de faltas consecutivas.
+  const alunoDemonstracaoFaltas = { turma: "NOROESTE (TERÇA E QUINTA - 17h00 às 18h00)", indice: 0 }
+
   const lista: Chamada[] = []
   let seq = 0
   for (const grupo of grupos) {
@@ -143,10 +149,12 @@ function gerarChamadasIniciais(): Chamada[] {
     const professor = getTurma(grupo.turma)?.professor ?? "Coordenação"
     grupo.datas.forEach((data, di) => {
       seq++
-      const presencas: PresencaAluno[] = alunosTurma.map((aluno, ai) => ({
-        alunoId: aluno.id,
-        status: pool[(ai + di) % pool.length],
-      }))
+      const presencas: PresencaAluno[] = alunosTurma.map((aluno, ai) => {
+        if (grupo.turma === alunoDemonstracaoFaltas.turma && ai === alunoDemonstracaoFaltas.indice) {
+          return { alunoId: aluno.id, status: "ausente" as StatusChamada }
+        }
+        return { alunoId: aluno.id, status: pool[(ai + di) % pool.length] }
+      })
       lista.push({
         id: `ch${seq}`,
         turma: grupo.turma,
