@@ -18,6 +18,7 @@ const secaoPorRota: Record<string, string> = {
   "/torneios": "Gestão de Torneios",
   "/uniformes": "Gestão de Uniformes",
   "/rankings": "Rankings",
+  "/album": "Álbum de Figurinhas",
 }
 
 export function AppShell({ children }: { children: ReactNode }) {

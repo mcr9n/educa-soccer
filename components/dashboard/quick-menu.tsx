@@ -39,7 +39,7 @@ const itens: Item[] = [
   { label: "Torneios", icon: Trophy, href: "/torneios" },
   { label: "Uniformes", icon: Shirt, href: "/uniformes" },
   { label: "Rankings", icon: Medal, href: "/rankings" },
-  { label: "Álbum de Figurinhas", icon: StickyNote },
+  { label: "Álbum de Figurinhas", icon: StickyNote, href: "/album" },
 ]
 
 export function QuickMenu() {
