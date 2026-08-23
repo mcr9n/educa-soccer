@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Saira_Condensed, Oxanium } from 'next/font/google'
+import { Providers } from "./providers"
 import './globals.css'
 
 const sairaCondensed = Saira_Condensed({
@@ -56,8 +57,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`dark ${sairaCondensed.variable} ${oxanium.variable}`}>
       <body className="antialiased bg-background font-sans">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <Providers>
+          {children}
+          {process.env.NODE_ENV === 'production' && <Analytics />}
+        </Providers>
       </body>
     </html>
   )

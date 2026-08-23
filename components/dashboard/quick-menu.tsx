@@ -28,7 +28,7 @@ export type Item = { label: string; icon: LucideIcon; href?: string }
 // Itens com `href` ja possuem tela; os demais aparecem como "em breve".
 // Exportado para ser reutilizado pelo menu mobile (drawer).
 export const itensMenu: Item[] = [
-  { label: "Painel Inicial", icon: LayoutDashboard, href: "/" },
+  { label: "Painel Inicial", icon: LayoutDashboard, href: "/dashboard" },
   { label: "Alunos", icon: Users, href: "/alunos" },
   { label: "Cadastro de Aluno", icon: UserPlus, href: "/cadastro" },
   { label: "Turmas", icon: UsersRound, href: "/turmas" },

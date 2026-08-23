@@ -6,7 +6,7 @@ import { QuickMenu } from "./quick-menu"
 import { MobileNav } from "./mobile-nav"
 
 const secaoPorRota: Record<string, string> = {
-  "/": "Painel Inicial",
+  "/dashboard": "Painel Inicial",
   "/alunos": "Consulta de Alunos",
   "/cadastro": "Cadastro de Aluno",
   "/turmas": "Gestão de Turmas",
