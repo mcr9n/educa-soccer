@@ -231,7 +231,7 @@ function FormSection({
         <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
           {tag}
         </span>
-        <h2 className="flex items-center gap-2 font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+        <h2 className="flex items-center gap-2 font-pixel text-[14px] uppercase tracking-wide text-white pixel-shadow">
           {icon && <UsersRound className="h-4 w-4" strokeWidth={2.5} />}
           {titulo}
         </h2>
@@ -264,7 +264,7 @@ function TurmaSalva({
         <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">
           GOAL!
         </span>
-        <h2 className="font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+        <h2 className="font-pixel text-[10px] uppercase tracking-wide text-white pixel-shadow">
           Turma cadastrada
         </h2>
       </header>

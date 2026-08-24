@@ -58,7 +58,7 @@ export function TurmaCard({
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-sm font-pixel text-[9px] inset-bevel ${
             turma.modalidade === "particular"
               ? "bg-gold text-gold-foreground"
-              : "bg-scoreboard text-primary-foreground"
+              : "bg-scoreboard text-white"
           }`}
         >
           {turma.modalidade === "particular" ? "PAR" : "COL"}
@@ -178,7 +178,7 @@ function Bloco({
   return (
     <section className="mt-3 rounded-sm border border-panel-shade bg-card p-2.5">
       <header className="mb-2 flex items-center gap-2">
-        <span className="rounded-sm bg-scoreboard px-1.5 py-0.5 font-pixel text-[13px] leading-none text-primary-foreground">
+        <span className="rounded-sm bg-scoreboard px-1.5 py-0.5 font-pixel text-[13px] leading-none text-white">
           {tag}
         </span>
         <h3 className="flex-1 font-pixel text-[13px] uppercase tracking-wide text-foreground">{titulo}</h3>
@@ -222,7 +222,7 @@ function ActionButton({
   const tones = {
     default: "border-panel-edge bg-panel-shade/50 text-foreground hover:border-gold hover:bg-gold hover:text-gold-foreground",
     danger: "border-danger bg-danger/15 text-danger hover:bg-danger hover:text-white",
-    confirm: "border-primary bg-primary/15 text-primary hover:bg-primary hover:text-primary-foreground",
+    confirm: "border-primary bg-primary/15 text-primary hover:bg-primary hover:text-white",
   }
 
   const classes = `inline-flex items-center gap-1.5 rounded-sm border-2 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide transition-colors focus:outline-none ${tones[tone]}`

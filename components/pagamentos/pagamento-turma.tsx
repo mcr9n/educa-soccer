@@ -61,19 +61,19 @@ export function TurmaPagamentos({
           className="shrink-0"
         />
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <span className="block truncate font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             {turma}
           </span>
           <span className="mt-1 flex flex-wrap gap-x-3 font-sans text-[11px] font-semibold">
-            <span className="text-primary-foreground">Recebido: {formatarValor(recebido)}</span>
-            <span className="text-primary-foreground">Em aberto: {formatarValor(emAberto)}</span>
+            <span className="text-white">Recebido: {formatarValor(recebido)}</span>
+            <span className="text-white">Em aberto: {formatarValor(emAberto)}</span>
           </span>
         </span>
-        <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-primary-foreground">
+        <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-white">
           {linhas.length}
         </span>
         <ChevronDown
-          className={`h-4 w-4 shrink-0 text-primary-foreground transition-transform ${aberto ? "rotate-180" : ""}`}
+          className={`h-4 w-4 shrink-0 text-white transition-transform ${aberto ? "rotate-180" : ""}`}
           strokeWidth={2.5}
         />
       </button>

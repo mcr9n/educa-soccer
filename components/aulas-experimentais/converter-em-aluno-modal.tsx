@@ -33,7 +33,7 @@ export function ConverterEmAlunoModal({
           </span>
           <h2
             id="converter-titulo"
-            className="flex items-center gap-2 font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow"
+            className="flex items-center gap-2 font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow"
           >
             <Trophy className="h-4 w-4" strokeWidth={2.5} />
             Converter em aluno

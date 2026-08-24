@@ -94,7 +94,7 @@ export function LancamentosMesForm({
           <button
             type="button"
             onClick={confirmar}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm border-2 border-primary bg-primary px-3 py-2 font-pixel text-[13px] uppercase tracking-wide text-primary-foreground transition-transform hover:-translate-y-0.5 focus:outline-none"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm border-2 border-primary bg-primary px-3 py-2 font-pixel text-[13px] uppercase tracking-wide text-white transition-transform hover:-translate-y-0.5 focus:outline-none"
           >
             <Check className="h-3.5 w-3.5" strokeWidth={3} />
             Salvar lançamentos

@@ -38,7 +38,7 @@ export function TimeCard({
         aria-expanded={expandido}
         className="flex w-full items-center gap-3 px-2.5 py-2 text-left transition-colors hover:bg-gold/10 focus-visible:bg-gold/10 focus:outline-none"
       >
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[9px] text-primary-foreground inset-bevel">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[9px] text-white inset-bevel">
           {time.nome.slice(0, 3).toUpperCase()}
         </span>
         <span className="min-w-0 flex-1">

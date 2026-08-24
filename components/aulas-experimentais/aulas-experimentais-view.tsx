@@ -102,11 +102,11 @@ export function AulasExperimentaisView() {
             <span className="rounded-sm bg-gold px-3 py-0.5 font-pixel text-sm font-bold leading-none text-gold-foreground">
               NOVO
             </span>
-            <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-primary-foreground pixel-shadow">
+            <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-white pixel-shadow">
               Registrar novo contato
             </h2>
           </span>
-          <UserPlus2 className="h-4 w-4 shrink-0 text-primary-foreground" strokeWidth={2.5} />
+          <UserPlus2 className="h-4 w-4 shrink-0 text-white" strokeWidth={2.5} />
         </button>
 
         {formularioAberto && (
@@ -122,7 +122,7 @@ export function AulasExperimentaisView() {
           <span className="rounded-sm bg-gold px-3 py-0.5 font-pixel text-sm font-bold leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-white pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>

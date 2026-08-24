@@ -87,7 +87,7 @@ export function ExAlunosView() {
           <span className="rounded-sm bg-gold px-3 py-0.5 font-pixel text-sm font-bold leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-white pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>

@@ -146,7 +146,7 @@ export function UniformesView() {
             priority
           />
           <div className="min-w-0 flex-1">
-            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
+            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-white pixel-shadow sm:text-base">
               Gestão de Uniformes
             </h1>
             <p className="font-sans text-[14px] font-semibold uppercase tracking-widest text-danger">
@@ -167,7 +167,7 @@ export function UniformesView() {
           {cards.map((c) => (
             <div key={c.label} className="inset-bevel bg-card px-3 py-2">
               <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{c.label}</p>
-              <p className={`mt-1 font-pixel text-base leading-none text-outline text-primary-foreground ${c.cls}`}>{c.value}</p>
+              <p className={`mt-1 font-pixel text-base leading-none text-outline text-white ${c.cls}`}>{c.value}</p>
             </div>
           ))}
         </div>
@@ -179,7 +179,7 @@ export function UniformesView() {
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>
@@ -281,7 +281,7 @@ export function UniformesView() {
             onClick={(e) => e.stopPropagation()}
           >
             <header className="border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-              <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+              <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
                 Excluir pedido
               </h2>
             </header>

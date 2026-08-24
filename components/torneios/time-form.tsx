@@ -122,7 +122,7 @@ export function TimeForm({
           </span>
           <h2
             id="time-form-titulo"
-            className="flex items-center gap-2 font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow"
+            className="flex items-center gap-2 font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow"
           >
             <Shield className="h-4 w-4" strokeWidth={2.5} />
             {time ? "Editar time" : "Novo time"} — {torneio.nome}

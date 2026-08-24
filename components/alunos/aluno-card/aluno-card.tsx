@@ -108,7 +108,7 @@ export function AlunoCard({
         aria-expanded={expandido}
         className="flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-gold/10 focus-visible:bg-gold/10 focus:outline-none"
       >
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[10px] text-primary-foreground inset-bevel">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[10px] text-white inset-bevel">
           {aluno.numero}
         </span>
         <span className="min-w-0 flex-1">
@@ -289,7 +289,7 @@ function ActionButton({
   const tones = {
     default: "border-panel-edge bg-panel-shade/50 text-foreground hover:border-gold hover:bg-gold hover:text-gold-foreground",
     danger: "border-danger bg-danger/15 text-danger hover:bg-danger hover:text-white",
-    confirm: "border-primary bg-primary/15 text-primary hover:bg-primary hover:text-primary-foreground",
+    confirm: "border-primary bg-primary/15 text-primary hover:bg-primary hover:text-white",
   }
 
   const classes = `inline-flex items-center gap-1.5 rounded-sm border-2 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide transition-colors focus:outline-none ${tones[tone]}`

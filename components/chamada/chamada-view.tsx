@@ -40,7 +40,7 @@ const resumoCls: Record<StatusChamada, string> = {
   presente: "text-success",
   ausente: "text-danger",
   ausencia_justificada: "text-gold",
-  aula_cancelada: "text-primary-foreground",
+  aula_cancelada: "text-white",
   nao_se_aplica: "text-muted-foreground",
 }
 
@@ -145,7 +145,7 @@ export function ChamadaView() {
             priority
           />
           <div className="min-w-0 flex-1">
-            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
+            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-white pixel-shadow sm:text-base">
               Controle de Chamada
             </h1>
             <p className="truncate font-sans text-[13px] font-semibold uppercase tracking-widest text-danger">
@@ -160,7 +160,7 @@ export function ChamadaView() {
               <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">
                 {statusChamadaInfo[c.status].label}
               </p>
-              <p className={`mt-1 font-pixel text-base leading-none text-outline text-primary-foreground ${resumoCls[c.status]}`}>
+              <p className={`mt-1 font-pixel text-base leading-none text-outline text-white ${resumoCls[c.status]}`}>
                 {c.value}
               </p>
             </div>
@@ -174,7 +174,7 @@ export function ChamadaView() {
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
             CHAMADA
           </span>
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             Turma & Data da Aula
           </h2>
         </header>
@@ -258,7 +258,7 @@ export function ChamadaView() {
             type="button"
             disabled={bloqueada}
             onClick={() => aplicarAtodos("aula_cancelada")}
-            className="inline-flex items-center gap-1 rounded-sm border border-panel-edge bg-panel-shade/50 px-2 py-1 font-sans text-[11px] font-bold uppercase tracking-wide text-foreground transition-colors hover:border-scoreboard hover:text-primary-foreground focus:outline-none"
+            className="inline-flex items-center gap-1 rounded-sm border border-panel-edge bg-panel-shade/50 px-2 py-1 font-sans text-[11px] font-bold uppercase tracking-wide text-foreground transition-colors hover:border-scoreboard hover:text-white focus:outline-none"
           >
             <RotateCcw className="h-3 w-3" strokeWidth={2.5} />
             Aula cancelada (todos)
@@ -269,10 +269,10 @@ export function ChamadaView() {
       {/* Lista de alunos da turma */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center justify-between gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             Lista de Presença
           </h2>
-          <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-primary-foreground">
+          <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-white">
             {alunosTurma.length}
           </span>
         </header>
@@ -366,8 +366,8 @@ export function ChamadaView() {
       {/* Historico da turma selecionada */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <History className="h-4 w-4 shrink-0 text-primary-foreground" strokeWidth={2.5} />
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <History className="h-4 w-4 shrink-0 text-white" strokeWidth={2.5} />
+          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             Chamadas já registradas nesta turma
           </h2>
         </header>

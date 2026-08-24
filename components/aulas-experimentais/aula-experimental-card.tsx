@@ -152,7 +152,7 @@ export function AulaExperimentalCard({
               href={linkWhatsApp(item.telefone, item.nomeCrianca)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-sm border-2 border-primary bg-primary/15 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="inline-flex items-center gap-1.5 rounded-sm border-2 border-primary bg-primary/15 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-white"
             >
               <MessageCircle className="h-3.5 w-3.5" strokeWidth={2.5} />
               Falar no WhatsApp

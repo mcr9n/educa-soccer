@@ -21,7 +21,7 @@ export function ScoreboardHeader() {
         />
         <div className="min-w-0">
           <h1 className="font-pixel text-xl sm:text-2xl font-extrabold uppercase leading-none tracking-tight truncate">
-            <span className="text-primary-foreground">EDUCA</span>
+            <span className="text-white">EDUCA</span>
             <span className="text-danger">SOCCER</span>
           </h1>
           <p className="mt-0.5 font-sans text-[11px] font-semibold uppercase tracking-widest text-danger">
@@ -30,7 +30,7 @@ export function ScoreboardHeader() {
         </div>
         <div className="ml-auto hidden sm:block text-right">
           <p className="font-pixel text-[14px] uppercase text-danger">Temporada</p>
-          <p className="font-sans text-sm font-bold text-primary-foreground capitalize">{hoje}</p>
+          <p className="font-sans text-sm font-bold text-white capitalize">{hoje}</p>
         </div>
       </div>
 

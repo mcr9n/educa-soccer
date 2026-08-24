@@ -54,7 +54,7 @@ export function AlertasFaltasView() {
             priority
           />
           <div className="min-w-0 flex-1">
-            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
+            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-white pixel-shadow sm:text-base">
               Alertas de Faltas
             </h1>
             <p className="truncate font-sans text-[13px] font-semibold uppercase tracking-widest text-danger">
@@ -67,7 +67,7 @@ export function AlertasFaltasView() {
           {cards.map((c) => (
             <div key={c.label} className="inset-bevel bg-card px-3 py-2">
               <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{c.label}</p>
-              <p className={`mt-1 font-pixel text-base leading-none text-outline text-primary-foreground ${c.cls}`}>
+              <p className={`mt-1 font-pixel text-base leading-none text-outline text-white ${c.cls}`}>
                 {c.value}
               </p>
             </div>
@@ -81,7 +81,7 @@ export function AlertasFaltasView() {
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             Configuração & Busca
           </h2>
         </header>

@@ -21,7 +21,7 @@ export function RetroPanel({ title, tag, right, children, className, maxBodyHeig
               {tag}
             </span>
           )}
-          <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-primary-foreground pixel-shadow truncate">
+          <h2 className="font-pixel text-lg font-bold uppercase tracking-wide text-white pixel-shadow truncate">
             {title}
           </h2>
         </div>

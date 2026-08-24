@@ -142,7 +142,7 @@ export function CadastroForm() {
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">NEW</span>
-          <h2 className="flex items-center gap-2 font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="flex items-center gap-2 font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             <UserPlus className="h-4 w-4" strokeWidth={2.5} />
             Ficha de Cadastro
           </h2>
@@ -308,7 +308,7 @@ function FormSection({
     <section className="panel-bevel overflow-hidden rounded-md bg-card">
       <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
         <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">{tag}</span>
-        <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">{titulo}</h2>
+        <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">{titulo}</h2>
       </header>
       <div className="p-4">{children}</div>
     </section>
@@ -338,7 +338,7 @@ function CadastroSucesso({
     <section className="panel-bevel overflow-hidden rounded-md bg-card">
       <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-primary px-3 py-2">
         <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[8px] leading-none text-gold-foreground">GOAL!</span>
-        <h2 className="font-pixel text-[10px] uppercase tracking-wide text-primary-foreground pixel-shadow">Aluno cadastrado</h2>
+        <h2 className="font-pixel text-[10px] uppercase tracking-wide text-white pixel-shadow">Aluno cadastrado</h2>
       </header>
 
       <div className="flex flex-col items-center gap-3 p-5">

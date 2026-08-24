@@ -37,7 +37,7 @@ export function MobileNav({ secao }: { secao: string }) {
           onClick={() => setAberto(true)}
           aria-label="Abrir menu de navegação"
           aria-expanded={aberto}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border-2 border-panel-edge bg-panel-shade/40 text-primary-foreground transition-colors active:bg-gold active:text-gold-foreground"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border-2 border-panel-edge bg-panel-shade/40 text-white transition-colors active:bg-gold active:text-gold-foreground"
         >
           <Menu className="h-5 w-5" strokeWidth={2.5} />
         </button>
@@ -49,7 +49,7 @@ export function MobileNav({ secao }: { secao: string }) {
           className="shrink-0 drop-shadow"
         />
         <div className="min-w-0 flex-1">
-          <p className="truncate font-pixel text-[13px] uppercase leading-none tracking-tight text-primary-foreground">
+          <p className="truncate font-pixel text-[13px] uppercase leading-none tracking-tight text-white">
             {secao}
           </p>
         </div>
@@ -74,7 +74,7 @@ export function MobileNav({ secao }: { secao: string }) {
               />
               <div className="min-w-0 flex-1">
                 <p className="font-pixel text-base font-extrabold uppercase leading-none tracking-tight">
-                  <span className="text-primary-foreground">EDUCA</span>
+                  <span className="text-white">EDUCA</span>
                   <span className="text-danger">SOCCER</span>
                 </p>
                 <p className="mt-1 font-sans text-[10px] uppercase tracking-widest text-danger">Menu Principal</p>

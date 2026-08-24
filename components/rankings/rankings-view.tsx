@@ -55,7 +55,7 @@ export function RankingsView() {
             priority
           />
           <div className="min-w-0 flex-1">
-            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
+            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-white pixel-shadow sm:text-base">
               Rankings
             </h1>
             <p className="truncate font-sans text-[13px] font-semibold uppercase tracking-widest text-danger">
@@ -100,7 +100,7 @@ export function RankingsView() {
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
             Turma & Período
           </h2>
         </header>
@@ -198,10 +198,10 @@ export function RankingsView() {
       {/* Lista de ranking */}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center justify-between gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-          <h2 className="font-pixel text-[15px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[15px] uppercase tracking-wide text-white pixel-shadow">
             Ranking de {tipoInfo.label}
           </h2>
-          <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-primary-foreground">
+          <span className="shrink-0 rounded-sm bg-panel-shade px-1.5 py-0.5 font-pixel text-[13px] text-white">
             {comDados.length}
           </span>
         </header>

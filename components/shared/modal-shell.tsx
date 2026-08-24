@@ -45,7 +45,7 @@ export function ModalShell({
             <span className="shrink-0 rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">
               {tag}
             </span>
-            <h2 className="truncate font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+            <h2 className="truncate font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
               {titulo}
             </h2>
           </div>

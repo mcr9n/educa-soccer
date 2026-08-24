@@ -49,7 +49,7 @@ export function TorneioCard({
         aria-expanded={expandido}
         className="flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-gold/10 focus-visible:bg-gold/10 focus:outline-none"
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[13px] text-primary-foreground inset-bevel">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-scoreboard font-pixel text-[13px] text-white inset-bevel">
           <Users className="h-4 w-4" strokeWidth={2.5} />
         </span>
         <span className="min-w-0 flex-1">
@@ -95,7 +95,7 @@ export function TorneioCard({
           {/* Times do torneio (req. 8.2) */}
           <section className="mt-3 rounded-sm border border-panel-shade bg-card p-2.5">
             <header className="mb-2 flex items-center gap-2">
-              <span className="rounded-sm bg-scoreboard px-1.5 py-0.5 font-pixel text-[13px] leading-none text-primary-foreground">
+              <span className="rounded-sm bg-scoreboard px-1.5 py-0.5 font-pixel text-[13px] leading-none text-white">
                 TIMES
               </span>
               <h3 className="flex-1 font-pixel text-[13px] uppercase tracking-wide text-foreground">

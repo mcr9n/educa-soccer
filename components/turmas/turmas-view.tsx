@@ -50,10 +50,10 @@ export function TurmasView() {
     busca !== "" || situacaoFiltro !== "todas" || modalidadeFiltro !== "todas"
 
   const principais = [
-    { label: "Turmas", value: contadores.total, cls: "text-primary-foreground" },
-    { label: "Ativas", value: contadores.ativas, cls: "text-primary-foreground" },
-    { label: "Inativas", value: contadores.inativas, cls: "text-primary-foreground" },
-    { label: "Matriculados", value: contadores.matriculados, cls: "text-primary-foreground" },
+    { label: "Turmas", value: contadores.total, cls: "text-white" },
+    { label: "Ativas", value: contadores.ativas, cls: "text-white" },
+    { label: "Inativas", value: contadores.inativas, cls: "text-white" },
+    { label: "Matriculados", value: contadores.matriculados, cls: "text-white" },
   ]
 
   return (
@@ -70,7 +70,7 @@ export function TurmasView() {
             priority
           />
           <div className="min-w-0 flex-1">
-            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
+            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-white pixel-shadow sm:text-base">
               Gestão de Turmas
             </h1>
             <p className="font-sans text-[13px] font-semibold uppercase tracking-widest text-danger">Elencos & Horários</p>
@@ -100,7 +100,7 @@ export function TurmasView() {
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[14px] uppercase tracking-wide text-white pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>

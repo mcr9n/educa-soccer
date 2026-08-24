@@ -7,7 +7,7 @@ const variants: Record<Variant, string> = {
   gold: "bg-gold text-gold-foreground",
   green: "bg-success text-success-foreground",
   danger: "bg-danger text-white",
-  blue: "bg-scoreboard text-primary-foreground",
+  blue: "bg-scoreboard text-white",
 }
 
 export function PositionTag({

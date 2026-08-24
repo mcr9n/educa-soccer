@@ -9,7 +9,7 @@ const variantAtivo: Record<string, string> = {
   green: "border-success bg-success text-success-foreground",
   danger: "border-danger bg-danger text-white",
   gold: "border-gold bg-gold text-gold-foreground",
-  blue: "border-scoreboard bg-scoreboard text-primary-foreground",
+  blue: "border-scoreboard bg-scoreboard text-white",
   default: "border-panel-edge bg-secondary text-secondary-foreground",
 }
 

@@ -104,7 +104,7 @@ export function AlbumView() {
             priority
           />
           <div className="min-w-0 flex-1">
-            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-primary-foreground pixel-shadow sm:text-base">
+            <h1 className="truncate font-pixel text-sm uppercase tracking-wide text-white pixel-shadow sm:text-base">
               Álbum de Figurinhas
             </h1>
             <p className="font-sans text-[14px] font-semibold uppercase tracking-widest text-danger">
@@ -125,7 +125,7 @@ export function AlbumView() {
           {cards.map((c) => (
             <div key={c.label} className="inset-bevel bg-card px-3 py-2">
               <p className="font-pixel text-[13px] uppercase tracking-wide text-muted-foreground">{c.label}</p>
-              <p className={`mt-1 font-pixel text-base leading-none text-outline text-primary-foreground ${c.cls}`}>{c.value}</p>
+              <p className={`mt-1 font-pixel text-base leading-none text-outline text-white ${c.cls}`}>{c.value}</p>
             </div>
           ))}
         </div>
@@ -138,14 +138,14 @@ export function AlbumView() {
             <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
               TIPO
             </span>
-            <h2 className="font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+            <h2 className="font-pixel text-[14px] uppercase tracking-wide text-white pixel-shadow">
               Tipos de figurinha
             </h2>
           </div>
           <button
             type="button"
             onClick={() => setTipoFormAberto("novo")}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border-2 border-panel-edge bg-panel-shade/50 px-2 py-1 font-sans text-[11px] font-bold uppercase tracking-wide text-primary-foreground transition-colors hover:border-gold hover:text-gold focus:outline-none"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border-2 border-panel-edge bg-panel-shade/50 px-2 py-1 font-sans text-[11px] font-bold uppercase tracking-wide text-white transition-colors hover:border-gold hover:text-gold focus:outline-none"
           >
             <Settings2 className="h-3.5 w-3.5" strokeWidth={2.5} />
             Novo tipo
@@ -193,7 +193,7 @@ export function AlbumView() {
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[14px] leading-none text-gold-foreground">
             FILTRO
           </span>
-          <h2 className="font-pixel text-[14px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+          <h2 className="font-pixel text-[14px] uppercase tracking-wide text-white pixel-shadow">
             Buscar & Filtrar
           </h2>
         </header>
@@ -301,7 +301,7 @@ export function AlbumView() {
         >
           <div className="panel-bevel w-full max-w-sm overflow-hidden rounded-md bg-card" onClick={(e) => e.stopPropagation()}>
             <header className="border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
-              <h2 className="font-pixel text-[13px] uppercase tracking-wide text-primary-foreground pixel-shadow">
+              <h2 className="font-pixel text-[13px] uppercase tracking-wide text-white pixel-shadow">
                 Excluir tipo de figurinha
               </h2>
             </header>

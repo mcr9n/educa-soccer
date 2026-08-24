@@ -112,7 +112,7 @@ export function QuickMenu() {
         />
         <div className="min-w-0">
           <p className="font-pixel text-base font-extrabold uppercase leading-none tracking-tight">
-            <span className="text-primary-foreground">EDUCA</span>
+            <span className="text-white">EDUCA</span>
             <span className="text-danger">SOCCER</span>
           </p>
           <p className="mt-1 font-sans text-[10px] uppercase tracking-widest text-danger">Menu Principal</p>

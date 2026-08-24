@@ -119,7 +119,7 @@ export function ExAlunoCard({
 
             {/* Histórico de pagamentos */}
             <section className="rounded-sm border border-panel-shade bg-card p-3">
-              <h4 className="mb-2 flex items-center gap-1.5 font-pixel text-[13px] uppercase tracking-wide text-primary-foreground">
+              <h4 className="mb-2 flex items-center gap-1.5 font-pixel text-[13px] uppercase tracking-wide text-white">
                 <Wallet className="h-3.5 w-3.5 text-gold" strokeWidth={2.5} />
                 Histórico de Pagamentos
               </h4>
@@ -170,7 +170,7 @@ export function ExAlunoCard({
                   href={linkWhatsApp(exAluno.telefone, exAluno.nome)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-sm border-2 border-primary bg-primary/15 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+                  className="inline-flex items-center gap-1.5 rounded-sm border-2 border-primary bg-primary/15 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-white"
                 >
                   <MessageCircle className="h-3.5 w-3.5" strokeWidth={2.5} />
                   WhatsApp
@@ -191,7 +191,7 @@ export function ExAlunoCard({
                 <button
                   type="button"
                   onClick={confirmarReativacao}
-                  className="inline-flex items-center gap-1.5 rounded-sm border-2 border-primary bg-primary/15 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus:outline-none"
+                  className="inline-flex items-center gap-1.5 rounded-sm border-2 border-primary bg-primary/15 px-2.5 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-white focus:outline-none"
                 >
                   <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                   Confirmar reativação
