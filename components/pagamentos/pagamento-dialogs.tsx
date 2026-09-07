@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useKeycloak } from "@react-keycloak/web"
 import { MessageCircle, Check, Send } from "lucide-react"
 import {
   type Pagamento,
@@ -10,7 +11,6 @@ import {
   linkCobranca,
   mensagemCobrancaPadrao,
   meses,
-  usuarioLogado,
 } from "@/lib/pagamentos-data"
 import type { Aluno } from "@/lib/alunos-data"
 import { ModalShell } from "@/components/shared/modal-shell"
@@ -84,10 +84,13 @@ export function RegistroDialog({
   }) => void
 }) {
   const hoje = new Date().toISOString().slice(0, 10)
+  const { keycloak } = useKeycloak()
   const [dataPagamento, setDataPagamento] = useState(hoje)
   const [valorRecebido, setValorRecebido] = useState(String(pagamento.valor))
   const [formaPagamento, setFormaPagamento] = useState<FormaPagamento>("PIX")
-  const [responsavel, setResponsavel] = useState(usuarioLogado)
+  const [responsavel, setResponsavel] = useState(
+    keycloak.tokenParsed?.name ?? keycloak.tokenParsed?.preferred_username ?? "Coordenação",
+  )
   const [observacoes, setObservacoes] = useState("")
 
   function confirmar() {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Search, Users } from "lucide-react"
 import {
   type Aluno,
@@ -18,6 +18,7 @@ import {
   type ModalidadeFiltro,
   transferirAluno as transferirAlunoService,
 } from "@/lib/services/alunos.service"
+import { atualizarAluno, listarAlunos } from "@/lib/services/alunos-api"
 import { AlunosCounters } from "../alunos-counters/alunos-counters"
 import { AlunoCard } from "../aluno-card/aluno-card"
 import styles from "./alunos-view.module.css"
@@ -30,6 +31,15 @@ export function AlunosView() {
   const [faixaFiltro, setFaixaFiltro] = useState<string>("todas")
   const [modalidadeFiltro, setModalidadeFiltro] = useState<ModalidadeFiltro>("todas")
   const [expandidoId, setExpandidoId] = useState<string | null>(null)
+  const [carregando, setCarregando] = useState(true)
+  const [erro, setErro] = useState<string | null>(null)
+
+  useEffect(() => {
+    listarAlunos()
+      .then((alunos) => setLista(alunos))
+      .catch(() => setErro("Não foi possível carregar os alunos. Verifique se o backend está em execução."))
+      .finally(() => setCarregando(false))
+  }, [])
 
   const ativos = useMemo(() => obterAlunosAtivos(lista), [lista])
 
@@ -44,16 +54,30 @@ export function AlunosView() {
 
   const contadores = useMemo(() => calcularResumoAlunos(ativos), [ativos])
 
-  function editarAluno(id: string, dados: Partial<Aluno>) {
-    setLista((prev) => editarAlunoService(prev, id, dados))
+  async function editarAluno(id: string, dados: Partial<Aluno>) {
+    const atual = lista.find((aluno) => aluno.id === id)
+    if (!atual) return
+    const atualizado = await atualizarAluno(id, { ...atual, ...dados })
+    setLista((prev) => editarAlunoService(prev, id, atualizado))
   }
 
-  function transferirAluno(id: string, turma: string) {
-    setLista((prev) => transferirAlunoService(prev, id, turma))
+  async function transferirAluno(id: string, turma: string) {
+    const atual = lista.find((aluno) => aluno.id === id)
+    if (!atual) return
+    const dados = transferirAlunoService([atual], id, turma)[0]
+    const atualizado = await atualizarAluno(id, dados)
+    setLista((prev) => editarAlunoService(prev, id, atualizado))
   }
 
-  function marcarExAluno(id: string) {
-    setLista((prev) => marcarAlunoComoExAluno(prev, id))
+  async function marcarExAluno(id: string, motivo: string, observacoes: string) {
+    const atual = lista.find((aluno) => aluno.id === id)
+    if (!atual) return
+    const dados = marcarAlunoComoExAluno([atual], id)[0]
+    const atualizado = await atualizarAluno(id, {
+      ...dados,
+      observacoesDesativacao: [motivo, observacoes].filter(Boolean).join(" - "),
+    })
+    setLista((prev) => editarAlunoService(prev, id, atualizado))
     setExAlunos((n) => n + 1)
     setExpandidoId((atual) => (atual === id ? null : atual))
   }
@@ -70,6 +94,8 @@ export function AlunosView() {
 
   return (
     <div className={styles.root}>
+      {erro && <p className="rounded-sm border border-danger bg-danger/10 p-3 text-sm text-danger">{erro}</p>}
+      {carregando && <p className="p-4 text-sm text-muted-foreground">Carregando alunos...</p>}
       <AlunosCounters
         ativos={contadores.ativos}
         particulares={contadores.particulares}
@@ -151,8 +177,8 @@ export function AlunosView() {
               aluno={aluno}
               expandido={expandidoId === aluno.id}
               onToggle={() => setExpandidoId((atual) => (atual === aluno.id ? null : aluno.id))}
-              onEditar={editarAluno}
-              onTransferir={transferirAluno}
+              onEditar={(id, dados) => void editarAluno(id, dados)}
+              onTransferir={(id, turma) => void transferirAluno(id, turma)}
               onMarcarExAluno={marcarExAluno}
             />
           ))}

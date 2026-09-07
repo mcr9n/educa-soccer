@@ -1,39 +1,60 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { Search, Wallet } from "lucide-react"
-import { alunos } from "@/lib/alunos-data"
-import { turmasDisponiveis } from "@/lib/turmas-data"
+import { type Aluno } from "@/lib/alunos-data"
+import { listarAlunos } from "@/lib/services/alunos-api"
+import { listarTurmas } from "@/lib/services/turmas-api"
+import { listarPagamentos, registrarPagamento, reabrirPagamento } from "@/lib/services/pagamentos-api"
 import {
-  pagamentos as pagamentosIniciais,
   type Pagamento,
   type SituacaoPagamento,
   type FormaPagamento,
   meses,
-  anoAtual,
   formatarValor,
-  alunoDoPagamento,
 } from "@/lib/pagamentos-data"
 import { TurmaPagamentos, type LinhaPagamento } from "./pagamento-turma"
 
 type SituacaoFiltro = SituacaoPagamento | "todas"
 type ModalidadeFiltro = "todas" | "coletiva" | "particular"
 
-const anosDisponiveis = Array.from(new Set(pagamentosIniciais.map((p) => p.ano))).sort((a, b) => b - a)
-const mesAtualPadrao = 7 // Julho (mes de referencia do mock)
+const anoAtualSistema = new Date().getFullYear()
+const mesAtualPadrao = new Date().getMonth() + 1
+const anosDisponiveis = [anoAtualSistema]
 
 export function PagamentosView() {
-  const [lista, setLista] = useState<Pagamento[]>(pagamentosIniciais)
+  const [lista, setLista] = useState<Pagamento[]>([])
+  const [alunos, setAlunos] = useState<Aluno[]>([])
+  const [turmasDisponiveis, setTurmasDisponiveis] = useState<string[]>([])
   const [busca, setBusca] = useState("")
   const [turmaFiltro, setTurmaFiltro] = useState("todas")
   const [mesFiltro, setMesFiltro] = useState(mesAtualPadrao)
-  const [anoFiltro, setAnoFiltro] = useState(anoAtual)
+  const [anoFiltro, setAnoFiltro] = useState(anoAtualSistema)
   const [situacaoFiltro, setSituacaoFiltro] = useState<SituacaoFiltro>("todas")
   const [modalidadeFiltro, setModalidadeFiltro] = useState<ModalidadeFiltro>("todas")
+  const [carregando, setCarregando] = useState(true)
+  const [erro, setErro] = useState<string | null>(null)
+
+  useEffect(() => {
+    Promise.all([listarAlunos(), listarTurmas()])
+      .then(([alunosApi, turmasApi]) => {
+        setAlunos(alunosApi)
+        setTurmasDisponiveis(turmasApi.map((turma) => turma.nome))
+      })
+      .catch(() => setErro("Não foi possível carregar alunos e turmas."))
+  }, [])
+
+  useEffect(() => {
+    setCarregando(true)
+    listarPagamentos(anoFiltro, mesFiltro)
+      .then(setLista)
+      .catch(() => setErro("Não foi possível carregar os pagamentos."))
+      .finally(() => setCarregando(false))
+  }, [anoFiltro, mesFiltro])
 
   // Registrar pagamento (req. 6.2): marca como pago e salva os dados.
-  function registrar(
+  async function registrar(
     id: string,
     dados: {
       dataPagamento: string
@@ -43,27 +64,16 @@ export function PagamentosView() {
       observacoes?: string
     },
   ) {
-    setLista((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, situacao: "pago", ...dados } : p)),
-    )
+    await registrarPagamento(id, dados)
+    setLista((prev) => prev.map((p) => (p.id === id ? { ...p, situacao: "pago", ...dados } : p)))
   }
 
   // Reabrir um pagamento pago (volta para pendente).
-  function reabrir(id: string) {
-    setLista((prev) =>
-      prev.map((p) =>
-        p.id === id
-          ? {
-              ...p,
-              situacao: "pendente",
-              dataPagamento: undefined,
-              valorRecebido: undefined,
-              formaPagamento: undefined,
-              responsavelRegistro: undefined,
-            }
-          : p,
-      ),
-    )
+  async function reabrir(id: string) {
+    await reabrirPagamento(id)
+    setLista((prev) => prev.map((p) => p.id === id
+      ? { ...p, situacao: "pendente", dataPagamento: undefined, valorRecebido: undefined, formaPagamento: undefined, responsavelRegistro: undefined }
+      : p))
   }
 
   // Aplica todos os filtros do requisito 6.4.
@@ -73,7 +83,7 @@ export function PagamentosView() {
     for (const pg of lista) {
       if (pg.ano !== anoFiltro) continue
       if (pg.mes !== mesFiltro) continue
-      const aluno = alunoDoPagamento(pg)
+      const aluno = alunos.find((item) => item.id === pg.alunoId)
       if (!aluno || !aluno.ativo) continue
       if (turmaFiltro !== "todas" && aluno.turma !== turmaFiltro) continue
       if (modalidadeFiltro !== "todas" && aluno.modalidade !== modalidadeFiltro) continue
@@ -83,7 +93,7 @@ export function PagamentosView() {
       resultado.push({ aluno, pagamento: pg })
     }
     return resultado
-  }, [lista, busca, turmaFiltro, mesFiltro, anoFiltro, situacaoFiltro, modalidadeFiltro])
+  }, [lista, alunos, busca, turmaFiltro, mesFiltro, anoFiltro, situacaoFiltro, modalidadeFiltro])
 
   // Agrupa por turma (req. 6.1: alunos organizados por turma).
   const grupos = useMemo(() => {
@@ -126,7 +136,7 @@ export function PagamentosView() {
     situacaoFiltro !== "todas" ||
     modalidadeFiltro !== "todas" ||
     mesFiltro !== mesAtualPadrao ||
-    anoFiltro !== anoAtual
+    anoFiltro !== anoAtualSistema
 
   const cards = [
     { label: "Recebido", value: formatarValor(resumo.recebido), cls: "text-primary" },
@@ -138,6 +148,8 @@ export function PagamentosView() {
 
   return (
     <>
+      {erro && <p className="rounded-sm border border-danger bg-danger/10 p-3 text-sm text-danger">{erro}</p>}
+      {carregando && <p className="p-4 text-sm text-muted-foreground">Carregando pagamentos...</p>}
       {/* Cabeçalho placar */}
       <header className="panel-bevel overflow-hidden rounded-md bg-card">
         <div className="flex items-center gap-3 bg-scoreboard px-3 py-2">
@@ -233,7 +245,7 @@ export function PagamentosView() {
                 setBusca("")
                 setTurmaFiltro("todas")
                 setMesFiltro(mesAtualPadrao)
-                setAnoFiltro(anoAtual)
+                setAnoFiltro(anoAtualSistema)
                 setSituacaoFiltro("todas")
                 setModalidadeFiltro("todas")
               }}
@@ -254,8 +266,8 @@ export function PagamentosView() {
               turma={g.turma}
               modalidade={g.modalidade}
               linhas={g.linhas}
-              onRegistrar={registrar}
-              onReabrir={reabrir}
+              onRegistrar={(id, dados) => void registrar(id, dados)}
+              onReabrir={(id) => void reabrir(id)}
             />
           ))}
         </div>

@@ -5,18 +5,20 @@ import { useRouter } from "next/navigation"
 import { Check, ChevronLeft, RotateCcw, UsersRound, Sparkles, X } from "lucide-react"
 import {
   type Modalidade,
-  type SituacaoTurma,
   type Turma,
-  adicionarTurma,
   diasDaSemana,
   locaisDisponiveis,
   professoresDisponiveis,
 } from "@/lib/turmas-data"
+import { cadastrarTurma } from "@/lib/services/turmas-api"
 
 const faixasEtariasDisponiveis = ["sub-7", "sub-8", "sub-10", "sub-11", "11+"]
 
 type FormState = {
   nome: string
+  local: string
+  dias: string[]
+  horario: string
   modalidade: Modalidade
   faixaEtaria: string
   professor: string
@@ -27,6 +29,9 @@ type Erros = Partial<Record<keyof FormState, string>>
 
 const estadoInicial: FormState = {
   nome: "",
+  local: "",
+  dias: [],
+  horario: "",
   modalidade: "coletiva",
   faixaEtaria: "",
   professor: professoresDisponiveis[0],
@@ -38,6 +43,8 @@ export function CadastroTurmaForm() {
   const [form, setForm] = useState<FormState>(estadoInicial)
   const [erros, setErros] = useState<Erros>({})
   const [salva, setSalva] = useState<Turma | null>(null)
+  const [salvando, setSalvando] = useState(false)
+  const [erroApi, setErroApi] = useState<string | null>(null)
 
   function set<K extends keyof FormState>(campo: K, valor: FormState[K]) {
     setForm((f) => ({ ...f, [campo]: valor }))
@@ -55,6 +62,9 @@ export function CadastroTurmaForm() {
   function validar(): boolean {
     const e: Erros = {}
     if (!form.nome.trim()) e.nome = "Informe o nome da turma."
+    if (!form.local) e.local = "Informe o local."
+    if (form.dias.length === 0) e.dias = "Selecione ao menos um dia."
+    if (!form.horario.trim()) e.horario = "Informe o horário."
     if (!form.faixaEtaria.trim()) e.faixaEtaria = "Informe a faixa etária."
     if (form.limite && (Number(form.limite) <= 0 || !Number.isInteger(Number(form.limite))))
       e.limite = "Limite inválido."
@@ -62,18 +72,30 @@ export function CadastroTurmaForm() {
     return Object.keys(e).length === 0
   }
 
-  function aoEnviar(evento: React.FormEvent) {
+  async function aoEnviar(evento: React.FormEvent) {
     evento.preventDefault()
     if (!validar()) return
-    const turma = adicionarTurma({
-      nome: form.nome.trim(),
-      modalidade: form.modalidade,
-      faixaEtaria: form.faixaEtaria.trim(),
-      professor: form.professor,
-      limite: form.limite ? Number(form.limite) : undefined,
-    })
-    setSalva(turma)
-    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" })
+    setSalvando(true)
+    setErroApi(null)
+    try {
+      const turma = await cadastrarTurma({
+        nome: form.nome.trim(),
+        local: form.local,
+        dias: form.dias,
+        horario: form.horario.trim(),
+        modalidade: form.modalidade,
+        faixaEtaria: form.faixaEtaria.trim(),
+        professor: form.professor,
+        situacao: "ativa",
+        limite: form.limite ? Number(form.limite) : undefined,
+      })
+      setSalva(turma)
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" })
+    } catch {
+      setErroApi("Não foi possível salvar a turma. Verifique se o backend está em execução.")
+    } finally {
+      setSalvando(false)
+    }
   }
 
   function novaTurma() {
@@ -88,6 +110,7 @@ export function CadastroTurmaForm() {
 
   return (
     <form onSubmit={aoEnviar} className="flex flex-col gap-3" noValidate>
+      {erroApi && <p className="rounded-sm border border-danger bg-danger/10 p-3 text-sm text-danger">{erroApi}</p>}
       <FormSection tag="NEW" titulo="Dados da Turma" icon>
         <div className="grid gap-3">
           <Campo label="Nome da turma" obrigatorio erro={erros.nome}>
@@ -97,6 +120,26 @@ export function CadastroTurmaForm() {
               placeholder="Ex.: SUDOESTE (SEXTA - 17h00 às 18h00)"
               className={inputClasses}
             />
+          </Campo>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Campo label="Local" obrigatorio erro={erros.local}>
+              <select value={form.local} onChange={(e) => set("local", e.target.value)} className={inputClasses}>
+                <option value="">Selecione...</option>
+                {locaisDisponiveis.map((local) => <option key={local} value={local}>{local}</option>)}
+              </select>
+            </Campo>
+            <Campo label="Horário" obrigatorio erro={erros.horario}>
+              <input value={form.horario} onChange={(e) => set("horario", e.target.value)} placeholder="Ex.: 17h00 às 18h00" className={inputClasses} />
+            </Campo>
+          </div>
+          <Campo label="Dias da semana" obrigatorio erro={erros.dias}>
+            <div className="flex flex-wrap gap-2">
+              {diasDaSemana.map((dia) => (
+                <button key={dia} type="button" onClick={() => alternarDia(dia)} aria-pressed={form.dias.includes(dia)} className={`rounded-sm border px-2 py-1 font-sans text-xs font-bold ${form.dias.includes(dia) ? "border-gold bg-gold text-gold-foreground" : "border-panel-edge bg-panel-shade/50 text-foreground"}`}>
+                  {dia}
+                </button>
+              ))}
+            </div>
           </Campo>
         </div>
       </FormSection>
@@ -171,10 +214,11 @@ export function CadastroTurmaForm() {
         </button>
         <button
           type="submit"
-          className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[14px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none"
+          disabled={salvando}
+          className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[14px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none disabled:cursor-wait disabled:opacity-60"
         >
           <Check className="h-4 w-4" strokeWidth={3} />
-          Salvar turma
+          {salvando ? "Salvando..." : "Salvar turma"}
         </button>
       </div>
     </form>

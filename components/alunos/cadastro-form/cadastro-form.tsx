@@ -21,6 +21,7 @@ import {
   turmasDisponiveis,
 } from "@/lib/alunos-data"
 import { formatarTelefone } from "@/lib/alunos-data"
+import { cadastrarAluno } from "@/lib/services/alunos-api"
 
 type FormState = {
   nome: string
@@ -61,6 +62,8 @@ export function CadastroForm() {
   const [form, setForm] = useState<FormState>(estadoInicial)
   const [erros, setErros] = useState<Erros>({})
   const [salvo, setSalvo] = useState<Aluno | null>(null)
+  const [salvando, setSalvando] = useState(false)
+  const [erroApi, setErroApi] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
   const idade = useMemo(() => {
@@ -103,12 +106,13 @@ export function CadastroForm() {
     return Object.keys(e).length === 0
   }
 
-  function aoEnviar(evento: React.FormEvent) {
+  async function aoEnviar(evento: React.FormEvent) {
     evento.preventDefault()
     if (!validar()) return
-    const novo: Aluno = {
-      id: `novo-${Date.now()}`,
-      numero: 0,
+    setSalvando(true)
+    setErroApi(null)
+    try {
+      const novo = await cadastrarAluno({
       nome: form.nome.trim(),
       responsavel: form.responsavel.trim(),
       dataNascimento: form.dataNascimento,
@@ -120,11 +124,16 @@ export function CadastroForm() {
       ativo: true,
       dataEntrada: form.dataEntrada,
       dataVencimentoParcelas: form.dataVencimentoParcelas,
-      observacoes: form.observacoes.trim() || undefined,
+      observacoesCadastro: form.observacoes.trim() || undefined,
       foto: form.foto || undefined,
+      })
+      setSalvo(novo)
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" })
+    } catch {
+      setErroApi("Não foi possível salvar o cadastro. Verifique se o backend está em execução.")
+    } finally {
+      setSalvando(false)
     }
-    setSalvo(novo)
-    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   function novoCadastro() {
@@ -139,6 +148,7 @@ export function CadastroForm() {
 
   return (
     <form onSubmit={aoEnviar} className="flex flex-col gap-3" noValidate>
+      {erroApi && <p className="rounded-sm border border-danger bg-danger/10 p-3 text-sm text-danger">{erroApi}</p>}
       <section className="panel-bevel overflow-hidden rounded-md bg-card">
         <header className="flex items-center gap-2 border-b-2 border-panel-shade bg-scoreboard px-3 py-2">
           <span className="rounded-sm bg-gold px-1.5 py-0.5 font-pixel text-[13px] leading-none text-gold-foreground">NEW</span>
@@ -253,9 +263,9 @@ export function CadastroForm() {
           <RotateCcw className="h-3.5 w-3.5" strokeWidth={2.5} />
           Limpar formulário
         </button>
-        <button type="submit" className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[14px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none">
+        <button type="submit" disabled={salvando} className="flex items-center gap-2 rounded-sm border-2 border-gold bg-gold px-5 py-2 font-pixel text-[14px] uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none disabled:cursor-wait disabled:opacity-60">
           <Check className="h-4 w-4" strokeWidth={3} />
-          Salvar cadastro
+          {salvando ? "Salvando..." : "Salvar cadastro"}
         </button>
       </div>
     </form>

@@ -1,24 +1,20 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { CalendarDays, Save, CheckCircle2, XCircle, RotateCcw, History, Lock, LockOpen } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { getTurma } from "@/lib/turmas-data"
+import { type Aluno } from "@/lib/alunos-data"
+import { listarAlunos } from "@/lib/services/alunos-api"
+import { listarTurmas } from "@/lib/services/turmas-api"
+import { buscarChamada, listarChamadas, salvarChamada } from "@/lib/services/chamadas-api"
 import {
   type Chamada,
   type PresencaAluno,
   type StatusChamada,
   type Pontualidade,
-  chamadasIniciais,
-  turmasParaChamada,
-  dataAtualPadrao,
-  alunosDaTurma,
-  chamadaExistente,
-  novaChamadaEmBranco,
   resumoChamada,
   marcarTodosComo,
-  registrarChamada,
   formatarDataBR,
   statusChamadaInfo,
   ordemStatusChamada,
@@ -27,13 +23,8 @@ import { AlunoChamadaRow } from "./aluno-chamada-row"
 
 type Rascunho = { turma: string; data: string; presencas: PresencaAluno[] }
 
-function carregarRascunho(turma: string, data: string, lista: Chamada[]): Rascunho {
-  const existente = chamadaExistente(lista, turma, data)
-  return {
-    turma,
-    data,
-    presencas: existente ? existente.presencas : novaChamadaEmBranco(alunosDaTurma(turma)),
-  }
+function novaChamadaEmBranco(alunos: Aluno[]): PresencaAluno[] {
+  return alunos.map((aluno) => ({ alunoId: aluno.id, status: "presente", gols: 0, pontualidade: "no_horario" }))
 }
 
 const resumoCls: Record<StatusChamada, string> = {
@@ -45,25 +36,25 @@ const resumoCls: Record<StatusChamada, string> = {
 }
 
 export function ChamadaView() {
-  const [chamadas, setChamadas] = useState<Chamada[]>(chamadasIniciais)
-  const [rascunho, setRascunho] = useState<Rascunho>(() =>
-    carregarRascunho(turmasParaChamada[0] ?? "", dataAtualPadrao, chamadasIniciais),
-  )
+  const [chamadas, setChamadas] = useState<Chamada[]>([])
+  const [alunos, setAlunos] = useState<Aluno[]>([])
+  const [turmasParaChamada, setTurmasParaChamada] = useState<string[]>([])
+  const [rascunho, setRascunho] = useState<Rascunho>({ turma: "", data: new Date().toISOString().slice(0, 10), presencas: [] })
   const [salvoAgora, setSalvoAgora] = useState(false)
+  const [carregando, setCarregando] = useState(true)
+  const [erro, setErro] = useState<string | null>(null)
   // Uma ficha ja salva abre bloqueada, para evitar edicao acidental; o
   // professor precisa reabri-la explicitamente para poder alterar (pedido
   // do usuario: "possibilidade de mudar a situacao da ficha mesmo depois
   // de salvar, para ficar em edicao novamente").
   const [edicaoForcada, setEdicaoForcada] = useState(false)
 
-  const alunosTurma = useMemo(() => alunosDaTurma(rascunho.turma), [rascunho.turma])
+  const alunosTurma = useMemo(() => alunos.filter((aluno) => aluno.ativo && aluno.turma === rascunho.turma).sort((a, b) => a.nome.localeCompare(b.nome)), [alunos, rascunho.turma])
   const resumo = useMemo(() => resumoChamada(rascunho.presencas), [rascunho.presencas])
-  const jaSalva = useMemo(
-    () => Boolean(chamadaExistente(chamadas, rascunho.turma, rascunho.data)),
-    [chamadas, rascunho.turma, rascunho.data],
-  )
+  const chamadaAtual = useMemo(() => chamadas.find((chamada) => chamada.turma === rascunho.turma && chamada.data === rascunho.data), [chamadas, rascunho.turma, rascunho.data])
+  const jaSalva = Boolean(chamadaAtual)
   const bloqueada = jaSalva && !edicaoForcada
-  const professor = getTurma(rascunho.turma)?.professor ?? "Coordenação"
+  const professor = chamadaAtual?.registradoPor ?? "Coordenação"
 
   const historicoTurma = useMemo(
     () =>
@@ -73,16 +64,38 @@ export function ChamadaView() {
     [chamadas, rascunho.turma],
   )
 
+  useEffect(() => {
+    Promise.all([listarTurmas(), listarAlunos()])
+      .then(([turmas, alunosApi]) => {
+        const nomes = turmas.filter((turma) => turma.situacao === "ativa").map((turma) => turma.nome)
+        setTurmasParaChamada(nomes)
+        setAlunos(alunosApi)
+        setRascunho((atual) => ({ ...atual, turma: nomes[0] ?? "", presencas: novaChamadaEmBranco(alunosApi.filter((aluno) => aluno.ativo && aluno.turma === nomes[0])) }))
+      })
+      .catch(() => setErro("Não foi possível carregar turmas e alunos."))
+      .finally(() => setCarregando(false))
+  }, [])
+
+  useEffect(() => {
+    if (!rascunho.turma || !rascunho.data) return
+    Promise.all([listarChamadas(rascunho.turma), buscarChamada(rascunho.turma, rascunho.data)])
+      .then(([historico, atual]) => {
+        setChamadas(historico)
+        setRascunho((rascunhoAtual) => ({ ...rascunhoAtual, presencas: atual?.presencas ?? novaChamadaEmBranco(alunos.filter((aluno) => aluno.ativo && aluno.turma === rascunhoAtual.turma)) }))
+      })
+      .catch(() => setErro("Não foi possível carregar o histórico da chamada."))
+  }, [rascunho.turma, rascunho.data])
+
   function selecionarTurma(turma: string) {
     setSalvoAgora(false)
     setEdicaoForcada(false)
-    setRascunho(carregarRascunho(turma, rascunho.data, chamadas))
+    setRascunho((atual) => ({ ...atual, turma, presencas: novaChamadaEmBranco(alunos.filter((aluno) => aluno.ativo && aluno.turma === turma)) }))
   }
 
   function selecionarData(data: string) {
     setSalvoAgora(false)
     setEdicaoForcada(false)
-    setRascunho(carregarRascunho(rascunho.turma, data, chamadas))
+    setRascunho((atual) => ({ ...atual, data, presencas: novaChamadaEmBranco(alunos.filter((aluno) => aluno.ativo && aluno.turma === atual.turma)) }))
   }
 
   function reabrirParaEdicao() {
@@ -120,8 +133,14 @@ export function ChamadaView() {
     setRascunho((r) => ({ ...r, presencas: marcarTodosComo(r.presencas, status) }))
   }
 
-  function salvar() {
-    setChamadas((prev) => registrarChamada(prev, rascunho.turma, rascunho.data, rascunho.presencas, professor))
+  async function salvar() {
+    try {
+      const chamada = await salvarChamada({ turma: rascunho.turma, data: rascunho.data, presencas: rascunho.presencas, registradoPor: professor })
+      setChamadas((prev) => [...prev.filter((item) => !(item.turma === chamada.turma && item.data === chamada.data)), chamada])
+    } catch {
+      setErro("Não foi possível salvar a chamada.")
+      return
+    }
     setSalvoAgora(true)
     setEdicaoForcada(false)
   }
@@ -133,6 +152,8 @@ export function ChamadaView() {
 
   return (
     <>
+      {erro && <p className="rounded-sm border border-danger bg-danger/10 p-3 text-sm text-danger">{erro}</p>}
+      {carregando && <p className="p-4 text-sm text-muted-foreground">Carregando chamada...</p>}
       {/* Cabeçalho placar */}
       <header className="panel-bevel overflow-hidden rounded-md bg-card">
         <div className="flex items-center gap-3 bg-scoreboard px-3 py-2">
@@ -319,7 +340,7 @@ export function ChamadaView() {
           ) : (
             <button
               type="button"
-              onClick={salvar}
+              onClick={() => void salvar()}
               disabled={alunosTurma.length === 0}
               className="inline-flex items-center gap-1.5 rounded-sm border-2 border-gold bg-gold px-3 py-1.5 font-sans text-xs font-bold uppercase tracking-wide text-gold-foreground transition-transform hover:-translate-y-0.5 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             >
@@ -350,7 +371,7 @@ export function ChamadaView() {
           ) : (
             <button
               type="button"
-              onClick={salvar}
+              onClick={() => void salvar()}
               className="flex w-full items-center justify-center gap-2 rounded-sm border-2 border-gold bg-gold px-3 py-3 font-sans text-sm font-bold uppercase tracking-wide text-gold-foreground focus:outline-none"
             >
               <Save className="h-4 w-4" strokeWidth={2.5} />

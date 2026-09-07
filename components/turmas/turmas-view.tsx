@@ -1,11 +1,13 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Search, UsersRound, Plus } from "lucide-react"
-import { alunos } from "@/lib/alunos-data"
-import { turmas as turmasIniciais, locaisDisponiveis, type Turma } from "@/lib/turmas-data"
+import { type Aluno } from "@/lib/alunos-data"
+import type { Turma } from "@/lib/turmas-data"
+import { listarAlunos } from "@/lib/services/alunos-api"
+import { listarTurmas } from "@/lib/services/turmas-api"
 import { TurmaCard } from "./turma-card"
 
 type SituacaoFiltro = "todas" | "ativa" | "inativa"
@@ -16,6 +18,20 @@ export function TurmasView() {
   const [situacaoFiltro, setSituacaoFiltro] = useState<SituacaoFiltro>("todas")
   const [modalidadeFiltro, setModalidadeFiltro] = useState<ModalidadeFiltro>("todas")
   const [expandidoId, setExpandidoId] = useState<string | null>(null)
+  const [turmas, setTurmas] = useState<Turma[]>([])
+  const [alunos, setAlunos] = useState<Aluno[]>([])
+  const [carregando, setCarregando] = useState(true)
+  const [erro, setErro] = useState<string | null>(null)
+
+  useEffect(() => {
+    Promise.all([listarTurmas(), listarAlunos()])
+      .then(([turmasApi, alunosApi]) => {
+        setTurmas(turmasApi)
+        setAlunos(alunosApi)
+      })
+      .catch(() => setErro("Não foi possível carregar as turmas. Verifique o backend e o CORS."))
+      .finally(() => setCarregando(false))
+  }, [])
 
   // Matriculas ativas por turma (nome da turma == chave).
   const matriculasPorTurma = useMemo(() => {
@@ -31,20 +47,20 @@ export function TurmasView() {
 
   const filtradas = useMemo(() => {
     const termo = busca.trim().toLowerCase()
-    return turmasIniciais.filter((t: Turma) => {
+    return turmas.filter((t: Turma) => {
       if (termo && !t.nome.toLowerCase().includes(termo) && !t.professor.toLowerCase().includes(termo)) return false
       if (situacaoFiltro !== "todas" && t.situacao !== situacaoFiltro) return false
       if (modalidadeFiltro !== "todas" && t.modalidade !== modalidadeFiltro) return false
       return true
     })
-  }, [busca, situacaoFiltro, modalidadeFiltro])
+  }, [turmas, busca, situacaoFiltro, modalidadeFiltro])
 
   const contadores = useMemo(() => {
-    const ativas = turmasIniciais.filter((t) => t.situacao === "ativa").length
-    const inativas = turmasIniciais.length - ativas
+    const ativas = turmas.filter((t) => t.situacao === "ativa").length
+    const inativas = turmas.length - ativas
     const matriculados = alunos.filter((a) => a.ativo).length
-    return { total: turmasIniciais.length, ativas, inativas, matriculados }
-  }, [])
+    return { total: turmas.length, ativas, inativas, matriculados }
+  }, [turmas, alunos])
 
   const temFiltro =
     busca !== "" || situacaoFiltro !== "todas" || modalidadeFiltro !== "todas"
@@ -58,6 +74,8 @@ export function TurmasView() {
 
   return (
     <>
+      {erro && <p className="rounded-sm border border-danger bg-danger/10 p-3 text-sm text-danger">{erro}</p>}
+      {carregando && <p className="p-4 text-sm text-muted-foreground">Carregando turmas...</p>}
       {/* Cabeçalho placar */}
       <header className="panel-bevel overflow-hidden rounded-md bg-card">
         <div className="flex items-center gap-3 bg-scoreboard px-3 py-2">
