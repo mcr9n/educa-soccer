@@ -1,6 +1,6 @@
 import type { Pagamento, FormaPagamento } from "@/lib/pagamentos-data"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:8443"
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8443"
 
 type RegistroPagamento = {
   dataPagamento: string

@@ -100,7 +100,7 @@ export function AlunosView() {
         ativos={contadores.ativos}
         particulares={contadores.particulares}
         coletivos={contadores.coletivos}
-        exAlunos={exAlunos}
+        exAlunos={contadores.exAlunos}
         porTurma={contadores.porTurma}
       />
 

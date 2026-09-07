@@ -1,6 +1,6 @@
 import type { Aluno } from "@/lib/alunos-data"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:8443"
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8443"
 
 export type NovoAluno = Omit<Aluno, "id" | "numero" | "ativo"> & {
   ativo?: boolean

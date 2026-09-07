@@ -1,7 +1,7 @@
 import Image from "next/image"
 import styles from "./alunos-counters.module.css"
 
-type Counter = { label: string; value: number; accent?: "green" | "gold" | "blue" | "danger" }
+type Counter = { label: string; value: number; accent?: "green" | "gold" | "blue" | "danger" | "black"}
 
 export function AlunosCounters({
   ativos,
@@ -28,6 +28,7 @@ export function AlunosCounters({
     gold: styles.accentGold,
     blue: styles.accentBlue,
     danger: styles.accentDanger,
+    black: styles.accentBlack
   }
 
   return (

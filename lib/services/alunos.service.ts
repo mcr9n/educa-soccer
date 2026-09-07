@@ -19,6 +19,7 @@ export type ResumoAlunos = {
   ativos: number
   particulares: number
   coletivos: number
+  exAlunos: number
   porTurma: { turma: string; total: number }[]
 }
 
@@ -43,6 +44,7 @@ export function filtrarAlunos(alunos: Aluno[], filtros: FiltrosAlunos) {
 
 export function calcularResumoAlunos(alunosAtivos: Aluno[]): ResumoAlunos {
   const particulares = alunosAtivos.filter((aluno) => aluno.modalidade === "particular").length
+  const exAlunos = alunosAtivos.filter((aluno) => !aluno.ativo).length
   const coletivos = alunosAtivos.filter((aluno) => aluno.modalidade === "coletiva").length
   const porTurma = turmasDisponiveis
     .map((turma) => ({ turma, total: alunosAtivos.filter((aluno) => aluno.turma === turma).length }))
@@ -52,6 +54,7 @@ export function calcularResumoAlunos(alunosAtivos: Aluno[]): ResumoAlunos {
     ativos: alunosAtivos.length,
     particulares,
     coletivos,
+    exAlunos,
     porTurma,
   }
 }
